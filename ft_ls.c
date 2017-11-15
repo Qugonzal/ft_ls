@@ -18,7 +18,7 @@ d_list	*lister(struct dirent *file, d_list **list)
 
 	if (!(new = malloc(sizeof(d_list))))
 		exit(-1);
-	new->name = (char[256])ft_strcpy(new->name, file->d_name);
+	ft_strcpy((char *)new->name, file->d_name);
 	new->next = *list;
 	return (new);
 }
@@ -39,7 +39,7 @@ void	ft_ls(char *name)
 	elem = readdir(dirstream);
 //	ft_putstr(elem->d_name);
 //	ft_putstr("\nWWWWW");
-	(char *)list->name = ft_strcpy((char *)list->name, elem->d_name);
+	ft_strcpy((char *)list->name, elem->d_name);
 	list->next = NULL;
 	while ((elem = readdir(dirstream)))
 	{
