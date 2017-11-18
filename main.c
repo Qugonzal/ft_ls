@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/11 19:55:25 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/11/18 07:49:17 by qugonzal         ###   ########.fr       */
+/*   Updated: 2017/11/18 07:59:21 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,14 @@ int		main(int argc, char **argv)
 			{
 				if (ft_strcmp(sw->name, (sw->prev)->name) < 0)
 				{
-					tmp = sw->next;
-					sw->next = sw->prev;
-					sw->prev = (sw->prev)->prev;
-					(sw->next)->next = tmp;
-					(sw->next)->prev = sw;
+					cmp = (sw->prev)->name;
+					(sw->prev)->name = sw->name;
+					sw->name = 
 				}
 				sw = sw->prev;
 			}
 			lsta = lsta->next;
 		}
-		lsta = firstelem;
 		while (lsta->next)
 		{
 			ft_putstr(lsta->name);
@@ -81,13 +78,14 @@ int		main(int argc, char **argv)
 			lsta = lsta->next;
 		}
 		ft_putstr(lsta->name);
-/*		while (lsta->prev)
+		ft_putstr("WWW\n");
+		while (lsta->prev)
 		{
 			ft_putstr(lsta->name);
 			ft_putstr("\n");
 			lsta = lsta->prev;
 		}
-		ft_putstr(lsta->name);*/
+		ft_putstr(lsta->name);
 		while (firstelem->next)
 		{
 			lsta = firstelem->next;
