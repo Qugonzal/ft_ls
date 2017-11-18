@@ -63,9 +63,11 @@ int		main(int argc, char **argv)
 			{
 				if (ft_strcmp(sw->name, (sw->prev)->name) < 0)
 				{
-					cmp = (sw->prev)->name;
-					(sw->prev)->name = sw->name;
-					sw->name = 
+					tmp = sw->next;
+              sw->next = sw->prev;
+              (sw->prev)->next = tmp;
+              (sw->prev)->prev = sw;
+              sw->prev = (sw->prev)->prev;
 				}
 				sw = sw->prev;
 			}
