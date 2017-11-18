@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 00:00:33 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/11/15 05:44:58 by qugonzal         ###   ########.fr       */
+/*   Updated: 2017/11/18 06:31:52 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@
 #include <dirent.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <unistd.h>
 
 typedef struct		dir_list
 {
 	char			name[256];
 	struct dir_list	*next;
+	struct dir_list	*prev;
 }					d_list;
 
 void	ft_ls(char *name);
