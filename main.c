@@ -5,95 +5,65 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/11 19:55:25 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/11/18 07:59:21 by qugonzal         ###   ########.fr       */
+/*   Created: 2017/11/28 03:01:56 by qugonzal          #+#    #+#             */
+/*   Updated: 2017/11/28 06:16:25 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-d_list	*lister_a(char *rp, d_list **lst)
+void			no_option(char chr)
 {
-	d_list	*new;
-
-	if (!(new = malloc(sizeof(d_list))))
-		exit(-1);
-	ft_strcpy((char *)new->name, rp);
-	new->next = *lst;
-	return (new);
+	ft_putstr("./ft_ls: illegal option -- ");
+	ft_putchar(chr);
+	ft_putstr("\nusage: ./ft_ls [-lRart] [file ...]\n");
+	exit(-1);
 }
 
-int		main(int argc, char **argv)
+unsigned char	set_options(char **av, unsigned char options)
 {
-	int i;
-	d_list	*lsta;
-	d_list	*firstelem;
-	d_list	*sw;
-	d_list	*tmp;
-	char *cmp;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	options = 0;
+	while (av[++i] && av[i][0] == '-')
+	{
+		while (av[i][++j])
+		{	
+			if (av[i][j] == 'l')
+				options = options | LS_L;
+			else if (av[i][j] == 'R')
+				options = options | LS_REC;
+			else if (av[i][j] == 'a')
+				options = options | LS_A;
+			else if (av[i][j] == 'r')
+				options = options | LS_R;
+			else if (av[i][j] == 't')
+				options = options | LS_T;
+			else
+				no_option(av[i][j]);
+		}
+	}
+	return (options);
+}
+
+int		main(int ac, char **av)
+{
+	unsigned char	options;
+	int				i;
 
 	i = 1;
-	if (argc == 1)
-	{
-		ft_ls(".");
-		return (0);
-	}
-	if (!(lsta = malloc(sizeof(d_list))))
-	{
-		ft_putstr("fail malloc\n");
-		return (0);
-	}
-	ft_strcpy(lsta->name, argv[i]);
-	lsta->next = NULL;
-	if (argc > 1)
-	{
+	options = set_options(av, options);
+	while (av[i] && av[i][0] == '-')
 		i++;
-		while (i < argc)
-		{
-			lsta->prev = lister_a(argv[i], &lsta);
-			lsta = lsta->prev;
-			i++;
-		}
-		lsta->prev = NULL;
-		firstelem = lsta;
-		while (lsta->next)
-		{
-			sw = lsta;
-			while (sw->prev)
-			{
-				if (ft_strcmp(sw->name, (sw->prev)->name) < 0)
-				{
-					tmp = sw->next;
-              sw->next = sw->prev;
-              (sw->prev)->next = tmp;
-              (sw->prev)->prev = sw;
-              sw->prev = (sw->prev)->prev;
-				}
-				sw = sw->prev;
-			}
-			lsta = lsta->next;
-		}
-		while (lsta->next)
-		{
-			ft_putstr(lsta->name);
-			ft_putstr("\n");
-			lsta = lsta->next;
-		}
-		ft_putstr(lsta->name);
-		ft_putstr("WWW\n");
-		while (lsta->prev)
-		{
-			ft_putstr(lsta->name);
-			ft_putstr("\n");
-			lsta = lsta->prev;
-		}
-		ft_putstr(lsta->name);
-		while (firstelem->next)
-		{
-			lsta = firstelem->next;
-			free(firstelem);
-			firstelem = lsta;
-		}
+	if (i < ac)
+	{
+		ft_putstr("arg\n");
 	}
+	else
+//		ft_ls(".", options);
+		ft_putstr("no arg\n");
 	return (0);
 }
