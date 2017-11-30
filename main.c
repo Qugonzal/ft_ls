@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 03:01:56 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/11/28 06:16:25 by qugonzal         ###   ########.fr       */
+/*   Updated: 2017/11/30 18:25:49 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ unsigned char	set_options(char **av, unsigned char options)
 	int		j;
 
 	i = 0;
-	j = 0;
 	options = 0;
 	while (av[++i] && av[i][0] == '-')
 	{
+		j = 0;
 		while (av[i][++j])
 		{	
 			if (av[i][j] == 'l')
@@ -53,14 +53,37 @@ int		main(int ac, char **av)
 {
 	unsigned char	options;
 	int				i;
+	t_arg			*arg_lst;
 
 	i = 1;
+	arg_lst = NULL;
+	options = 0;
 	options = set_options(av, options);
 	while (av[i] && av[i][0] == '-')
 		i++;
 	if (i < ac)
 	{
-		ft_putstr("arg\n");
+		while (av[i])
+		{
+			arg_lst = new_arg(av[i], &arg_lst);
+			i++;
+		}
+		arg_lst = ft_link(arg_lst);
+		while (arg_lst->next)
+		{
+			ft_putstr(arg_lst->name);
+			ft_putstr("\n");
+			arg_lst = arg_lst->next;
+		}
+		ft_putstr(arg_lst->name);
+		ft_putstr("\n");
+		while (arg_lst->prev)
+		{
+			arg_lst = arg_lst->prev;
+			free(arg_lst->next);
+		}
+		free(arg_lst);
+//		ft_ls(&arg_lst, options);
 	}
 	else
 //		ft_ls(".", options);

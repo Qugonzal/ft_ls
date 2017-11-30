@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 00:00:33 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/11/28 04:04:34 by qugonzal         ###   ########.fr       */
+/*   Updated: 2017/11/30 18:25:55 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@
 # define	LS_R	(1 << 4)
 # define	LS_T	(1 << 5)
 
-/*typedef struct			s_list
+typedef struct			s_arg
 {
+	struct s_arg		*prev;
 	char				name[256];
-	struct s_list		*next;
-	struct s_list		*prev;
-}						t_list;
+	struct s_arg		*next;
+}						t_arg;
 
-void					ft_ls(char *name);
-d_list					*lister(struct dirent *file, d_list **list);
-*/
+t_arg					*new_arg(char *name, t_arg **nxt_elem);
+t_arg					*ft_link(t_arg *arg_lst);
+
 #endif
