@@ -38,11 +38,29 @@ t_arg		*ft_link(t_arg *arg_lst)
 		arg_lst = arg_lst->prev;
 	return (arg_lst);
 }
-/*
-t_arg		*ft_unlink_arg(t_arg *arg_lst)
+
+t_arg		*ft_unlink_arg(t_arg *arg)
 {
-	t_arg	*tmp;
+	(arg->prev)->next = arg->next;
+	(arg->next)->prev = arg->prev;
+	return (arg);
+}
 
-	tmp = arg_lst;
-
-}*/
+t_arg		*ft_insert_arg(t_arg *arg, t_arg *arg_place, char option)
+{
+	if (option == 1)
+	{
+		arg->next = arg_place;
+		arg->prev = arg_place->prev;
+		(arg_place->prev)->next = arg;
+		arg_place->prev = arg;
+	}
+	if (option == 2)
+	{
+		arg->next = arg_place->next;
+		arg->prev = arg_place;
+		(arg_place->next)->prev = arg;
+		arg_place->next = arg;
+	}
+	return (arg);
+}

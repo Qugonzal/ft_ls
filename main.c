@@ -54,6 +54,7 @@ int		main(int ac, char **av)
 	unsigned char	options;
 	int				i;
 	t_arg			*arg_lst;
+	t_arg			*tmp;
 
 	i = 1;
 	arg_lst = NULL;
@@ -71,17 +72,27 @@ int		main(int ac, char **av)
 		arg_lst = ft_link(arg_lst);
 		while (arg_lst->next)
 		{
+			if (ft_strchr(arg_lst->name, 'Z'))
+			{
+				ft_unlink_arg(arg_lst);
+				tmp = arg_lst->next;
+				while (tmp->next)
+					tmp = tmp->next;
+				ft_insert_arg(arg_lst, tmp, 1);
+			}
+			arg_lst = arg_lst->next;
+		}
+		while (arg_lst->prev)
+			arg_lst = arg_lst->prev;
+		while (arg_lst->next)
+		{
 			ft_putstr(arg_lst->name);
 			ft_putstr("\n");
 			arg_lst = arg_lst->next;
+			free(arg_lst->prev);
 		}
 		ft_putstr(arg_lst->name);
 		ft_putstr("\n");
-		while (arg_lst->prev)
-		{
-			arg_lst = arg_lst->prev;
-			free(arg_lst->next);
-		}
 		free(arg_lst);
 //		ft_ls(&arg_lst, options);
 	}
