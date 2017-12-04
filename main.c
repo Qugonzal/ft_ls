@@ -49,52 +49,48 @@ unsigned char	set_options(char **av, unsigned char options)
 	return (options);
 }
 
+void		ft_print_n_free(t_arg **arg_tmp)
+{
+	while ((*arg_tmp)->next)
+	{
+		ft_putstr((*arg_tmp)->name);
+		ft_putstr("\n");
+		(*arg_tmp) = (*arg_tmp)->next;
+		free((*arg_tmp)->prev);
+	}
+	ft_putstr((*arg_tmp)->name);
+	ft_putstr("\n");
+	free((*arg_tmp));
+}
+
 int		main(int ac, char **av)
 {
 	unsigned char	options;
 	int				i;
-	t_arg			*arg_lst;
-	t_arg			*tmp;
+	int				identifier;
+	t_arg			**arg_lst;
+	t_arg			*tmp_arg;
 
 	i = 1;
-	arg_lst = NULL;
+	tmp_arg = NULL;
 	options = 0;
 	options = set_options(av, options);
+	identifier = 0;
 	while (av[i] && av[i][0] == '-')
 		i++;
 	if (i < ac)
 	{
 		while (av[i])
 		{
-			arg_lst = new_arg(av[i], &arg_lst);
+			tmp_arg = new_arg(av[i], tmp_arg);
+			identifier = identifier + 1;
+			tmp_arg->ID = identifier;
 			i++;
 		}
-		arg_lst = ft_link(arg_lst);
-		while (arg_lst->next)
-		{
-			if (ft_strchr(arg_lst->name, 'Z'))
-			{
-				ft_unlink_arg(arg_lst);
-				tmp = arg_lst->next;
-				while (tmp->next)
-					tmp = tmp->next;
-				ft_insert_arg(arg_lst, tmp, 1);
-			}
-			arg_lst = arg_lst->next;
-		}
-		while (arg_lst->prev)
-			arg_lst = arg_lst->prev;
-		while (arg_lst->next)
-		{
-			ft_putstr(arg_lst->name);
-			ft_putstr("\n");
-			arg_lst = arg_lst->next;
-			free(arg_lst->prev);
-		}
-		ft_putstr(arg_lst->name);
-		ft_putstr("\n");
-		free(arg_lst);
-//		ft_ls(&arg_lst, options);
+		arg_lst = ft_link_arg_lst(&tmp_arg);
+		arg_lst = ft_ascii_a(arg_lst);
+		ft_print_n_free(arg_lst);
+//		ft_ls(&(*arg_lst), options);
 	}
 	else
 //		ft_ls(".", options);
