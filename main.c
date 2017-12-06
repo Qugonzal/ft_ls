@@ -6,61 +6,27 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 03:01:56 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/11/30 18:25:49 by qugonzal         ###   ########.fr       */
+/*   Updated: 2017/12/06 05:58:15 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void			no_option(char chr)
-{
-	ft_putstr("./ft_ls: illegal option -- ");
-	ft_putchar(chr);
-	ft_putstr("\nusage: ./ft_ls [-lRart] [file ...]\n");
-	exit(-1);
-}
-
-unsigned char	set_options(char **av, unsigned char options)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	options = 0;
-	while (av[++i] && av[i][0] == '-')
-	{
-		j = 0;
-		while (av[i][++j])
-		{	
-			if (av[i][j] == 'l')
-				options = options | LS_L;
-			else if (av[i][j] == 'R')
-				options = options | LS_REC;
-			else if (av[i][j] == 'a')
-				options = options | LS_A;
-			else if (av[i][j] == 'r')
-				options = options | LS_R;
-			else if (av[i][j] == 't')
-				options = options | LS_T;
-			else
-				no_option(av[i][j]);
-		}
-	}
-	return (options);
-}
-
 void		ft_print_n_free(t_arg **arg_tmp)
 {
-	while ((*arg_tmp)->next)
+	t_arg *tmp;
+
+	tmp = *arg_tmp;
+	while (tmp->next)
 	{
-		ft_putstr((*arg_tmp)->name);
+		ft_putstr(tmp->name);
 		ft_putstr("\n");
-		(*arg_tmp) = (*arg_tmp)->next;
-		free((*arg_tmp)->prev);
+		tmp = tmp->next;
+		free(tmp->prev);
 	}
-	ft_putstr((*arg_tmp)->name);
+	ft_putstr(tmp->name);
 	ft_putstr("\n");
-	free((*arg_tmp));
+	free(tmp);
 }
 
 int		main(int ac, char **av)
@@ -95,5 +61,6 @@ int		main(int ac, char **av)
 	else
 //		ft_ls(".", options);
 		ft_putstr("no arg\n");
+	ft_error();
 	return (0);
 }
