@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 03:01:56 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/12/06 05:58:15 by qugonzal         ###   ########.fr       */
+/*   Updated: 2017/12/08 04:45:00 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		main(int ac, char **av)
 	unsigned char	options;
 	int				i;
 	int				identifier;
-	t_arg			**arg_lst;
+//	t_arg			**arg_lst;
 	t_arg			*tmp_arg;
 
 	i = 1;
@@ -53,9 +53,9 @@ int		main(int ac, char **av)
 			tmp_arg->ID = identifier;
 			i++;
 		}
-		arg_lst = ft_link_arg_lst(&tmp_arg);
-		arg_lst = ft_ascii_a(arg_lst);
-		ft_print_n_free(arg_lst);
+		ft_link_arg_lst(&tmp_arg);
+		ft_ascii_a(&tmp_arg);
+		ft_print_n_free(&tmp_arg);
 //		ft_ls(&(*arg_lst), options);
 	}
 	else

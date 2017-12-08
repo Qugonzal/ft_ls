@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 15:15:24 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/12/06 04:35:20 by qugonzal         ###   ########.fr       */
+/*   Updated: 2017/12/08 05:33:09 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ t_arg		**ft_place_last(t_arg **arg)
 	{
 		tmp = tmp->next;
 		if ((ft_strcmp(tmp->name, (*arg)->name)) > 0)
-			*arg = tmp;
+			arg = &tmp;
 	}
 	if ((*arg)->next)
 	{
 		ft_unlink_arg(arg);
-		ft_insert_arg(arg, &tmp, 'D');
+		arg = ft_insert_arg(arg, &tmp, 'D');
 	}
 	return (arg);
 }
@@ -55,8 +55,11 @@ t_arg		**ft_parse(t_arg **small, t_arg **big)
 	t_arg	*tmp;
 	t_arg	*index;
 
-	tmp = (*small)->next;
-	index = tmp;
+	tmp = *small;
+	if (tmp->next)
+		index = tmp->next;
+	else
+		return (small);
 	if ((index->ID) == ((*big)->ID))
 		return (small);
 	while (index->ID != (*big)->ID)
@@ -77,6 +80,5 @@ t_arg		**ft_ascii_a(t_arg **arg_lst)
 	ft_place_last(arg_lst);
 	big = *arg_lst;
 	ft_place_first(arg_lst);
-	ft_parse(arg_lst, &big);
-	return (arg_lst);
+	return (ft_parse(arg_lst, &big));
 }
