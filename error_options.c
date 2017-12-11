@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 05:08:10 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/12/06 05:51:29 by qugonzal         ###   ########.fr       */
+/*   Updated: 2017/12/11 17:58:56 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,3 @@ unsigned char	set_options(char **av, unsigned char options)
 	}
 	return (options);
 }
-
