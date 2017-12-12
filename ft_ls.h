@@ -38,13 +38,13 @@ void			ft_print_n_free(t_arg *arg_tmp);
 void			ft_print(t_arg *arg_tmp);
 void			ft_unlink_arg(t_arg *arg);
 void			no_option(char chr);
-unsigned char	set_options(char **av, unsigned char options);
+unsigned char		set_options(char **av);
 void			ft_insert_arg(t_arg *arg, t_arg *arg_place, char option);
 t_arg			*new_arg(char *name, t_arg *nxt_elem);
 void			ft_link_arg_lst(t_arg *arg_lst);
-void			ft_ascii_a(t_arg *arg_lst);
+t_arg			*ft_ascii_a(t_arg *arg_lst);
 t_arg			*ft_parse(t_arg *small, t_arg *big);
-void			ft_place_last(t_arg *arg);
-void			ft_place_first(t_arg *arg);
+t_arg			*ft_place_last(t_arg *arg);
+t_arg			*ft_place_first(t_arg *arg);
 
 #endif
