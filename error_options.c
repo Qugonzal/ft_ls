@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 05:08:10 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/12/11 17:58:56 by qugonzal         ###   ########.fr       */
+/*   Updated: 2017/12/12 21:01:58 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		*ft_hard_option(char *av, int *options)
 	j = 1;
 	while (av[++j])
 	{
-		if
+		if ()
 		else
 			no_option(av[j]);
 	}
