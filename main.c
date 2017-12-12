@@ -53,8 +53,7 @@ int		main(int ac, char **av)
 
 	i = 1;
 	arg_lst = NULL;
-	options = 0;
-	options = set_options(av, options);
+	options = set_options(av);
 	identifier = 0;
 	while (av[i] && av[i][0] == '-')
 		i++;
@@ -68,7 +67,7 @@ int		main(int ac, char **av)
 			i++;
 		}
 		ft_link_arg_lst(arg_lst);
-		ft_ascii_a(arg_lst);
+		arg_lst = ft_ascii_a(arg_lst);
 		ft_print_n_free(arg_lst);
 //		ft_ls(&(*arg_lst_lst), options);
 	}

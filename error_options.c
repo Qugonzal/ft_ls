@@ -26,16 +26,54 @@ void			ft_error(void)
 
 void			no_option(char chr)
 {
-	ft_putstr("./ft_ls: illegal option -- ");
+	ft_putstr("./ft_ls: illegal option -- '");
 	ft_putchar(chr);
-	ft_putstr("\nusage: ./ft_ls [-lRart] [file ...]\n");
+	ft_putstr("'\nusage: ./ft_ls [-lRart] [file ...]\n");
 	exit(-1);
 }
 
-unsigned char	set_options(char **av, unsigned char options)
+int		*ft_hard_option(char *av, int *options)
+{
+	int j;
+
+	j = 1;
+	while (av[++j])
+	{
+		if
+		else
+			no_option(av[j]);
+	}
+	return (options);
+}
+
+int		*ft_normal_option(char *av, int *options)
+{
+	int j;
+
+	j = 0;
+	while (av[++j])
+	{	
+		if (av[j] == 'l')
+			*options = *options | LS_L;
+		else if (av[j] == 'R')
+			*options = *options | LS_REC;
+		else if (av[j] == 'a')
+			*options = *options | LS_A;
+		else if (av[j] == 'r')
+			*options = *options | LS_R;
+		else if (av[j] == 't')
+			*options = *options | LS_T;
+		else
+			no_option(av[j]);
+	}
+	return (options);
+}
+
+unsigned char	set_options(char **av)
 {
 	int		i;
 	int		j;
+	unsigned char	options;
 
 	i = 0;
 	options = 0;
@@ -44,18 +82,10 @@ unsigned char	set_options(char **av, unsigned char options)
 		j = 0;
 		while (av[i][++j])
 		{	
-			if (av[i][j] == 'l')
-				options = options | LS_L;
-			else if (av[i][j] == 'R')
-				options = options | LS_REC;
-			else if (av[i][j] == 'a')
-				options = options | LS_A;
-			else if (av[i][j] == 'r')
-				options = options | LS_R;
-			else if (av[i][j] == 't')
-				options = options | LS_T;
+			if (av[i][j] == '-')
+				ft_hard_option(av[i], options);
 			else
-				no_option(av[i][j]);
+				ft_normal_option(av[i], options);
 		}
 	}
 	return (options);
