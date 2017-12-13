@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 05:08:10 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/12/12 21:01:58 by qugonzal         ###   ########.fr       */
+/*   Updated: 2017/12/13 13:28:16 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,31 @@ void			no_option(char chr)
 	exit(-1);
 }
 
-int		*ft_hard_option(char *av, int *options)
+unsigned char		ft_hard_option(char *av, unsigned char *options)
 {
 	int j;
 
 	j = 1;
 	while (av[++j])
 	{
-		if ()
+		if (!(ft_strncmp("recursive", &av[j], ft_strlen(&av[j]))))
+			*options = *options | LS_REC;
+		else if (!(ft_strncmp("all", &av[j], ft_strlen(&av[j]))))
+			*options = *options | LS_A;
+		else if (!(ft_strncmp("reverse", &av[j], ft_strlen(&av[j]))))
+			*options = *options | LS_R;
 		else
 			no_option(av[j]);
 	}
-	return (options);
+	return (*options);
 }
 
-int		*ft_normal_option(char *av, int *options)
+unsigned char		ft_normal_option(char *av, unsigned char *options)
 {
 	int j;
 
 	j = 0;
+	ft_putstr("normal option\n");
 	while (av[++j])
 	{	
 		if (av[j] == 'l')
@@ -66,7 +72,7 @@ int		*ft_normal_option(char *av, int *options)
 		else
 			no_option(av[j]);
 	}
-	return (options);
+	return (*options);
 }
 
 unsigned char	set_options(char **av)
@@ -82,10 +88,10 @@ unsigned char	set_options(char **av)
 		j = 0;
 		while (av[i][++j])
 		{	
-			if (av[i][j] == '-')
-				ft_hard_option(av[i], options);
+			if (av[i][j] == '-' && (av[i][j + 1] == '-'))
+				return (ft_hard_option(&av[i][j], &options));
 			else
-				ft_normal_option(av[i], options);
+				return (ft_normal_option(&av[i][j], &options));
 		}
 	}
 	return (options);

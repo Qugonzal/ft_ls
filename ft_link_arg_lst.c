@@ -6,11 +6,12 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 04:24:43 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/12/11 16:50:10 by qugonzal         ###   ########.fr       */
+/*   Updated: 2017/12/13 14:00:58 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
 
 void		ft_link_arg_lst(t_arg *arg_lst)
 {
