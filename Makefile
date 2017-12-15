@@ -6,7 +6,7 @@
 #    By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/15 00:14:59 by qugonzal          #+#    #+#              #
-#    Updated: 2017/12/13 14:14:35 by qugonzal         ###   ########.fr        #
+#    Updated: 2017/12/15 05:40:30 by qugonzal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ CFLAGS = -Wall -Wextra -Werror
 #     \/\/\/Files-----
 
 SRC = main.c \
-	  ft_link_arg_lst.c error_options.c ft_ascii_arg.c \
+	  ft_link_arg_lst.c options.c ft_ascii_arg.c \
+	  ft_error.c \
 
 OBJ = $(SRC:.c=.o)
 

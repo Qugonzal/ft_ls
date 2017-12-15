@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 15:15:24 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/12/11 17:55:30 by qugonzal         ###   ########.fr       */
+/*   Updated: 2017/12/15 05:29:21 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,15 @@ t_arg		*ft_parse(t_arg *small, t_arg *big)
 	t_arg	*index;
 
 	tmp = small;
-/*	if (tmp->next)
-		index = tmp->next;*/
 	index = small;
-/*	else
-		return (small);*/
-	if ((index->ID) == (big->ID))
-		return (small);
 	while (index->ID != big->ID)
 	{
 		if ((ft_strcmp(index->name, tmp->name)) > 0)
 			tmp = index;
 		index = index->next;
 	}
+	if (ft_strcmp(tmp->name, small->name) == 0)
+		return (small);
 	ft_unlink_arg(tmp);
 	ft_insert_arg(tmp, big, 'G');
 	return (ft_parse(small, tmp));
