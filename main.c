@@ -1,4 +1,4 @@
-/** ************************************************************************** */
+/**************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
@@ -6,17 +6,15 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 03:01:56 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/12/13 13:37:27 by qugonzal         ###   ########.fr       */
+/*   Updated: 2017/12/19 05:08:49 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		ft_print(t_arg *arg_tmp)
-{
-	t_arg *tmp;
+void		ft_print(t_file *file_tmp)
 
-	tmp = arg_tmp;
+	tmp = file_tmp;
 	while (tmp->next)
 	{
 		ft_putstr(tmp->name);
@@ -27,11 +25,11 @@ void		ft_print(t_arg *arg_tmp)
 	ft_putstr("\n");
 }
 
-void		ft_print_n_free(t_arg *arg_tmp)
+void		ft_print_n_free(t_file *file_tmp)
 {
-	t_arg *tmp;
+	t_file *tmp;
 
-	tmp = arg_tmp;
+	tmp = file_tmp;
 	while (tmp->next)
 	{
 		ft_putstr(tmp->name);
@@ -49,10 +47,10 @@ int		main(int ac, char **av)
 	unsigned char	options;
 	int				i;
 	int				identifier;
-	t_arg			*arg_lst;
+	t_file			*file_lst;
 
 	i = 1;
-	arg_lst = NULL;
+	file_lst = NULL;
 	options = set_options(av);
 	identifier = 0;
 	while (av[i] && av[i][0] == '-')
@@ -61,19 +59,19 @@ int		main(int ac, char **av)
 	{
 		while (av[i])
 		{
-			arg_lst = new_arg(av[i], arg_lst);
-			identifier = identifier + 1;
-			arg_lst->ID = identifier;
+			file_lst = new_file(av[i], file_lst);
+			if (ft_check_open(file_lst))
+			{
+				identifier = identifier + 1;
+				file_lst->id = identifier;
+			}
 			i++;
 		}
-		ft_link_arg_lst(arg_lst);
-		arg_lst = ft_ascii_a(arg_lst);
-		ft_print_n_free(arg_lst);
-//		ft_ls(&(*arg_lst_lst), options);
+		ft_link_file_lst(file_lst);
+		ft_print_n_free(ft_ascii(file_lst));
 	}
 	else
-//		ft_ls(".", options);
-		ft_putstr("no arg_lst\n");
+		ft_putstr("no arg\n");
 	ft_error();
 	return (0);
 }
