@@ -43,31 +43,34 @@ void	ft_ls(DIR *dir, unsigned char options)
 	struct dirent		*dirstream;
 	t_file				*file;
 	t_file				*start_tmp;
+// t_file.   *dir
 	int					id;
 
 	file = NULL;
+// dir = NULL;
 	id = 0;
 	while ((dirstream = readdir(dir)))
 	{
 		file = new_file(file, dirstream->d_name);
 		file->mode = dirstream->d_type;
+//   if (file->mode = 4)
+//      dir = new_file(dir, dirstream->name);
+
 		file->id = id;
 		id++;
 	}
 	ft_link_list(file);
 	file = ft_ascii(file);
 	start_tmp = file;
+	ft_print_n_free(start_tmp);
 	if (options & LS_REC)
 	{
-		while (file)
+		while (dir)
 		{
-			if (file->mode == 4)
-			{
 				if (ft_check_open(file))
 					ft_ls(file->dirstream, options);
 			}
 			file = file->next;
 		}
 	}
-	ft_print_n_free(start_tmp);
 }
