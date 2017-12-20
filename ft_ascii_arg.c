@@ -6,58 +6,58 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 15:15:24 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/12/15 05:29:21 by qugonzal         ###   ########.fr       */
+/*   Updated: 2017/12/20 16:22:45 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_arg		*ft_place_first(t_arg *arg)
+t_file		*ft_place_first(t_file *elem)
 {
-	t_arg	*index;
+	t_file	*index;
 
-	index = arg;
+	index = elem;
 	while (index->prev)
 	{
 		index = index->prev;
-		if ((ft_strcmp(index->name, arg->name)) < 0)
-			arg = index;
+		if ((ft_strcmp(index->name, elem->name)) < 0)
+			elem = index;
 	}
-	if (arg->prev)
+	if (elem->prev)
 	{
-		ft_unlink_arg(arg);
-		ft_insert_arg(arg, index, 'G');
+		ft_unlink(elem);
+		ft_insert(elem, index, 'G');
 	}
-	return (arg);
+	return (elem);
 }
 
-t_arg		*ft_place_last(t_arg *arg)
+t_file		*ft_place_last(t_file *elem)
 {
-	t_arg	*index;
+	t_file	*index;
 
-	index = arg;
+	index = elem;
 	while (index->next)
 	{
 		index = index->next;
-		if ((ft_strcmp(index->name, arg->name)) > 0)
-			arg = index;
+		if ((ft_strcmp(index->name, elem->name)) > 0)
+			elem = index;
 	}
-	if (arg->next)
+	if (elem->next)
 	{
-		ft_unlink_arg(arg);
-		ft_insert_arg(arg, index, 'D');
+		ft_unlink(elem);
+		ft_insert(elem, index, 'D');
 	}
-	return (arg);
+	return (elem);
 }
 
-t_arg		*ft_parse(t_arg *small, t_arg *big)
+t_file		*ft_parse(t_file *small, t_file *big)
 {
-	t_arg	*tmp;
-	t_arg	*index;
+	t_file	*tmp;
+	t_file	*index;
 
 	tmp = small;
 	index = small;
-	while (index->ID != big->ID)
+	while (index->id != big->id)
 	{
 		if ((ft_strcmp(index->name, tmp->name)) > 0)
 			tmp = index;
@@ -65,16 +65,16 @@ t_arg		*ft_parse(t_arg *small, t_arg *big)
 	}
 	if (ft_strcmp(tmp->name, small->name) == 0)
 		return (small);
-	ft_unlink_arg(tmp);
-	ft_insert_arg(tmp, big, 'G');
+	ft_unlink(tmp);
+	ft_insert(tmp, big, 'G');
 	return (ft_parse(small, tmp));
 }
 
-t_arg		*ft_ascii_a(t_arg *arg_lst)
+t_file		*ft_ascii(t_file *first)
 {
-	t_arg	*big;
+	t_file	*last;
 
-	big = ft_place_last(arg_lst);
-	arg_lst = ft_place_first(big);
-	return (ft_parse(arg_lst, big));
+	last = ft_place_last(first);
+	first = ft_place_first(last);
+	return (ft_parse(first, last));
 }

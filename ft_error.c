@@ -6,13 +6,13 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 03:48:58 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/12/18 18:55:33 by qugonzal         ###   ########.fr       */
+/*   Updated: 2017/12/15 05:54:22 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void			ft_error(void)
+void		ft_error(void)
 {
 	if (errno)
 	{
@@ -24,7 +24,7 @@ void			ft_error(void)
 	}
 }
 
-int			ft_check_open(t_file *dir)
+char		ft_check_open(t_file *dir)
 {
 	if (!(dir->dirstream = opendir(dir->name)))
 	{
@@ -32,9 +32,9 @@ int			ft_check_open(t_file *dir)
 		ft_putnbr(errno);
 		ft_putstr("\n");
 		perror(dir->name);
-		ft_unlink_dir(dir);
-		free(&dir);
-		return (1);
+		ft_unlink(dir);
+		free(dir);
+		return (0);
 	}
-	return (0);
+	return (1);
 }

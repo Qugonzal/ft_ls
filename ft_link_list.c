@@ -6,12 +6,10 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 04:24:43 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/12/19 04:33:23 by qugonzal         ###   ########.fr       */
+/*   Updated: 2017/12/20 15:49:16 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "ft_ls.h"
-
+include "ft_ls.h"
 
 void		ft_link_list(t_file *file_lst)
 {
