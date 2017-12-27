@@ -1,41 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   ft_inverse.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/15 03:48:58 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/12/27 20:23:24 by qugonzal         ###   ########.fr       */
+/*   Created: 2017/12/27 19:26:32 by qugonzal          #+#    #+#             */
+/*   Updated: 2017/12/27 20:02:37 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		ft_error(void)
+void	ft_inverse_list(t_file *file)
 {
-	if (errno)
-	{
-		ft_putstr("Erreur, errno == ");
-		ft_putnbr(errno);
-		ft_putstr(":\n");
-		ft_putstr(strerror(errno));
-		ft_putstr("\n");
-	}
-}
+		t_file *tmp;
 
-char		ft_check_open(t_file *dir)
-{
-	if (!(dir->dirstream = opendir(dir->name)))
-	{
-		ft_putstr("errno == ");
-		ft_putnbr(errno);
-		ft_putstr("\n");
-		perror(dir->name);
-		ft_unlink(dir);
-		free(dir);
-		dir = NULL;
-		return (0);
-	}
-	return (1);
+		tmp = file;
+		while (file)
+		{
+			file->prev = file->next;
+			file = file->next;
+		}
+		file->next = NULL;
+		while (file->prev)
+		{
+			tmp = file;
+			file = file->prev;
+			file->next = tmp;
+		}
 }

@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 03:01:56 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/12/20 17:07:29 by qugonzal         ###   ########.fr       */
+/*   Updated: 2017/12/27 20:06:21 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void		ft_print_options(unsigned char options)
 {
-	ft_putstr("-- OPTIONS --\n");
+	if (options)
+		ft_putstr("-- OPTIONS --\n");
 	if (options & LS_L)
 		ft_putstr("-l\n");
 	if (options & LS_REC)
@@ -25,6 +26,8 @@ void		ft_print_options(unsigned char options)
 		ft_putstr("-r\n");
 	if (options & LS_T)
 		ft_putstr("-t\n");
+	else 
+		ft_putstr("-- NO OPTIONS --\n");
 }
 
 void		ft_print(t_file *arg_tmp)

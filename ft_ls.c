@@ -6,9 +6,10 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 00:06:00 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/12/20 17:22:50 by qugonzal         ###   ########.fr       */
+/*   Updated: 2017/12/27 20:44:20 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "ft_ls.h"
 
 t_file		*new_file(t_file *nxt, char *name)
@@ -28,14 +29,41 @@ void		ft_link_list(t_file *file)
 	t_file	*start_tmp;
 
 	file->prev = NULL;
-	start_tmp = file;
-	while (file->next)
+	if (file)
 	{
-		previous = file;
-		file = file->next;
-		file->prev = previous;
+		start_tmp = file;
+		while (file->next)
+		{
+			previous = file;
+			file = file->next;
+			file->prev = previous;
+		}
+		file = start_tmp;
 	}
-	file = start_tmp;
+	else
+	{
+		ft_putstr("FAIL");
+		exit(-1);
+	}
+}
+
+t_file		*ft_print_chk_dir(t_file *file)
+{
+	t_file *dir;
+
+	dir = NULL;
+	while (file)
+	{
+		ft_putstr(file->name);
+		if (dir->mode == 4)
+		{
+			dir = new_file(file, file->name);
+			ft_check_open(dir);
+		}
+	}
+	ft_link_list(dir);
+	ft_inverse_list(dir);
+	return (dir);
 }
 
 void	ft_ls(DIR *dir, unsigned char options)
@@ -49,6 +77,7 @@ void	ft_ls(DIR *dir, unsigned char options)
 	file = NULL;
 // dir = NULL;
 	id = 0;
+	ft_print_options(options);
 	while ((dirstream = readdir(dir)))
 	{
 		file = new_file(file, dirstream->d_name);
@@ -62,15 +91,10 @@ void	ft_ls(DIR *dir, unsigned char options)
 	ft_link_list(file);
 	file = ft_ascii(file);
 	start_tmp = file;
-	ft_print_n_free(start_tmp);
-	if (options & LS_REC)
+	ft_print_chk_dir(file);
+/*	if ((options & LS_REC))
 	{
-		while (dir)
-		{
-				if (ft_check_open(file))
-					ft_ls(file->dirstream, options);
-			}
-			file = file->next;
-		}
-	}
+		while ()
+	}*/
+	ft_print_n_free(start_tmp);
 }
