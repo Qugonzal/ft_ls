@@ -62,7 +62,7 @@ t_file		*ft_print_chk_dir(t_file *file)
 		}
 	}
 	ft_link_list(dir);
-	ft_inverse_list(dir);
+	dir = ft_inverse_list(dir);
 	return (dir);
 }
 

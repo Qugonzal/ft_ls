@@ -43,6 +43,7 @@ typedef struct		s_file
 	time_t			mtime;
 }					t_file;
 
+t_file	*ft_inverse_list(t_file *file);
 t_file				*new_file(t_file *nxt, char *name);
 void				ft_unlink(t_file *elem);
 void				ft_link_list(t_file *file);

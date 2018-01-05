@@ -12,21 +12,24 @@
 
 #include "ft_ls.h"
 
-void	ft_inverse_list(t_file *file)
+t_file	*ft_inverse_list(t_file *file)
 {
-		t_file *tmp;
+		t_file	*start;
+		t_file	*tmp;
 
-		tmp = file;
-		while (file)
+		start = file;
+		file = file->prev;
+		(file->next)->next = (file->next)->prev;
+		(file->next)->prev = 0;
+		tmp = file->prev;
+		while (tmp)
 		{
 			file->prev = file->next;
-			file = file->next;
-		}
-		file->next = NULL;
-		while (file->prev)
-		{
-			tmp = file;
-			file = file->prev;
 			file->next = tmp;
+			file = tmp;
+			tmp = tmp->prev;
 		}
+		file->prev = file->next;
+		file->next = 0;
+		return (start);
 }
