@@ -1,16 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   options.c                                          :+:      :+:    :+:   */
+/*   error_options.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 05:08:10 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/12/15 04:56:05 by qugonzal         ###   ########.fr       */
+/*   Updated: 2017/12/13 13:28:16 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
+void			ft_error(void)
+{
+	if (errno)
+	{
+		ft_putstr("Erreur, errno == ");
+		ft_putnbr(errno);
+		ft_putstr(":\n");
+		ft_putstr(strerror(errno));
+		ft_putstr("\n");
+	}
+}
 
 void			no_option(char chr)
 {
@@ -73,11 +85,14 @@ unsigned char	set_options(char **av)
 	options = 0;
 	while (av[++i] && av[i][0] == '-')
 	{
-			j = 0;
-			if ((av[i][j] == '-') && (av[i][j + 1] == '-'))
-				options = ft_hard_option(&av[i][j], &options);
+		j = 0;
+		while (av[i][++j])
+		{	
+			if (av[i][j] == '-' && (av[i][j + 1] == '-'))
+				return (ft_hard_option(&av[i][j], &options));
 			else
-				options = ft_normal_option(&av[i][j], &options);
+				return (ft_normal_option(&av[i][j], &options));
+		}
 	}
 	return (options);
 }

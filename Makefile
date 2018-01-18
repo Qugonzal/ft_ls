@@ -26,14 +26,14 @@ CFLAGS = -Wall -Wextra -Werror
 #     \/\/\/Files-----
 
 SRC = main.c $(addprefix ft_, $(addsuffix .c, \
-	link_arg_lst \
+	link_arg_lst inverse\
 	set_options error \
 	ascii_arg \
 	ls))
 
 OBJ = $(SRC:.c=.o)
 
-INC = -I ./libft/ -L ./libft -lft
+INC = -Llibft ./libft/libft.a
 
 #     \/\/\/Rules-----
 
@@ -43,7 +43,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make all -C libft
-	$(CC) $(CFLAGS) $(INC) $(OBJ) -o $@ 
+	$(CC) $(CFLAGS) $(OBJ) $(INC) -o $@ 
 	@echo "$(OK_COLOR)	--- Compiled ! ---	$(NO_COLOR)"
 
 $(OBJ): $(SRC)

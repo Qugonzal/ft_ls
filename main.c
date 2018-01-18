@@ -88,7 +88,7 @@ int		main(int ac, char **av)
 			i++;
 		}
 		ft_link_list(arg_lst);
-		arg_lst = ft_ascii(arg_lst);
+		ft_ascii(arg_lst);
 		tmp_start = arg_lst;
 		while (arg_lst)
 		{

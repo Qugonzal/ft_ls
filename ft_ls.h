@@ -51,7 +51,7 @@ void				ft_insert(t_file *elem, t_file *dest, char option);
 t_file				*ft_place_first(t_file *elem);
 t_file				*ft_place_last(t_file *elem);
 void				ft_ls(DIR *dir, unsigned char options);
-t_file				*ft_ascii(t_file *first);
+void	ft_ascii(t_file *first);
 char				ft_check_open(t_file *dir);
 t_file				*ft_parse(t_file *small, t_file *big);
 void				ft_error(void);

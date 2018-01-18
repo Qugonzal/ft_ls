@@ -52,7 +52,6 @@ t_file		*ft_place_last(t_file *elem)
 
 t_file		*ft_parse(t_file *small, t_file *big)
 {
-	ft_putstr("**\n");
 	t_file	*tmp;
 	t_file	*index;
 
@@ -71,12 +70,11 @@ t_file		*ft_parse(t_file *small, t_file *big)
 	return (ft_parse(small, tmp));
 }
 
-t_file		*ft_ascii(t_file *first)
+void	ft_ascii(t_file *first)
 {
 	t_file	*last;
 
 	last = ft_place_last(first);
 	first = ft_place_first(last);
-	ft_print(first);
-	return (ft_parse(first, last));
+	first = ft_parse(first, last);
 }
