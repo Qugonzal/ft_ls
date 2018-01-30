@@ -14,22 +14,20 @@
 
 t_file	*ft_inverse_list(t_file *file)
 {
-		t_file	*start;
-		t_file	*tmp;
-
-		start = file;
-		file = file->prev;
-		(file->next)->next = (file->next)->prev;
-		(file->next)->prev = 0;
-		tmp = file->prev;
-		while (tmp)
-		{
-			file->prev = file->next;
-			file->next = tmp;
-			file = tmp;
-			tmp = tmp->prev;
-		}
-		file->prev = file->next;
-		file->next = 0;
-		return (start);
+	if (file->next)
+		file = file->next;
+	while (file->next)
+	{
+		(file->prev)->next = (file->prev)->prev;
+		(file->prev)->prev = file;
+		file = file->next;
+	}
+	if (file->prev)
+	{
+		(file->prev)->next = (file->prev)->prev;
+		(file->prev)->prev = file;
+		file->next = file->prev;
+		file->prev = NULL;
+	}
+	return (file);
 }

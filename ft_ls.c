@@ -52,16 +52,22 @@ t_file		*ft_print_chk_dir(t_file *file)
 	t_file *dir;
 
 	dir = NULL;
-	while (file)
+	while (file->next)
 	{
 		ft_putstr(file->name);
 		if (file->mode == 4)
 		{
-			dir = new_file(file, file->name);
+			dir = new_file(dir, file->name);
 		}
 		file = file->next;
 		free(file->prev);
 	}
+	ft_putstr(file->name);
+	if (file->mode == 4)
+	{
+		dir = new_file(dir, file->name);
+	}
+	free(file);
 	if (dir)
 	{
 		ft_link_list(dir);
@@ -86,7 +92,7 @@ void	ft_ls(DIR *dir, unsigned char options)
 		id++;
 	}
 	ft_link_list(file);
-	ft_ascii(file);
+	file = ft_ascii(file);
 	file = ft_print_chk_dir(file);
 	if ((options & LS_REC) && file)
 	{

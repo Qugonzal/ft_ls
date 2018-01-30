@@ -44,7 +44,6 @@ unsigned char		ft_normal_option(char *av, unsigned char *options)
 	int j;
 
 	j = 0;
-	ft_putstr("normal option\n");
 	while (av[++j])
 	{	
 		if (av[j] == 'l')

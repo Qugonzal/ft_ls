@@ -70,11 +70,11 @@ t_file		*ft_parse(t_file *small, t_file *big)
 	return (ft_parse(small, tmp));
 }
 
-void	ft_ascii(t_file *first)
+t_file		*ft_ascii(t_file *first)
 {
 	t_file	*last;
 
 	last = ft_place_last(first);
 	first = ft_place_first(last);
-	first = ft_parse(first, last);
+	return(ft_parse(first, last));
 }

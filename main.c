@@ -14,19 +14,21 @@
 
 void		ft_print_options(unsigned char options)
 {
-	if (options)
-		ft_putstr("-- OPTIONS --\n");
-	if (options & LS_L)
-		ft_putstr("-l\n");
-	if (options & LS_REC)
-		ft_putstr("-R\n");
-	if (options & LS_A)
-		ft_putstr("-a\n");
-	if (options & LS_R)
-		ft_putstr("-r\n");
-	if (options & LS_T)
-		ft_putstr("-t\n");
-	else 
+	if (options) 
+	{
+		ft_putstr("-- OPTIONS --> ");
+		if (options & LS_L)
+			ft_putstr("-l\n");
+		if (options & LS_REC)
+			ft_putstr("-R\n");
+		if (options & LS_A)
+			ft_putstr("-a\n");
+		if (options & LS_R)
+			ft_putstr("-r\n");
+		if (options & LS_T)
+			ft_putstr("-t\n");
+	}
+	else
 		ft_putstr("-- NO OPTIONS --\n");
 }
 
@@ -88,7 +90,7 @@ int		main(int ac, char **av)
 			i++;
 		}
 		ft_link_list(arg_lst);
-		ft_ascii(arg_lst);
+		arg_lst = ft_ascii(arg_lst);
 		tmp_start = arg_lst;
 		while (arg_lst)
 		{
@@ -101,7 +103,6 @@ int		main(int ac, char **av)
 		}
 		ft_putstr("- ARGUMENTS -\n");
 		ft_print_n_free(tmp_start);
-//		ft_ls(&(*arg_lst_lst), options);
 	}
 	else
 	{
