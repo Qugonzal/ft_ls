@@ -55,6 +55,7 @@ t_file		*ft_print_chk_dir(t_file *file)
 	while (file->next)
 	{
 		ft_putstr(file->name);
+		ft_putstr("\n");
 		if (file->mode == 4)
 		{
 			dir = new_file(dir, file->name);
@@ -76,7 +77,17 @@ t_file		*ft_print_chk_dir(t_file *file)
 	return (dir);
 }
 
-void	ft_ls(DIR *dir, unsigned char options)
+char	*ft_path(char **path, char *name)
+{
+	char *new_path;
+
+	tmp = path;
+	new_path = ft_strjoin(*path, name);
+	free(*path);
+	return (new_path);
+}
+
+void	ft_ls(DIR *dir, unsigned char options, char *path)
 {
 	struct dirent		*dirstream;
 	t_file				*file;
@@ -86,24 +97,37 @@ void	ft_ls(DIR *dir, unsigned char options)
 	id = 0;
 	while ((dirstream = readdir(dir)))
 	{
-		file = new_file(file, dirstream->d_name);
-		file->mode = dirstream->d_type;
-		file->id = id;
-		id++;
-	}
-	ft_link_list(file);
-	file = ft_ascii(file);
-	file = ft_print_chk_dir(file);
-	if ((options & LS_REC) && file)
-	{
-		while (file)
+		if (dirstream->d_name[0] != '.')
 		{
-			ft_putstr(file->name);
-			ft_putstr(":\n");
-			if (ft_check_open(file))
-				ft_ls(file->dirstream, options);
-			file = file->next;
-			free(file->prev);
+			file = new_file(file, dirstream->d_name);
+			file->mode = dirstream->d_type;
+			file->id = id;
+			id++;
+		}
+	}
+	if (file)
+	{
+		ft_link_list(file);
+		file = ft_ascii(file);
+		file = ft_print_chk_dir(file);
+		if ((options & LS_REC) && file)
+		{
+			while (file)
+			{
+				path = ft_path(&path, file->name);
+				ft_putstr(path);
+				ft_putstr(":\n");
+				if (ft_check_open(file, path))
+					ft_ls(file->dirstream, options, path);
+				closedir(file->dirstream);
+				if (file->next)
+				{
+					file = file->next;
+					free(file->prev);
+				}
+				else
+					free(file);
+			}
 		}
 	}
 }

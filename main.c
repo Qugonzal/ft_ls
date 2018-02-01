@@ -85,29 +85,39 @@ int		main(int ac, char **av)
 		{
 			arg_lst = new_file(arg_lst, av[i]);
 			arg_lst->id = identifier;
-			if (ft_check_open(arg_lst))
+			if (ft_check_open(arg_lst, NULL)
 				identifier++;
+			else
+			{
+				ft_putstr(av[i]);
+				ft_putstr("\n");
+				tmp_start = arg_lst->next;
+				free(arg_lst);
+				arg_lst = tmp_start;
+			}
 			i++;
 		}
-		ft_link_list(arg_lst);
-		arg_lst = ft_ascii(arg_lst);
-		tmp_start = arg_lst;
-		while (arg_lst)
+		if (arg_lst)
 		{
-			ft_putstr(" ---- ");
-			ft_putstr(arg_lst->name);
-			ft_putstr(" ---- :\n");
-			ft_ls(arg_lst->dirstream, options);
-			closedir(arg_lst->dirstream);
-			arg_lst = arg_lst->next;
+			ft_link_list(arg_lst);
+			arg_lst = ft_ascii(arg_lst);
+			tmp_start = arg_lst;
+			while (arg_lst)
+			{
+				ft_putstr(" ---- ");
+				ft_putstr(arg_lst->name);
+				ft_putstr(" ---- :\n");
+				ft_ls(arg_lst->dirstream, options, "./");
+				closedir(arg_lst->dirstream);
+				arg_lst = arg_lst->next;
+			}
+			ft_putstr("- ARGUMENTS -\n");
+			ft_print_n_free(tmp_start);
 		}
-		ft_putstr("- ARGUMENTS -\n");
-		ft_print_n_free(tmp_start);
 	}
 	else
 	{
-		ft_ls(opendir("."), options);
+		ft_ls(opendir("."), options, "./");
 	}
-	ft_error();
 	return (0);
 }
