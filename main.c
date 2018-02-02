@@ -71,6 +71,7 @@ int		main(int ac, char **av)
 	int				identifier;
 	t_file			*arg_lst;
 	t_file			*tmp_start;
+	char		*path;
 
 	i = 1;
 	arg_lst = NULL;
@@ -85,7 +86,7 @@ int		main(int ac, char **av)
 		{
 			arg_lst = new_file(arg_lst, av[i]);
 			arg_lst->id = identifier;
-			if (ft_check_open(arg_lst, NULL)
+			if (ft_check_open(arg_lst, NULL))
 				identifier++;
 			else
 			{
@@ -104,20 +105,21 @@ int		main(int ac, char **av)
 			tmp_start = arg_lst;
 			while (arg_lst)
 			{
+				if (!(path = (char *)ft_memalloc(ft_strlen(arg_lst->name + 1))))
+					ft_error();
+				ft_strcpy(path, arg_lst->name);
 				ft_putstr(" ---- ");
 				ft_putstr(arg_lst->name);
 				ft_putstr(" ---- :\n");
-				ft_ls(arg_lst->dirstream, options, "./");
+				ft_ls(arg_lst->dirstream, options, path);
 				closedir(arg_lst->dirstream);
 				arg_lst = arg_lst->next;
 			}
-			ft_putstr("- ARGUMENTS -\n");
-			ft_print_n_free(tmp_start);
 		}
 	}
 	else
 	{
-		ft_ls(opendir("."), options, "./");
+		ft_ls(opendir("."), options, ".");
 	}
 	return (0);
 }
