@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 00:06:00 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/12/27 20:44:20 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/03/13 16:36:24 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*ft_path(char *path, char *name)
 	char *new_path;
 	int	s1;
 	int	s2;
-	
+
 	s1 = ft_strlen(path);
 	s2 = ft_strlen(name);
 	if (!(new_path = (char *)ft_memalloc(s1 + s2 + 2)))
@@ -110,12 +110,27 @@ void	ft_ls(DIR *dir, unsigned char options, char *path)
 	id = 0;
 	while ((dirstream = readdir(dir)))
 	{
-		if (dirstream->d_name[0] != '.')
+		if (options & LS_A)
 		{
-			file = new_file(file, dirstream->d_name);
-			file->mode = dirstream->d_type;
-			file->id = id;
-			id++;
+			if ((dirstream->d_name[0] != '.') && (dirstream->d_name[1] != '\0') 
+				&& (dirstream->d_name[1] != '.'))
+			{
+				file = new_file(file, dirstream->d_name);
+				file->mode = dirstream->d_type;
+				file->id = id;
+				id++;
+			}
+		}
+		else
+		{
+			if (dirstream->d_name[0] != '.')
+			{
+				file = new_file(file, dirstream->d_name);
+				file->mode = dirstream->d_type;
+				file->id = id;
+				id++;
+			}
+		
 		}
 	}
 	if (file)
