@@ -25,7 +25,7 @@ char		*ft_conv_right(unsigned long n)
 	return (right);
 }
 
-static void		ft_putnbr_ul_octal(unsigned long n)
+/*static void		ft_putnbr_ul_octal(unsigned long n)
 {
 	if (n >= 8)
 	{
@@ -34,7 +34,7 @@ static void		ft_putnbr_ul_octal(unsigned long n)
 	}
 	else
 		ft_putchar(n + '0');
-}
+}*/
 
 static void		ft_putnbr_ll(long long n)
 {
@@ -69,9 +69,6 @@ t_stat		*ft_fillstat(struct stat *sb)
 	if ((usr = getpwuid(sb->st_uid)))
 	{
 		file->user = usr->pw_name;
-		ft_putstr(usr->pw_dir);
-		ft_putnbr_ll(usr->pw_gid);
-		ft_putstr(usr->pw_gecos);
 	}
 	else
 		file->user = "error";
@@ -94,6 +91,18 @@ t_stat		*ft_fillstat(struct stat *sb)
 	else
 		file->blocks = 0;
 	return (file);
+}
+
+void		ft_printspace_str(char *file_name, char *max_name)
+{
+	int nb;
+
+	nb = ft_strlen(max_name) - ft_strlen(file_name);
+	while (nb)
+	{
+		ft_putchar(' ');
+		nb--;
+	}
 }
 
 void		ft_printspace(long long nb, long long max)
@@ -151,27 +160,62 @@ void		ft_cut_time(char *time)
 	}
 }
 
+void		ft_put_right(mode_t mode)
+{
+	mode_t check;
+
+	check = (mode & S_IFMT);
+	if (check == S_IFIFO)
+		ft_putchar('p');
+	else if (check == S_IFCHR)
+		ft_putchar('c');
+	else if (check == S_IFDIR)
+		ft_putchar('d');
+	else if (check == S_IFBLK)
+		ft_putchar('b');
+	else if (check == S_IFREG)
+		ft_putchar('-');
+	else if (check == S_IFSOCK)
+		ft_putchar('s');
+	else if (check == S_IFLNK)
+		ft_putchar('l');
+	else
+		ft_putchar('?');
+	check = (mode & ~S_IFMT);
+	(check & S_IRUSR) ? ft_putstr("r") : ft_putstr("-");
+	(check & S_IWUSR) ? ft_putstr("w") : ft_putstr("-");    
+	(check & S_IXUSR) ? ft_putstr("x") : ft_putstr("-");
+	(check & S_IRGRP) ? ft_putstr("r") : ft_putstr("-");
+	(check & S_IWGRP) ? ft_putstr("w") : ft_putstr("-");
+	(check & S_IXGRP) ? ft_putstr("x") : ft_putstr("-");
+	(check & S_IROTH) ? ft_putstr("r") : ft_putstr("-");
+	(check & S_IWOTH) ? ft_putstr("w") : ft_putstr("-");
+	(check & S_IXOTH) ? ft_putstr("x") : ft_putstr("-");
+}
+
 void		ft_print_ls(t_file *file, t_stat *max)
 {
-	ft_putnbr_ll((file->attr)->nlink);
+	ft_put_right((file->attr)->mode);
+	ft_putchar(' ');
 	ft_printspace((file->attr)->nlink, max->nlink);
+	ft_putnbr_ll((file->attr)->nlink);
 	ft_putchar(' ');
 	if ((file->attr)->user)
 		ft_putstr((file->attr)->user);
 	else
 		ft_putstr("none");
+	ft_printspace_str((file->attr)->user, max->user);
 	ft_putchar(' ');
 	if ((file->attr)->group)
 		ft_putstr((file->attr)->group);
 	else
 		ft_putstr("none");
+	ft_printspace_str((file->attr)->group, max->group);
 	ft_putchar(' ');
-	ft_putnbr_ll((file->attr)->size);
 	ft_printspace((file->attr)->size, max->size);
+	ft_putnbr_ll((file->attr)->size);
 	ft_putchar(' ');
 	ft_cut_time(ctime(&((file->attr)->mtime)));
-	ft_putchar(' ');
-	ft_putnbr_ul_octal((file->attr)->mode);
 	ft_putchar(' ');
 	ft_putstr(file->name);
 	ft_putchar('\n');
@@ -188,7 +232,7 @@ void		ft_fillcheck_stat(t_file *file, t_stat *max, char *path)
 	while (check)
 	{
 		tmp_path = ft_path(path, check->name);
-		if (stat(tmp_path, &sb) == -1)
+		if (lstat(tmp_path, &sb) == -1)
 			perror("stat");
 		else
 			check->attr = ft_fillstat(&sb);
