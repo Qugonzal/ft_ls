@@ -29,7 +29,7 @@ SRC = main.c $(addprefix ft_, $(addsuffix .c, \
 	link_arg_lst inverse\
 	set_options error \
 	ascii_arg \
-	ls))
+	ls ls_l))
 
 OBJ = $(SRC:.c=.o)
 

@@ -106,7 +106,10 @@ int		main(int ac, char **av)
 			while (arg_lst)
 			{
 				if (!(path = (char *)ft_memalloc(ft_strlen(arg_lst->name + 1))))
+				{
 					ft_error();
+					exit(-1);
+				}
 				ft_strcpy(path, arg_lst->name);
 				ft_putstr(" ---- ");
 				ft_putstr(arg_lst->name);

@@ -27,7 +27,7 @@ int		main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	if (stat(argv[1], &sb) == -1) {
+	if (lstat(argv[1], &sb) == -1) {
 
 		perror("stat");
 		exit(EXIT_SUCCESS);
@@ -62,7 +62,8 @@ int		main(int argc, char *argv[])
 			(long long) sb.st_size);
 	printf("Blocs alloués :                    %lld\n",
 			(long long) sb.st_blocks);
-
+	ft_putlongnbr(sb.st_mtime);
+	ft_putstr("\n");
 	printf("Dernier changement d’état :        %s", ctime(&sb.st_ctime));
 	printf("Dernier accès au fichier :         %s", ctime(&sb.st_atime));
 	printf("Dernière modification du fichier:  %s", ctime(&sb.st_mtime));

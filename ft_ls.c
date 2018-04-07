@@ -17,7 +17,10 @@ t_file		*new_file(t_file *nxt, char *name)
 	t_file		*file;
 
 	if (!(file = (t_file *)malloc(sizeof(t_file))))
+	{
+		perror("malloc:");
 		exit(-1);
+	}
 	file->next = nxt;
 	ft_strcpy(file->name, name);
 	return (file);
@@ -47,29 +50,29 @@ void		ft_link_list(t_file *file)
 	}
 }
 
-t_file		*ft_print_chk_dir(t_file *file)
+t_file		*ft_print_chk_dir(t_file *file, char *path, char options)
 {
 	t_file *dir;
 
 	dir = NULL;
-	while (file->next)
+	if (options & LS_L)
+		dir = ft_ls_l(file, path, options);
+	else
 	{
-		ft_putstr(file->name);
-		ft_putstr("  ");
-		if (file->mode == 4)
+		while (file)
 		{
-			dir = new_file(dir, file->name);
+			if (file->prev)
+				free(file->prev);
+			ft_putstr(file->name);
+			ft_putstr("  ");
+			if (options & LS_REC)
+				if (file->mode == 4)
+					dir = new_file(dir, file->name);
+			file = file->next;
 		}
-		file = file->next;
-		free(file->prev);
+		ft_putstr("\n");
+		free(file);
 	}
-	ft_putstr(file->name);
-	ft_putstr("\n");
-	if (file->mode == 4)
-	{
-		dir = new_file(dir, file->name);
-	}
-	free(file);
 	if (dir)
 	{
 		ft_link_list(dir);
@@ -99,30 +102,61 @@ char	*ft_path(char *path, char *name)
 	return (new_path);
 }
 
-void	ft_ls(DIR *dir, unsigned char options, char *path)
+t_file	*ft_ls_skip_current(t_file *file, char options)
 {
-	struct dirent		*dirstream;
-	t_file				*file;
-	int					id;
-	char *new_path;
+	t_file	*first;
 
-	file = NULL;
-	id = 0;
-	while ((dirstream = readdir(dir)))
+	first = file;
+	if ((options & LS_R) && ((file->next)->next))
 	{
-		if (options & LS_A)
+		while (file->next)
+			file = file->next;
+		file = (file->prev)->prev;
+		free((file->next)->next);
+		free(file->next);
+		file->next = NULL;
+		file = first;
+		return (file);
+	}
+	else if ((file->next)->next)
+	{
+		file = (file->next)->next;
+		free((file->prev)->prev);
+		free(file->prev);
+		file->prev = NULL;
+		return (file);
+	}
+	else
+	{
+		free(file->next);
+		free(file);
+		return (NULL);
+	}
+}
+
+void	ft_putpath(char *path)
+{
+	ft_putstr("\n");
+	ft_putstr(path);
+	ft_putstr(":\n");
+}
+
+t_file	*ft_ls_all(DIR *dir, char options, t_file *file)
+{
+	struct dirent	*dirstream;
+	int		id;
+
+	id = 0;
+	if (options & LS_A)
+		while ((dirstream = readdir(dir)))
 		{
-			if ((dirstream->d_name[0] != '.') && (dirstream->d_name[1] != '\0') 
-				&& (dirstream->d_name[1] != '.'))
-			{
-				file = new_file(file, dirstream->d_name);
-				file->mode = dirstream->d_type;
-				file->id = id;
-				id++;
-			}
+			file = new_file(file, dirstream->d_name);
+			file->mode = dirstream->d_type;
+			file->id = id;
+			id++;
 		}
-		else
-		{
+	else
+		while ((dirstream = readdir(dir)))
 			if (dirstream->d_name[0] != '.')
 			{
 				file = new_file(file, dirstream->d_name);
@@ -130,40 +164,43 @@ void	ft_ls(DIR *dir, unsigned char options, char *path)
 				file->id = id;
 				id++;
 			}
-		
-		}
-	}
+	return (file);
+}
+
+void	ft_ls(DIR *dir, unsigned char options, char *path)
+{
+	t_file		*file;
+	t_file		*temp;
+	char		*new_path;
+
+	file = NULL;
+	temp = NULL;
+	file = ft_ls_all(dir, options, file);
 	if (file)
 	{
 		ft_link_list(file);
 		file = ft_ascii(file);
 		if (options & LS_R)
 			file = ft_inverse_list(file);
-		file = ft_print_chk_dir(file);
+		file = ft_print_chk_dir(file, path, options);
 		if ((options & LS_REC) && file)
 		{
-			while (file->next)
+			file = ft_ls_skip_current(file, options);
+			while (file)
 			{
+				if (file->prev)
+					free(file->prev);
 				new_path = ft_path(path, file->name);
-				ft_putstr("\n");
-				ft_putstr(new_path);
-				ft_putstr(":\n");
+				ft_putpath(new_path);
 				if (ft_check_open(file, new_path))
 					ft_ls(file->dirstream, options, new_path);
 				closedir(file->dirstream);
 				free(new_path);
+				temp = file;
 				file = file->next;
-				free(file->prev);
 			}
-			new_path = ft_path(path, file->name);
-			ft_putstr("\n");
-			ft_putstr(new_path);
-			ft_putstr(":\n");
-			if (ft_check_open(file, new_path))
-				ft_ls(file->dirstream, options, new_path);
-			closedir(file->dirstream);
-			free(new_path);
-			free(file);
+			if (temp)
+				free(temp);
 		}
 	}
 }
