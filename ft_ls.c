@@ -21,32 +21,105 @@ t_file		*new_file(t_file *nxt, char *name)
 		perror("malloc:");
 		exit(-1);
 	}
+	if (!(file->attr = (t_stat *)malloc(sizeof(t_stat))))
+	{
+		perror("malloc :");
+		exit(-1);
+	}
 	file->next = nxt;
 	ft_strcpy(file->name, name);
 	return (file);
 }
 
+t_file		*ft_place_young(t_file *list)
+{
+	t_file	*file;
+	t_file	*tmp;
+
+	tmp = list;
+	{
+		file = list->next;
+		while (file)
+		{
+			if (file->attr)
+				if ((file->attr)->mtime > ((tmp->attr)->mtime))
+					tmp = file;
+			file = file->next;
+		}
+		if (tmp->prev)
+		{
+			ft_unlink(tmp);
+			ft_insert(tmp, list, 'G');
+		}
+	}
+	return (tmp);
+}
+
+t_file		*ft_mtimecopy(t_file *list, char *path)
+{
+	t_file 		*file;
+	struct stat	sb;
+	char		*tmp_path;
+
+	file = list;
+	while (file)
+	{
+		tmp_path = ft_path(path, file->name);
+		if (lstat(tmp_path, &sb) == -1)
+		{
+			free(file->attr);
+			file->attr = NULL;
+			perror("stat");
+		}
+		else
+			(file->attr)->mtime = sb.st_mtime;
+		free(tmp_path);
+		file = file->next;
+	}
+	return (ft_place_young(list));
+}
+
+t_file		*ft_mtime(t_file *list, char *path)
+{
+	t_file	*file;
+	t_file	*tmp;
+	char	i;
+
+	i = 1;
+	list = ft_mtimecopy(list, path);
+	while (i)
+	{
+		file = list;
+		i = 0;
+		while (file)
+		{
+			if (file->next)
+				if ((file->attr)->mtime < ((file->next)->attr)->mtime)
+				{
+					tmp = file->next;
+					ft_unlink(tmp);
+					ft_insert(tmp, file, 'G');
+					file = tmp;
+					i = 1;
+				}
+				file = file->next;
+		}
+	}
+	return (list);
+}
+
 void		ft_link_list(t_file *file)
 {
 	t_file	*previous;
-	t_file	*start_tmp;
+	t_file	*tmp;
 
 	file->prev = NULL;
-	if (file)
+	tmp = file;
+	while (tmp->next)
 	{
-		start_tmp = file;
-		while (file->next)
-		{
-			previous = file;
-			file = file->next;
-			file->prev = previous;
-		}
-		file = start_tmp;
-	}
-	else
-	{
-		ft_putstr("FAIL");
-		exit(-1);
+		previous = tmp;
+		tmp = tmp->next;
+		tmp->prev = previous;
 	}
 }
 
@@ -107,31 +180,36 @@ t_file	*ft_ls_skip_current(t_file *file, char options)
 	t_file	*first;
 
 	first = file;
-	if ((options & LS_R) && ((file->next)->next))
+	if (options & LS_A)
 	{
-		while (file->next)
-			file = file->next;
-		file = (file->prev)->prev;
-		free((file->next)->next);
-		free(file->next);
-		file->next = NULL;
-		file = first;
-		return (file);
-	}
-	else if ((file->next)->next)
-	{
-		file = (file->next)->next;
-		free((file->prev)->prev);
-		free(file->prev);
-		file->prev = NULL;
-		return (file);
+		if ((options & LS_R) && ((file->next)->next))
+		{
+			while (file->next)
+				file = file->next;
+			file = (file->prev)->prev;
+			free((file->next)->next);
+			free(file->next);
+			file->next = NULL;
+			file = first;
+			return (file);
+		}
+		else if ((file->next)->next)
+		{
+			file = (file->next)->next;
+			free((file->prev)->prev);
+			free(file->prev);
+			file->prev = NULL;
+			return (file);
+		}
+		else
+		{
+			free(file->next);
+			free(file);
+			return (NULL);
+		}
 	}
 	else
-	{
-		free(file->next);
-		free(file);
-		return (NULL);
-	}
+		return (file);
 }
 
 void	ft_putpath(char *path)
@@ -171,7 +249,7 @@ void	ft_ls(DIR *dir, unsigned char options, char *path)
 {
 	t_file		*file;
 	t_file		*temp;
-	char		*new_path;
+	char		*npath;
 
 	file = NULL;
 	temp = NULL;
@@ -179,7 +257,10 @@ void	ft_ls(DIR *dir, unsigned char options, char *path)
 	if (file)
 	{
 		ft_link_list(file);
-		file = ft_ascii(file);
+		if (options & LS_T)
+			file = ft_mtime(file, path);
+		else
+			file = ft_ascii(file);
 		if (options & LS_R)
 			file = ft_inverse_list(file);
 		file = ft_print_chk_dir(file, path, options);
@@ -188,19 +269,19 @@ void	ft_ls(DIR *dir, unsigned char options, char *path)
 			file = ft_ls_skip_current(file, options);
 			while (file)
 			{
-				if (file->prev)
-					free(file->prev);
-				new_path = ft_path(path, file->name);
-				ft_putpath(new_path);
-				if (ft_check_open(file, new_path))
-					ft_ls(file->dirstream, options, new_path);
+				npath = ft_path(path, file->name);
+				if (options & LS_REC)
+					ft_putpath(npath);
+				if (ft_check_open(file, npath))
+					ft_ls(file->dirstream, options, npath);
 				closedir(file->dirstream);
-				free(new_path);
+				free(npath);
 				temp = file;
 				file = file->next;
-			}
-			if (temp)
+				if (temp->attr)
+					free(temp->attr);
 				free(temp);
+			}
 		}
 	}
 }

@@ -76,7 +76,7 @@ int		main(int ac, char **av)
 	i = 1;
 	arg_lst = NULL;
 	options = set_options(av);
-	ft_print_options(options);
+//	ft_print_options(options);
 	identifier = 0;
 	while (av[i] && av[i][0] == '-')
 		i++;

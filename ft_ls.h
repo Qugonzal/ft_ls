@@ -53,29 +53,30 @@ typedef struct		s_file
 	struct s_file	*next;
 }			t_file;
 
-t_file			*new_file(t_file *nxt, char *name);
-t_file			*ft_place_first(t_file *elem);
-t_file			*ft_place_last(t_file *elem);
-t_file			*ft_inverse_list(t_file *file);
-t_file			*ft_ascii(t_file *first);
-t_file			*ft_parse(t_file *small, t_file *big);
+t_file		*new_file(t_file *nxt, char *name);
+t_file		*ft_place_first(t_file *elem);
+t_file		*ft_place_last(t_file *elem);
+t_file		*ft_inverse_list(t_file *file);
+t_file		*ft_ascii(t_file *first);
+t_file		*ft_parse(t_file *small, t_file *big);
+t_file		*ft_mtime(t_file *list, char *path);  
 
-void			ft_unlink(t_file *elem);
-void			ft_link_list(t_file *file);
-void			ft_insert(t_file *elem, t_file *dest, char option);
+void		ft_unlink(t_file *elem);
+void		ft_link_list(t_file *file);
+void		ft_insert(t_file *elem, t_file *dest, char option);
 
-void			ft_ls(DIR *dir, unsigned char options, char *path);
-t_file			*ft_ls_l(t_file *file, char *path, unsigned char options);
+void		ft_ls(DIR *dir, unsigned char options, char *path);
+t_file		*ft_ls_l(t_file *file, char *path, unsigned char options);
 
-char			ft_check_open(t_file *dir, char *path);
-char			*ft_path(char *path, char *name);
+char		ft_check_open(t_file *dir, char *path);
+char		*ft_path(char *path, char *name);
 
-void			ft_error(void);
-void			ft_print_n_free(t_file *arg_tmp);
-void			ft_print(t_file *arg_tmp);
+void		ft_error(void);
+void		ft_print_n_free(t_file *arg_tmp);
+void		ft_print(t_file *arg_tmp);
 
-void			ft_print_options(unsigned char options);
-void			no_option(char chr);
-unsigned char		set_options(char **av);
+void		ft_print_options(unsigned char options);
+void		no_option(char chr);
+unsigned char	set_options(char **av);
 
 #endif
