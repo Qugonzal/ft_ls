@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 03:01:56 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/12/27 20:06:21 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/04/09 19:24:37 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,21 +102,21 @@ int		main(int ac, char **av)
 		{
 			ft_link_list(arg_lst);
 			arg_lst = ft_ascii(arg_lst);
-			tmp_start = arg_lst;
 			while (arg_lst)
 			{
+				tmp_start = arg_lst;
 				if (!(path = (char *)ft_memalloc(ft_strlen(arg_lst->name + 1))))
 				{
 					ft_error();
 					exit(-1);
 				}
 				ft_strcpy(path, arg_lst->name);
-				ft_putstr(" ---- ");
 				ft_putstr(arg_lst->name);
-				ft_putstr(" ---- :\n");
+				ft_putstr(" :\n");
 				ft_ls(arg_lst->dirstream, options, path);
 				closedir(arg_lst->dirstream);
 				arg_lst = arg_lst->next;
+				free(tmp_start);
 			}
 		}
 	}

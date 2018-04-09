@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 03:48:58 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/12/27 20:23:24 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/04/09 19:30:25 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,8 @@ char		ft_check_open(t_file *dir, char *path)
 	{
 		if (!(dir->dirstream = opendir(path)))
 		{
-			ft_putstr("errno == ");
-			ft_putnbr(errno);
-			ft_putstr("\n");
+			dir->dirstream = NULL;
+			ft_putstr("ft_ls: ");
 			perror(dir->name);
 			return (0);
 		}
@@ -42,9 +41,8 @@ char		ft_check_open(t_file *dir, char *path)
 	{
 		if (!(dir->dirstream = opendir(dir->name)))
 		{
-			ft_putstr("errno == ");
-			ft_putnbr(errno);
-			ft_putstr("\n");
+			ft_putstr("ft_ls: ");
+			dir->dirstream = NULL;
 			perror(dir->name);
 			return (0);
 		}

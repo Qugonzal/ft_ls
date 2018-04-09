@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 00:06:00 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/03/13 16:36:24 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/04/09 23:18:59 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,18 @@ t_file		*ft_place_young(t_file *list)
 	t_file	*tmp;
 
 	tmp = list;
+	file = list->next;
+	while (file)
 	{
-		file = list->next;
-		while (file)
-		{
-			if (file->attr)
-				if ((file->attr)->mtime > ((tmp->attr)->mtime))
-					tmp = file;
-			file = file->next;
-		}
-		if (tmp->prev)
-		{
-			ft_unlink(tmp);
-			ft_insert(tmp, list, 'G');
-		}
+		if (file->attr)
+			if ((file->attr)->mtime > ((tmp->attr)->mtime))
+				tmp = file;
+		file = file->next;
+	}
+	if (tmp->prev && (tmp != list))
+	{
+		ft_unlink(tmp);
+		ft_insert(tmp, list, 'G');
 	}
 	return (tmp);
 }
@@ -82,28 +80,13 @@ t_file		*ft_mtimecopy(t_file *list, char *path)
 t_file		*ft_mtime(t_file *list, char *path)
 {
 	t_file	*file;
-	t_file	*tmp;
-	char	i;
 
-	i = 1;
 	list = ft_mtimecopy(list, path);
-	while (i)
+	file = list->next;
+	while (file)
 	{
-		file = list;
-		i = 0;
-		while (file)
-		{
-			if (file->next)
-				if ((file->attr)->mtime < ((file->next)->attr)->mtime)
-				{
-					tmp = file->next;
-					ft_unlink(tmp);
-					ft_insert(tmp, file, 'G');
-					file = tmp;
-					i = 1;
-				}
-				file = file->next;
-		}
+		file = ft_place_young(file);
+		file = file->next;
 	}
 	return (list);
 }
@@ -175,14 +158,47 @@ char	*ft_path(char *path, char *name)
 	return (new_path);
 }
 
-t_file	*ft_ls_skip_current(t_file *file, char options)
+t_file	*ft_skip_current_t(t_file *list)
+{
+	t_file *tmp;
+	t_file *file;
+
+	file = list;
+	while (file)
+	{
+		tmp = file;
+		if (!ft_strcmp(".", file->name))
+		{
+			if (file == list)
+				list = file->next;
+			file = file->next;
+			ft_unlink(tmp);
+			free(tmp);
+		}
+		else if (!ft_strcmp("..", file->name))
+		{
+			if (file == list)
+				list = file->next;
+			file = file->next;
+			ft_unlink(tmp);
+			free(tmp);
+		}
+		else
+			file = file->next;
+	}
+	return (list);
+}
+
+/*t_file	*ft_ls_skip_current(t_file *file, char options)
 {
 	t_file	*first;
 
 	first = file;
 	if (options & LS_A)
 	{
-		if ((options & LS_R) && ((file->next)->next))
+		if (options & LS_T)
+			ft_skip_current_t(file);
+		else if ((options & LS_R) && ((file->next)->next))
 		{
 			while (file->next)
 				file = file->next;
@@ -208,9 +224,8 @@ t_file	*ft_ls_skip_current(t_file *file, char options)
 			return (NULL);
 		}
 	}
-	else
-		return (file);
-}
+	return (file);
+}*/
 
 void	ft_putpath(char *path)
 {
@@ -266,15 +281,17 @@ void	ft_ls(DIR *dir, unsigned char options, char *path)
 		file = ft_print_chk_dir(file, path, options);
 		if ((options & LS_REC) && file)
 		{
-			file = ft_ls_skip_current(file, options);
+			file = ft_skip_current_t(file);
 			while (file)
 			{
 				npath = ft_path(path, file->name);
 				if (options & LS_REC)
 					ft_putpath(npath);
 				if (ft_check_open(file, npath))
+				{
 					ft_ls(file->dirstream, options, npath);
-				closedir(file->dirstream);
+					closedir(file->dirstream);
+				}
 				free(npath);
 				temp = file;
 				file = file->next;

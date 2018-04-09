@@ -23,14 +23,16 @@ void		ft_fillstat(t_stat *file, struct stat *sb)
 	file->size = sb->st_size;
 	file->mtime = sb->st_mtime;
 	file->blocks = sb->st_blocks;
-	if ((usr = getpwuid(sb->st_uid)))
+	if ((usr = getpwuid(sb->st_uid)) && usr->pw_name)
 		file->user = usr->pw_name;
 	else
 		file->user = "error";
-	if ((grp = getgrgid(sb->st_gid)))
+	ft_putstr(usr->pw_name);
+	if ((grp = getgrgid(sb->st_gid)) && grp->gr_name)
 		file->group = grp->gr_name;
 	else
 		file->group = "error";
+	ft_putstr(grp->gr_name);
 }
 
 void		ft_printspace_str(char *file_name, char *max_name)
@@ -157,7 +159,7 @@ void		ft_print_l(t_file *file, t_stat *max)
 	if (file->attr)
 	{
 		ft_put_right((file->attr)->mode);
-		ft_putchar(' ');
+		ft_putstr("  ");
 		ft_printspace((file->attr)->nlink, max->nlink);
 		ft_putnbr_ll((file->attr)->nlink);
 		ft_putchar(' ');
@@ -171,7 +173,7 @@ void		ft_print_l(t_file *file, t_stat *max)
 			ft_putstr("none");
 			ft_printspace_str("none", max->user);
 		}
-		ft_putchar(' ');
+		ft_putstr("  ");
 		if ((file->attr)->group)
 		{
 			ft_putstr((file->attr)->group);
@@ -182,7 +184,7 @@ void		ft_print_l(t_file *file, t_stat *max)
 			ft_putstr("none");
 			ft_printspace_str("none", max->user);
 		}
-		ft_putchar(' ');
+		ft_putstr("  ");
 		ft_printspace((file->attr)->size, max->size);
 		ft_putnbr_ll((file->attr)->size);
 		ft_putchar(' ');
