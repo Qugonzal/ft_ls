@@ -27,12 +27,10 @@ void		ft_fillstat(t_stat *file, struct stat *sb)
 		file->user = usr->pw_name;
 	else
 		file->user = "error";
-	ft_putstr(usr->pw_name);
 	if ((grp = getgrgid(sb->st_gid)) && grp->gr_name)
 		file->group = grp->gr_name;
 	else
 		file->group = "error";
-	ft_putstr(grp->gr_name);
 }
 
 void		ft_printspace_str(char *file_name, char *max_name)
@@ -107,7 +105,7 @@ void		ft_cut_time(char *str, time_t mtime)
 			write(1, &str[i], 1);
 }
 
-void		ft_put_right(mode_t mode)
+int		ft_put_right(mode_t mode)
 {
 	mode_t check;
 
@@ -127,7 +125,9 @@ void		ft_put_right(mode_t mode)
 	else if (check == S_IFLNK)
 		ft_putchar('l');
 	else
-		ft_putchar('?');
+	{
+		return (0);
+	}
 	check = (mode & ~S_IFMT);
 	(check & S_IRUSR) ? ft_putstr("r") : ft_putstr("-");
 	(check & S_IWUSR) ? ft_putstr("w") : ft_putstr("-");    
@@ -138,27 +138,35 @@ void		ft_put_right(mode_t mode)
 	(check & S_IROTH) ? ft_putstr("r") : ft_putstr("-");
 	(check & S_IWOTH) ? ft_putstr("w") : ft_putstr("-");
 	(check & S_IXOTH) ? ft_putstr("x") : ft_putstr("-");
+	return (1);
 }
 
-void		ft_nostat(t_stat *max)
+void	ft_nostat(t_stat *max)
 {
 	ft_putchar('-');
-	ft_putstr("????????? ");
+	ft_putstr("?????????  ");
 	ft_printspace(0, max->nlink);
 	ft_putstr("? ?");
 	ft_printspace_str("?", max->user);
-	ft_putstr(" ?");
+	ft_putstr("  ?");
 	ft_printspace_str("?", max->group);
-	ft_putchar(' ');
+	ft_putstr("  ");
 	ft_printspace(0, max->size);
-	ft_putstr("            ? ");
+	ft_putstr("?            ?");
 }
 
-void		ft_print_l(t_file *file, t_stat *max)
+int		ft_print_l(t_file *file, t_stat *max)
 {
 	if (file->attr)
 	{
-		ft_put_right((file->attr)->mode);
+		if (!ft_put_right((file->attr)->mode))
+		{
+			ft_nostat(max);
+			ft_putchar(' ');
+			ft_putstr(file->name);
+ 			ft_putchar('\n');
+			return (0);
+		}
 		ft_putstr("  ");
 		ft_printspace((file->attr)->nlink, max->nlink);
 		ft_putnbr_ll((file->attr)->nlink);
@@ -195,6 +203,7 @@ void		ft_print_l(t_file *file, t_stat *max)
 	ft_putchar(' ');
 	ft_putstr(file->name);
 	ft_putchar('\n');
+	return (1);
 }
 
 
