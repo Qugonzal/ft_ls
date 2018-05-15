@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 03:07:05 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/12/15 03:07:43 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/05/15 20:40:01 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,15 @@ int		main(int argc, char *argv[])
 	printf("Dernier accès au fichier :         %s", ctime(&sb.st_atime));
 	printf("Dernière modification du fichier:  %s", ctime(&sb.st_mtime));
 
+	int i;
+	char *liste;
+	liste = NULL;
+	i = listxattr(argv[1], liste, 0);
+	if (i)
+	{
+		liste = malloc(i);
+		listxattr(argv[1], liste, i);
+	}
+	ft_putnstr(liste, i);
 	exit(EXIT_SUCCESS);
 }
