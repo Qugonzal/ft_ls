@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 19:22:12 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/05/15 20:41:49 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/06/01 18:12:16 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ void		ft_fillstat(t_stat *file, struct stat *sb)
 
 	file->mode = sb->st_mode;
 	file->nlink = sb->st_nlink;
-	file->size = sb->st_size;
+	if (file->mode & S_IFCHR)
+		file->size = sb->st_dev;
+	else
+		file->size = sb->st_size;
 	file->mtime = sb->st_mtime;
 	file->blocks = sb->st_blocks;
 	if ((usr = getpwuid(sb->st_uid)) && usr->pw_name)
@@ -91,8 +94,27 @@ void		ft_checkmax(t_stat *file, t_stat *max)
 		max->user = file->user;
 	if (ft_strlen(file->group) > ft_strlen(max->group))
 		max->group = file->group;
-	if ((file->size) > max->size)
-			max->size = file->size;
+	if (max->mode)
+	{
+		if (file->mode & S_IFCHR)
+		{
+			if ((file->size >> 8) > max->mode)
+				max->mode = file->size >> 8;
+			if ((file->size & ~(file->size << 8)) > max->size)
+				max->size = file->size & ~(file->size >> 8 << 8);
+		}
+	}
+	else
+	{
+		if (file->mode & S_IFCHR)
+		{
+				max->mode = file->size >> 8;
+				max->size = file->size & ~(file->size << 8);
+		}
+		else 
+			if ((file->size) > max->size)
+				max->size = file->size;
+	}
 	max->blocks = max->blocks + file->blocks;
 }
 
@@ -205,8 +227,26 @@ int		ft_print_l(t_file *file, t_stat *max)
 			ft_printspace_str("none", max->user);
 		}
 		ft_putstr("  ");
-		ft_printspace((file->attr)->size, max->size);
-		ft_putnbr_ll((file->attr)->size);
+		if (max->mode)
+		{
+			if ((file->attr)->mode & S_IFCHR)
+			{
+				ft_printspace((file->attr)->size >> 8, max->mode);
+				ft_putnbr_ll((file->attr)->size >> 8);
+				ft_printspace((file->attr)->size & ~((file->attr)->size >> 8 << 8), max->size);
+				ft_putnbr_ll((file->attr)->size >> 8);
+			}
+			else
+			{
+				ft_printspace((file->attr)->size, max->size);
+				ft_putnbr_ll((file->attr)->size);
+			}
+		}
+		else
+		{
+			ft_printspace((file->attr)->size, max->size);
+			ft_putnbr_ll((file->attr)->size);
+		}
 		ft_putchar(' ');
 		ft_cut_time(ctime(&((file->attr)->mtime)), (file->attr)->mtime);
 	}
@@ -251,6 +291,7 @@ t_file		*ft_ls_l(t_file *file, char *path, unsigned char options)
 	t_stat		max;
 
 	dir = NULL;
+	max.mode = 0;
 	max.blocks = 0;
 	max.nlink = 0;
 	max.size = 0;
