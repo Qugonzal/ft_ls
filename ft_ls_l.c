@@ -189,13 +189,13 @@ int		ft_put_right(mode_t mode)
 int		ft_nostat(t_stat *max, char *name)
 {
 	ft_putchar('-');
-	ft_putstr("?????????  ");
+	ft_putstr("????????? ");
 	ft_printspace(0, max->nlink);
 	ft_putstr("? ?");
 	ft_printspace_str("?", max->user);
-	ft_putstr("  ?");
+	ft_putstr(" ?");
 	ft_printspace_str("?", max->group);
-	ft_putstr("  ");
+	ft_putstr(" ");
 	ft_printspace(0, max->size);
 	ft_putstr("?            ? ");
 	ft_putstr(name);
@@ -216,7 +216,7 @@ void	ft_put_owners(t_file *file, t_stat *max)
 		ft_putstr("none");
 		ft_printspace_str("none", max->user);
 	}
-	ft_putstr("  ");
+	ft_putstr(" ");
 	if ((file->attr)->group)
 	{
 		ft_putstr((file->attr)->group);
@@ -227,7 +227,7 @@ void	ft_put_owners(t_file *file, t_stat *max)
 		ft_putstr("none");
 		ft_printspace_str("none", max->user);
 	}
-	ft_putstr("  ");
+	ft_putstr(" ");
 }
 
 void	ft_put_size_and_time(t_file *file, t_stat *max, int mode, int check)
@@ -236,7 +236,7 @@ void	ft_put_size_and_time(t_file *file, t_stat *max, int mode, int check)
 	{
 		ft_printspace(major(check), max->mode);
 		ft_putnbr(major(check));
-		ft_putstr(", ");
+		ft_putchar(',');
 		ft_printspace(minor(check), max->size);
 		ft_putnbr(minor(check));
 	}
@@ -287,7 +287,7 @@ int		ft_print_l(t_file *file, t_stat *max, char *path)
 		mode  = (file->attr)->mode & S_IFMT;
 		if (!ft_put_right((file->attr)->mode))
 			return (ft_nostat(max, file->name));
-		ft_putstr("  ");
+		ft_putchar(' ');
 		ft_printspace((file->attr)->nlink, max->nlink);
 		ft_putnbr_ll((file->attr)->nlink);
 		ft_put_owners(file, max);

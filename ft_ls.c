@@ -15,7 +15,16 @@
 t_file		*new_file(t_file *nxt, char *name)
 {
 	t_file		*file;
+	int		s;
 
+	s = ft_strlen(name);
+	if (s > 256)
+	{
+		ft_putstr("ft_ls: ");
+		ft_putstr(name);
+		ft_putstr(": filename is too long\n");
+		return (NULL);
+	}
 	if (!(file = (t_file *)malloc(sizeof(t_file))))
 	{
 		perror("malloc:");

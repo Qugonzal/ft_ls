@@ -76,7 +76,7 @@ int		main(int ac, char **av)
 	i = 1;
 	arg_lst = NULL;
 	options = set_options(av);
-//	ft_print_options(options);
+	//	ft_print_options(options);
 	identifier = 0;
 	while (av[i] && av[i][0] == '-')
 		i++;
@@ -85,18 +85,21 @@ int		main(int ac, char **av)
 		while (av[i])
 		{
 			arg_lst = new_file(arg_lst, av[i]);
-			arg_lst->id = identifier;
-			if (ft_check_open(arg_lst, NULL))
-				identifier++;
+			if (!arg_lst)
+				i++;
 			else
 			{
-				ft_putstr(av[i]);
-				ft_putstr("\n");
-				tmp_start = arg_lst->next;
-				free(arg_lst);
-				arg_lst = tmp_start;
+				arg_lst->id = identifier;
+				if (ft_check_open(arg_lst, NULL))
+					identifier++;
+				else
+				{
+					tmp_start = arg_lst->next;
+					free(arg_lst);
+					arg_lst = tmp_start;
+				}
+				i++;
 			}
-			i++;
 		}
 		if (arg_lst)
 		{
