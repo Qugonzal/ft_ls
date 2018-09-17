@@ -1,4 +1,4 @@
-/** ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 03:01:56 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/04/09 19:24:37 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/17 19:46:23 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int		main(int ac, char **av)
 	i = 1;
 	arg_lst = NULL;
 	options = set_options(av);
-	//	ft_print_options(options);
 	identifier = 0;
 	while (av[i] && av[i][0] == '-')
 		i++;
@@ -90,14 +89,13 @@ int		main(int ac, char **av)
 			else
 			{
 				arg_lst->id = identifier;
-				if (ft_check_open(arg_lst, NULL))
-					identifier++;
-				else
+				if (!(ft_check_open(arg_lst, NULL)))
 				{
 					tmp_start = arg_lst->next;
 					free(arg_lst);
 					arg_lst = tmp_start;
 				}
+				identifier++;
 				i++;
 			}
 		}
@@ -105,6 +103,8 @@ int		main(int ac, char **av)
 		{
 			ft_link_list(arg_lst);
 			arg_lst = ft_ascii(arg_lst);
+			if (options & LS_R)
+				arg_lst = ft_inverse_list(arg_lst);
 			while (arg_lst)
 			{
 				tmp_start = arg_lst;
@@ -114,8 +114,11 @@ int		main(int ac, char **av)
 					exit(-1);
 				}
 				ft_strcpy(path, arg_lst->name);
-				ft_putstr(arg_lst->name);
-				ft_putstr(" :\n");
+				if (identifier > 1)
+				{
+					ft_putstr(arg_lst->name);
+					ft_putstr(":\n");
+				}
 				ft_ls(arg_lst->dirstream, options, path);
 				closedir(arg_lst->dirstream);
 				arg_lst = arg_lst->next;

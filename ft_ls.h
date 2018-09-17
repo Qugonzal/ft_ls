@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 00:00:33 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/12/20 16:33:36 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/17 18:37:03 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define	LS_A	(1 << 3)
 # define	LS_R	(1 << 4)
 # define	LS_T	(1 << 5)
+# define	LS_1	(1 << 6)
 
 typedef struct		s_stat
 {

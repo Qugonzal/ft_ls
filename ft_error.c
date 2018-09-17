@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 03:48:58 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/06/15 17:54:47 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/17 17:48:10 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char		ft_check_open(t_file *dir, char *path)
 	{
 		if (!(dir->dirstream = opendir(dir->name)))
 		{
-			ft_putstr("ft_ls: ");
+			ft_putstr("ls: ");
 			dir->dirstream = NULL;
 			perror(dir->name);
 			return (0);

@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 00:06:00 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/04/09 23:18:59 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/17 18:43:49 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_file		*new_file(t_file *nxt, char *name)
 	s = ft_strlen(name);
 	if (s > 256)
 	{
-		ft_putstr("ft_ls: ");
+		ft_putstr("ls: ");
 		ft_putstr(name);
 		ft_putstr(": filename is too long\n");
 		return (NULL);
@@ -129,13 +129,17 @@ t_file		*ft_print_chk_dir(t_file *file, char *path, char options)
 			if (file->prev)
 				free(file->prev);
 			ft_putstr(file->name);
-			ft_putstr("  ");
+			if (options & LS_1)
+				ft_putstr("\n");
+			else
+				ft_putstr("  ");
 			if (options & LS_REC)
 				if (file->mode == 4)
 					dir = new_file(dir, file->name);
 			file = file->next;
 		}
-		ft_putstr("\n");
+		if (!(options & LS_1))
+			ft_putstr("\n");
 		free(file);
 	}
 	if (dir)
@@ -197,44 +201,6 @@ t_file	*ft_skip_current_t(t_file *list)
 	}
 	return (list);
 }
-
-/*t_file	*ft_ls_skip_current(t_file *file, char options)
-{
-	t_file	*first;
-
-	first = file;
-	if (options & LS_A)
-	{
-		if (options & LS_T)
-			ft_skip_current_t(file);
-		else if ((options & LS_R) && ((file->next)->next))
-		{
-			while (file->next)
-				file = file->next;
-			file = (file->prev)->prev;
-			free((file->next)->next);
-			free(file->next);
-			file->next = NULL;
-			file = first;
-			return (file);
-		}
-		else if ((file->next)->next)
-		{
-			file = (file->next)->next;
-			free((file->prev)->prev);
-			free(file->prev);
-			file->prev = NULL;
-			return (file);
-		}
-		else
-		{
-			free(file->next);
-			free(file);
-			return (NULL);
-		}
-	}
-	return (file);
-}*/
 
 void	ft_putpath(char *path)
 {

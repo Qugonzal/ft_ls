@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 05:08:10 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/04/09 18:45:33 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/17 18:34:43 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ unsigned char		ft_normal_option(char *av, unsigned char *options)
 			*options = *options | LS_R;
 		else if (av[j] == 't')
 			*options = *options | LS_T;
+		else if (av[j] == '1')
+			*options = *options | LS_1;
 		else
 			no_option(av[j]);
 	}
