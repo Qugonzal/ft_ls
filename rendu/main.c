@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 03:01:56 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/24 19:01:29 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/25 20:51:53 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,35 @@ void	ft_lister(int *i, int *identifier, char **av, t_file **arg_lst)
 		}
 }
 
+t_file	*ft_lst_nodir(t_file *file, unsigned char options)
+{
+	t_file	*list;
+	t_file	*tmp;
+
+	list = file;
+	while (file)
+	{
+		if (!(file->dirstream))
+		{
+			list = file->prev;
+			ft_ls(NULL, options, file->name);
+			tmp = file;
+			file = file->next;
+			ft_unlink(tmp);
+			free(tmp->attr);
+			free(tmp);
+		}
+		else
+		{
+			list = file;
+			file = file->next;
+		}
+	}
+	while (list->prev)
+		list = list->prev;
+	return (list);
+}
+
 int		main(int ac, char **av)
 {
 	unsigned char	options;
@@ -111,6 +140,7 @@ int		main(int ac, char **av)
 			arg_lst = ft_ascii(arg_lst);
 			if (options & LS_R)
 				arg_lst = ft_inverse_list(arg_lst);
+			arg_lst = ft_lst_nodir(arg_lst, options);
 			while (arg_lst)
 			{
 				tmp_start = arg_lst;
@@ -120,7 +150,8 @@ int		main(int ac, char **av)
 					ft_putstr(":\n");
 				}
 				ft_ls(arg_lst->dirstream, options, arg_lst->name);
-				closedir(arg_lst->dirstream);
+				if (arg_lst->dirstream)
+					closedir(arg_lst->dirstream);
 				if ((arg_lst = arg_lst->next))
 					ft_putchar('\n');
 				free(tmp_start);

@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 00:06:00 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/24 20:30:08 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/25 21:03:40 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,30 +235,84 @@ t_file	*ft_ls_all(DIR *dir, char options, t_file *file)
 	return (file);
 }
 
+void	ft_strfcat(char *s1, char *s2)
+{
+	int i;
+	int j;
+	char str[260];
+
+	i = 0;
+	j = 0;
+	while (s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		str[i] = s2[j];
+		i++;
+		j++;
+	}
+	str[i] = '\0';
+	i = 0;
+	while (str[i])
+	{
+		s2[i] = str[i];
+		i++;
+	}
+	s2[i] = '\0';
+}
+
+void	ft_nodir(unsigned char options, char *path)
+{
+	struct stat sb;
+	t_file		*file;
+	t_stat		max;
+
+	if (options & LS_L)
+	{
+		file = new_file(NULL, path);
+		ft_init_max(&max);
+		if (lstat(file->name, &sb) == -1)
+		{
+			perror("lstat");
+			free(file->attr);
+			file->attr = NULL;
+		}
+		else
+			ft_fillstat(file->attr, &sb);
+		if (file->attr)
+			ft_checkmax(file->attr, &max);
+		ft_print_l(file, &max, path);
+		free(file);
+	}
+	else
+	{
+		if (options & LS_1)
+		{
+			ft_putstr(path);
+			ft_putstr("\n");
+		}
+		else
+		{
+			ft_putstr(path);
+			ft_putstr("  ");
+		}
+	}
+}
+
 void	ft_ls(DIR *dir, unsigned char options, char *path)
 {
 	t_file		*file;
 	t_file		*temp;
-	t_stat		max;
 	char		*npath;
 
 	file = NULL;
 	temp = NULL;
 	if (!dir)
 	{
-		if (options & LS_L)
-		{
-			if (!(file = ft_memalloc(sizeof(t_file))))
-				return ;
-			ft_strcpy(file->name, path);
-			ft_init_max(&max);
-			ft_fillcheck_stat(file, &max, "");
-			ft_print_l(file, &max, "");
-			free(file->name);
-			free(file);
-		}
-		else
-			ft_putstr(path);
+		ft_nodir(options, path);
 		return ;
 	}
 	file = ft_ls_all(dir, options, file);

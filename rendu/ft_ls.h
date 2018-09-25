@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 00:00:33 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/24 20:25:38 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/25 20:09:03 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct		s_stat
 typedef struct		s_file
 {
 	int		id;
-	char		name[256];
+	char		name[260];
 	DIR		*dirstream;
 	unsigned char	mode;
 	struct s_stat	*attr;
@@ -63,6 +63,8 @@ t_file		*ft_parse(t_file *small, t_file *big);
 t_file		*ft_mtime(t_file *list, char *path);  
 
 void		ft_unlink(t_file *elem);
+void		ft_checkmax(t_stat *file, t_stat *max);
+void		ft_fillstat(t_stat *file, struct stat *sb);
 void		ft_link_list(t_file *file);
 void		ft_insert(t_file *elem, t_file *dest, char option);
 void		ft_init_max(t_stat *max);
