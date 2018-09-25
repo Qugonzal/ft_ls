@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 03:01:56 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/25 20:51:53 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/25 21:21:48 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,9 @@ t_file	*ft_lst_nodir(t_file *file, unsigned char options)
 			file = file->next;
 		}
 	}
-	while (list->prev)
-		list = list->prev;
+	if (list)
+		while (list->prev)
+			list = list->prev;
 	return (list);
 }
 
