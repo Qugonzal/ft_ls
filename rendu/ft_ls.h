@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 00:00:33 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/25 20:09:03 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/26 19:41:29 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <time.h>
 # include <grp.h>
 # include <pwd.h>
+# include <sys/ioctl.h>
 
 # define	LS_L	(1 << 1)
 # define	LS_REC	(1 << 2)

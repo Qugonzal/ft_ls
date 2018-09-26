@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 19:22:12 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/06/15 18:27:18 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/26 20:35:08 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,13 +189,13 @@ int		ft_put_right(mode_t mode)
 int		ft_nostat(t_stat *max, char *name)
 {
 	ft_putchar('-');
-	ft_putstr("????????? ");
+	ft_putstr("?????????  ");
 	ft_printspace(0, max->nlink);
 	ft_putstr("? ?");
 	ft_printspace_str("?", max->user);
-	ft_putstr(" ?");
+	ft_putstr("  ?");
 	ft_printspace_str("?", max->group);
-	ft_putstr(" ");
+	ft_putstr("  ");
 	ft_printspace(0, max->size);
 	ft_putstr("?            ? ");
 	ft_putstr(name);
@@ -205,7 +205,7 @@ int		ft_nostat(t_stat *max, char *name)
 
 void	ft_put_owners(t_file *file, t_stat *max)
 {
-	ft_putchar(' ');
+	ft_putstr(" ");
 	if ((file->attr)->user)
 	{
 		ft_putstr((file->attr)->user);
@@ -216,7 +216,7 @@ void	ft_put_owners(t_file *file, t_stat *max)
 		ft_putstr("none");
 		ft_printspace_str("none", max->user);
 	}
-	ft_putstr(" ");
+	ft_putstr("  ");
 	if ((file->attr)->group)
 	{
 		ft_putstr((file->attr)->group);
@@ -227,7 +227,7 @@ void	ft_put_owners(t_file *file, t_stat *max)
 		ft_putstr("none");
 		ft_printspace_str("none", max->user);
 	}
-	ft_putstr(" ");
+	ft_putstr("  ");
 }
 
 void	ft_put_size_and_time(t_file *file, t_stat *max, int mode, int check)
