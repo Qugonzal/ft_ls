@@ -6,7 +6,7 @@
 #    By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/15 00:14:59 by qugonzal          #+#    #+#              #
-#    Updated: 2018/09/25 19:11:53 by qugonzal         ###   ########.fr        #
+#    Updated: 2018/09/27 19:52:44 by qugonzal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,10 @@ CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 
 SRC = main.c $(addprefix ft_, $(addsuffix .c, \
 	link_arg_lst inverse\
-	set_options error \
-	ascii_arg \
+	set_options error unique_files\
+	ascii_arg\
+	print print_2 print_3\
+	time stat max padding path\
 	ls ls_l))
 
 OBJ = $(SRC:.c=.o)

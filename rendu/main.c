@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 03:01:56 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/26 18:47:52 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/27 19:18:17 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
    else
    ft_putstr("-- NO OPTIONS --\n");
    }*/
-
+/*
 void		ft_print(t_file *arg_tmp)
 {
 	t_file *tmp;
@@ -46,24 +46,7 @@ void		ft_print(t_file *arg_tmp)
 	ft_putstr(tmp->name);
 	ft_putstr("\n");
 }
-
-void		ft_print_n_free(t_file *arg_tmp)
-{
-	t_file *tmp;
-
-	tmp = arg_tmp;
-	while (tmp->next)
-	{
-		ft_putstr(tmp->name);
-		ft_putstr("\n");
-		tmp = tmp->next;
-		free(tmp->prev);
-	}
-	ft_putstr(tmp->name);
-	ft_putstr("\n");
-	free(tmp);
-}
-
+*/
 void	ft_lister(int *i, int *identifier, char **av, t_file **arg_lst)
 {
 	t_file		*tmp_start;
@@ -88,51 +71,6 @@ void	ft_lister(int *i, int *identifier, char **av, t_file **arg_lst)
 	}
 }
 
-void	ft_print_ufiles(t_file **file_lst, t_file **list, unsigned char options)
-{
-	t_file	*tmp;
-	t_file	*file;
-
-	file = *file_lst;
-	*list = file->prev;
-	ft_ls(NULL, options, file->name);
-	tmp = file;
-	file = file->next;
-	ft_unlink(tmp);
-	free(tmp->attr);
-	free(tmp);
-	*file_lst = file;
-}
-
-int		ft_lst_nodir(t_file **arg_lst, unsigned char options)
-{
-	t_file	*list;
-	t_file	*file;
-	int		f;
-
-	file = *arg_lst;
-	list = file;
-	f = 0;
-	while (file)
-	{
-		if (!(file->dirstream))
-		{
-			ft_print_ufiles(&file, &list, options);
-			f = 1;
-		}
-		else
-		{
-			list = file;
-			file = file->next;
-		}
-	}
-	if (list)
-		while (list->prev)
-			list = list->prev;
-	*arg_lst = list;
-	return (f);
-}
-
 int		main(int ac, char **av)
 {
 	unsigned char	options;
@@ -143,7 +81,7 @@ int		main(int ac, char **av)
 
 	i = 1;
 	arg_lst = NULL;
-	options = set_options(av);
+	options = ft_set_options(av);
 	identifier = 0;
 	while (av[i] && av[i][0] == '-' && av[i][1])
 		i++;
@@ -158,7 +96,7 @@ int		main(int ac, char **av)
 				arg_lst = ft_mtime(arg_lst, "./");
 			if (options & LS_R)
 				arg_lst = ft_inverse_list(arg_lst);
-			if (ft_lst_nodir(&arg_lst, options))
+			if (ft_lst_nodir(&arg_lst, options) && arg_lst)
 				ft_putstr("\n");
 			while (arg_lst)
 			{

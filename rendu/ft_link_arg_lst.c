@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 04:24:43 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/12/15 05:29:12 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/27 19:50:44 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,50 @@ t_file		*new_arg(char *name, t_file *nxt_elem)
 	new->next = nxt_elem;
 	return (new);
 }*/
+
+t_file		*new_file(t_file *nxt, char *name)
+{
+	t_file		*file;
+	int		s;
+
+	s = ft_strlen(name);
+	if (s > 256)
+	{
+		ft_putstr("ls: ");
+		ft_putstr(name);
+		ft_putstr(": filename is too long\n");
+		return (NULL);
+	}
+	if (!(file = (t_file *)malloc(sizeof(t_file))))
+	{
+		perror("malloc:");
+		exit(-1);
+	}
+	if (!(file->attr = (t_stat *)malloc(sizeof(t_stat))))
+	{
+		perror("malloc :");
+		exit(-1);
+	}
+	file->next = nxt;
+	ft_strcpy(file->name, name);
+	return (file);
+}
+
+void		ft_link_list(t_file *file)
+{
+	t_file	*previous;
+	t_file	*tmp;
+
+	file->prev = NULL;
+	tmp = file;
+	while (tmp->next)
+	{
+		previous = tmp;
+		tmp = tmp->next;
+		tmp->prev = previous;
+	}
+}
+
 
 void		ft_unlink(t_file *elem)
 {
