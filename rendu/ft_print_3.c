@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 19:40:10 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/27 19:49:52 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/29 19:43:22 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	ft_put_name(t_file *file, int mode, char *path)
 		free(file_name);
 	}
 	free(link);
-	ft_putchar('\n');
 }
 
 void	ft_strfcat(char *s1, char *s2)

@@ -6,54 +6,49 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 00:06:00 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/27 19:50:44 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/29 19:34:57 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_file	*ft_skip(t_file *file)
+int		ft_skip(t_file *file)
 {
-	t_file	*tmp;
-
-	tmp = file;
-	ft_putstr("!!!!!!!>>)WXOXW(<<!!!!!!!");
-	ft_putstr(file->name);
 	if ((file->name[1] == '\0') || (file->name[1] == '.'))
 	{
 		if (!ft_strcmp(".", file->name))
 		{
-			file = file->next;
-			ft_unlink(tmp);
-			ft_free(tmp);
+			ft_unlink(file);
+			ft_free(file);
+			return (1);
 		}
 		else if (!ft_strcmp("..", file->name))
 		{
-			file = file->next;
-			ft_unlink(tmp);
-			ft_free(tmp);
+			ft_unlink(file);
+			ft_free(file);
+			return (1);
 		}
 	}
-	return (file);
+	return (0);
 }
 
 t_file	*ft_skip_current_t(t_file *file)
 {
 	t_file *tmp;
 
+	tmp = file;
 	while (file)
 	{
-		tmp = file;
 		if (file->name[0] == '.')
 		{
-			file = ft_skip(file);
+			tmp = file->next;
+			if (ft_skip(file))
+				file = tmp;
+			else
+				file = file->next;
 		}
 		else
 			file = file->next;
-	}
-	while (tmp->prev)
-	{
-		tmp = tmp->prev;
 	}
 	return (tmp);
 }
@@ -123,6 +118,7 @@ void	ft_ls(DIR *dir, unsigned char options, char *path)
 			file = ft_skip_current_t(file);
 			while (file)
 			{
+				ft_putchar('\n');
 				npath = ft_path(path, file->name);
 				if (options & LS_REC)
 					ft_putpath(npath);

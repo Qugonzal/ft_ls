@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 19:48:07 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/27 19:49:24 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/29 20:08:00 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ char	*ft_path(char *path, char *name)
 
 void	ft_putpath(char *path)
 {
-	ft_putstr("\n");
 	ft_putstr(path);
 	ft_putstr(":\n");
 }

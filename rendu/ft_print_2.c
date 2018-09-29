@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 19:26:18 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/27 19:39:40 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/29 19:37:12 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		ft_print_l(t_file *file, t_stat *max, char *path)
 		mode  = (file->attr)->mode & S_IFMT;
 		if (!ft_put_right((file->attr)->mode))
 			return (ft_nostat(max, file->name));
-		ft_putchar(' ');
+		ft_putstr("  ");
 		ft_printspace((file->attr)->nlink, max->nlink);
 		ft_putnbr_ll((file->attr)->nlink);
 		ft_put_owners(file, max);

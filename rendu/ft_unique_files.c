@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 19:04:07 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/27 19:32:32 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/29 19:47:58 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	ft_nodir(unsigned char options, char *path)
 			ft_checkmax(file->attr, &max);
 		ft_print_l(file, &max, path);
 		ft_free(file);
+		ft_putchar('\n');
 	}
 	else
 		ft_put_ls1(options, path);

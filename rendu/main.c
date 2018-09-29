@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 03:01:56 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/27 19:18:17 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/29 20:31:49 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int		main(int ac, char **av)
 				if (arg_lst->dirstream)
 					closedir(arg_lst->dirstream);
 				if ((arg_lst = arg_lst->next))
-					ft_putchar('\n');
+					ft_putstr("\n");
 				ft_free(tmp_start);
 			}
 		}
@@ -119,6 +119,7 @@ int		main(int ac, char **av)
 	{
 		ft_ls(opendir("."), options, ".");
 	}
-	ft_putchar('\n');
+	if (!(options & LS_1) || !(options & LS_L))
+		ft_putchar('\n');
 	return (0);
 }

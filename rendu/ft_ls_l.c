@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 19:22:12 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/27 19:42:40 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/29 19:43:22 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_file		*ft_ls_l(t_file *file, char *path, unsigned char options)
 				dir = new_file(dir, file->name);
 		file = file->next;
 		ft_free(file->prev);
+		ft_putchar('\n');
 	}
 	ft_print_l(file, &max, path);
 	if (options & LS_REC)
