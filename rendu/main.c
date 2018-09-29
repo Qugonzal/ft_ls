@@ -62,7 +62,7 @@ void	ft_lister(int *i, int *identifier, char **av, t_file **arg_lst)
 			if (!(ft_check_open((*arg_lst), NULL)))
 			{
 				tmp_start = (*arg_lst)->next;
-				free((*arg_lst));
+				ft_free((*arg_lst));
 				(*arg_lst) = tmp_start;
 			}
 			(*identifier)++;
@@ -111,7 +111,7 @@ int		main(int ac, char **av)
 					closedir(arg_lst->dirstream);
 				if ((arg_lst = arg_lst->next))
 					ft_putchar('\n');
-				free(tmp_start);
+				ft_free(tmp_start);
 			}
 		}
 	}
@@ -119,5 +119,6 @@ int		main(int ac, char **av)
 	{
 		ft_ls(opendir("."), options, ".");
 	}
+	ft_putchar('\n');
 	return (0);
 }

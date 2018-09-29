@@ -42,21 +42,22 @@ void	ft_put_owners(t_file *file, t_stat *max)
 void	ft_put_name(t_file *file, int mode, char *path)
 {
 	char	*link;
+	char	*file_name;
 
 	link = ft_memalloc(256);
 	ft_putchar(' ');
 	ft_putstr(file->name);
 	if (mode == S_IFLNK)
 	{
+		file_name = ft_path(path, file->name);
 		ft_putstr(" -> ");
-		if (!readlink(ft_path(path, file->name), link, 256))
+		if (!readlink(file_name, link, 256))
 			perror("readlink");
 		else
-		{
 			ft_putstr(link);
-			free(link);
-		}
+		free(file_name);
 	}
+	free(link);
 	ft_putchar('\n');
 }
 

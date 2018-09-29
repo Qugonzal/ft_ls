@@ -12,35 +12,50 @@
 
 #include "ft_ls.h"
 
-t_file	*ft_skip_current_t(t_file *list)
+t_file	*ft_skip(t_file *file)
 {
-	t_file *tmp;
-	t_file *file;
+	t_file	*tmp;
 
-	file = list;
-	while (file)
+	tmp = file;
+	ft_putstr("!!!!!!!>>)WXOXW(<<!!!!!!!");
+	ft_putstr(file->name);
+	if ((file->name[1] == '\0') || (file->name[1] == '.'))
 	{
-		tmp = file;
 		if (!ft_strcmp(".", file->name))
 		{
-			if (file == list)
-				list = file->next;
 			file = file->next;
 			ft_unlink(tmp);
-			free(tmp);
+			ft_free(tmp);
 		}
 		else if (!ft_strcmp("..", file->name))
 		{
-			if (file == list)
-				list = file->next;
 			file = file->next;
 			ft_unlink(tmp);
-			free(tmp);
+			ft_free(tmp);
+		}
+	}
+	return (file);
+}
+
+t_file	*ft_skip_current_t(t_file *file)
+{
+	t_file *tmp;
+
+	while (file)
+	{
+		tmp = file;
+		if (file->name[0] == '.')
+		{
+			file = ft_skip(file);
 		}
 		else
 			file = file->next;
 	}
-	return (list);
+	while (tmp->prev)
+	{
+		tmp = tmp->prev;
+	}
+	return (tmp);
 }
 
 t_file	*ft_ls_all(DIR *dir, char options, t_file *file)
@@ -67,6 +82,17 @@ t_file	*ft_ls_all(DIR *dir, char options, t_file *file)
 				id++;
 			}
 	return (file);
+}
+
+void	ft_free_list(t_file *file)
+{
+	t_file	*tmp;
+	while (file)
+	{
+		tmp = file;
+		file = file->next;
+		ft_free(tmp);
+	}
 }
 
 void	ft_ls(DIR *dir, unsigned char options, char *path)
@@ -108,9 +134,7 @@ void	ft_ls(DIR *dir, unsigned char options, char *path)
 				free(npath);
 				temp = file;
 				file = file->next;
-				if (temp->attr)
-					free(temp->attr);
-				free(temp);
+				ft_free(temp);
 			}
 		}
 	}

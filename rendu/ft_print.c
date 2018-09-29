@@ -22,16 +22,17 @@ void		ft_print_n_free(t_file *arg_tmp)
 		ft_putstr(tmp->name);
 		ft_putstr("\n");
 		tmp = tmp->next;
-		free(tmp->prev);
+		ft_free(tmp->prev);
 	}
 	ft_putstr(tmp->name);
 	ft_putstr("\n");
-	free(tmp);
+	ft_free(tmp);
 }
 
 t_file		*ft_print_chk_dir(t_file *file, char *path, char options)
 {
 	t_file *dir;
+	t_file *tmp;
 
 	dir = NULL;
 	if (options & LS_L)
@@ -40,8 +41,7 @@ t_file		*ft_print_chk_dir(t_file *file, char *path, char options)
 	{
 		while (file)
 		{
-			if (file->prev)
-				free(file->prev);
+			tmp = file;
 			ft_putstr(file->name);
 			if (options & LS_1)
 				ft_putstr("\n");
@@ -51,10 +51,10 @@ t_file		*ft_print_chk_dir(t_file *file, char *path, char options)
 				if (file->mode == 4)
 					dir = new_file(dir, file->name);
 			file = file->next;
+			ft_free(tmp);
 		}
 		if (!(options & LS_1))
 			ft_putstr("\n");
-		free(file);
 	}
 	if (dir)
 	{

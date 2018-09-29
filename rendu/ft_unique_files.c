@@ -12,6 +12,20 @@
 
 #include "ft_ls.h"
 
+void	ft_put_ls1(unsigned char options, char *path)
+{
+		if (options & LS_1)
+		{
+			ft_putstr(path);
+			ft_putstr("\n");
+		}
+		else
+		{
+			ft_putstr(path);
+			ft_putstr("  ");
+		}
+}
+
 void	ft_nodir(unsigned char options, char *path)
 {
 	struct stat sb;
@@ -33,21 +47,10 @@ void	ft_nodir(unsigned char options, char *path)
 		if (file->attr)
 			ft_checkmax(file->attr, &max);
 		ft_print_l(file, &max, path);
-		free(file);
+		ft_free(file);
 	}
 	else
-	{
-		if (options & LS_1)
-		{
-			ft_putstr(path);
-			ft_putstr("\n");
-		}
-		else
-		{
-			ft_putstr(path);
-			ft_putstr("  ");
-		}
-	}
+		ft_put_ls1(options, path);
 }
 
 int		ft_lst_nodir(t_file **arg_lst, unsigned char options)
@@ -63,7 +66,7 @@ int		ft_lst_nodir(t_file **arg_lst, unsigned char options)
 	{
 		if (!(file->dirstream))
 		{
-			ft_print_ufiles(&file, &list, options);
+			ft_put_ufile(&file, &list, options);
 			f = 1;
 		}
 		else
@@ -79,35 +82,17 @@ int		ft_lst_nodir(t_file **arg_lst, unsigned char options)
 	return (f);
 }
 
-void	ft_print_ufiles(t_file **file_lst, t_file **list, unsigned char options)
+void	ft_put_ufile(t_file **lst, t_file **list, unsigned char options)
 {
 	t_file	*tmp;
 	t_file	*file;
 
-	file = *file_lst;
+	file = *lst;
 	*list = file->prev;
 	ft_ls(NULL, options, file->name);
 	tmp = file;
 	file = file->next;
 	ft_unlink(tmp);
-	free(tmp->attr);
-	free(tmp);
-	*file_lst = file;
-}
-
-int		ft_nostat(t_stat *max, char *name)
-{
-	ft_putchar('-');
-	ft_putstr("?????????  ");
-	ft_printspace(0, max->nlink);
-	ft_putstr("? ?");
-	ft_printspace_str("?", max->user);
-	ft_putstr("  ?");
-	ft_printspace_str("?", max->group);
-	ft_putstr("  ");
-	ft_printspace(0, max->size);
-	ft_putstr("?            ? ");
-	ft_putstr(name);
-	ft_putchar('\n');
-	return (0);
+	ft_free(tmp);
+	*lst = file;
 }

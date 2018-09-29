@@ -31,12 +31,12 @@ t_file		*ft_ls_l(t_file *file, char *path, unsigned char options)
 			if (file->mode == 4)
 				dir = new_file(dir, file->name);
 		file = file->next;
-		free(file->prev);
+		ft_free(file->prev);
 	}
 	ft_print_l(file, &max, path);
 	if (options & LS_REC)
 		if (file->mode == 4)
 			dir = new_file(dir, file->name);
-	free(file);
+	ft_free(file);
 	return (dir);
 }

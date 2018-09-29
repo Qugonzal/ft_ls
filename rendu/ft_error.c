@@ -24,6 +24,22 @@ void		ft_error(void)
 	}
 }
 
+int		ft_nostat(t_stat *max, char *name)
+{
+	ft_putchar('-');
+	ft_putstr("?????????  ");
+	ft_printspace(0, max->nlink);
+	ft_putstr("? ?");
+	ft_printspace_str("?", max->user);
+	ft_putstr("  ?");
+	ft_printspace_str("?", max->group);
+	ft_putstr("  ");
+	ft_printspace(0, max->size);
+	ft_putstr("?            ? ");
+	ft_putstr(name);
+	ft_putchar('\n');
+	return (0);
+}
 
 char		ft_check_open(t_file *dir, char *path)
 {

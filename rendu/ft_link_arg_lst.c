@@ -67,6 +67,15 @@ void		ft_link_list(t_file *file)
 	}
 }
 
+void		ft_free(t_file *file)
+{
+	if (file)
+	{
+		if (file->attr)
+			free(file->attr);
+		free(file);
+	}
+}
 
 void		ft_unlink(t_file *elem)
 {

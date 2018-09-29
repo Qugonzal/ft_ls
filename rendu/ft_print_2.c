@@ -32,8 +32,6 @@ int		ft_print_l(t_file *file, t_stat *max, char *path)
 	else
 		return (ft_nostat(max, file->name));
 	ft_put_name(file, mode, path);
-	if (file->attr)
-		free(file->attr);
 	return (1);
 }
 

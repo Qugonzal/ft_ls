@@ -20,7 +20,7 @@ CLEAN_COLOR = \033[1;36m
 #     \/\/\/Compiliation-----
 
 NAME = ft_ls
-CC = gcc -g
+CC = gcc -ggdb
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 
 #     \/\/\/Files-----
