@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   options.c                                          :+:      :+:    :+:   */
+/*   ft_set_options.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 05:08:10 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/17 18:34:43 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/27 18:56:46 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void			no_option(char chr)
+void			ft_no_option(char chr)
 {
 	ft_putstr("./ft_ls: illegal option -- '");
 	ft_putchar(chr);
@@ -34,7 +34,7 @@ unsigned char		ft_hard_option(char *av, unsigned char *options)
 		else if (!(ft_strncmp("reverse", &av[j], ft_strlen(&av[j]))))
 			*options = *options | LS_R;
 		else
-			no_option(av[j]);
+			ft_no_option(av[j]);
 	}
 	return (*options);
 }
@@ -59,12 +59,12 @@ unsigned char		ft_normal_option(char *av, unsigned char *options)
 		else if (av[j] == '1')
 			*options = *options | LS_1;
 		else
-			no_option(av[j]);
+			ft_no_option(av[j]);
 	}
 	return (*options);
 }
 
-unsigned char	set_options(char **av)
+unsigned char	ft_set_options(char **av)
 {
 	int		i;
 	int		j;

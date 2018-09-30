@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 03:48:58 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/17 17:48:10 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/25 17:45:07 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,22 @@ void		ft_error(void)
 	}
 }
 
+int		ft_nostat(t_stat *max, char *name)
+{
+	ft_putchar('-');
+	ft_putstr("?????????  ");
+	ft_printspace(0, max->nlink);
+	ft_putstr("? ?");
+	ft_printspace_str("?", max->user);
+	ft_putstr("  ?");
+	ft_printspace_str("?", max->group);
+	ft_putstr("  ");
+	ft_printspace(0, max->size);
+	ft_putstr("?            ? ");
+	ft_putstr(name);
+	ft_putchar('\n');
+	return (0);
+}
 
 char		ft_check_open(t_file *dir, char *path)
 {
@@ -31,8 +47,7 @@ char		ft_check_open(t_file *dir, char *path)
 	{
 		if (!(dir->dirstream = opendir(path)))
 		{
-			dir->dirstream = NULL;
-			ft_putstr("ft_ls: ");
+			ft_putstr("ls: ");
 			perror(dir->name);
 			return (0);
 		}
@@ -41,9 +56,13 @@ char		ft_check_open(t_file *dir, char *path)
 	{
 		if (!(dir->dirstream = opendir(dir->name)))
 		{
-			ft_putstr("ls: ");
-			dir->dirstream = NULL;
-			perror(dir->name);
+			if (errno == 20)
+				return (1);
+			else
+			{
+				ft_putstr("ls: ");
+				perror(dir->name);
+			}
 			return (0);
 		}
 	}

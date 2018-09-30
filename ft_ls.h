@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 00:00:33 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/17 18:37:03 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/09/27 19:14:28 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <time.h>
 # include <grp.h>
 # include <pwd.h>
+# include <sys/ioctl.h>
 
 # define	LS_L	(1 << 1)
 # define	LS_REC	(1 << 2)
@@ -46,7 +47,7 @@ typedef struct		s_stat
 typedef struct		s_file
 {
 	int		id;
-	char		name[256];
+	char		name[260];
 	DIR		*dirstream;
 	unsigned char	mode;
 	struct s_stat	*attr;
@@ -57,27 +58,53 @@ typedef struct		s_file
 t_file		*new_file(t_file *nxt, char *name);
 t_file		*ft_place_first(t_file *elem);
 t_file		*ft_place_last(t_file *elem);
+t_file		*ft_place_young(t_file *list);
 t_file		*ft_inverse_list(t_file *file);
 t_file		*ft_ascii(t_file *first);
 t_file		*ft_parse(t_file *small, t_file *big);
 t_file		*ft_mtime(t_file *list, char *path);  
-
-void		ft_unlink(t_file *elem);
-void		ft_link_list(t_file *file);
-void		ft_insert(t_file *elem, t_file *dest, char option);
-
-void		ft_ls(DIR *dir, unsigned char options, char *path);
+t_file		*ft_mtimecopy(t_file *list, char *path);
+t_file		*ft_ls_all(DIR *dir, char options, t_file *file);
 t_file		*ft_ls_l(t_file *file, char *path, unsigned char options);
+t_file		*ft_skip_current_t(t_file *list);
+t_file		*ft_print_chk_dir(t_file *file, char *path, char options);
+
+void		ft_checkmax(t_stat *file, t_stat *max);
+void		ft_cut_time(char *str, time_t mtime);
+void		ft_error(void);
+void		ft_free(t_file *file);
+void		ft_fillstat(t_stat *file, struct stat *sb);
+void		ft_fillcheck_stat(t_file *file, t_stat *max, char *path);
+void		ft_insert(t_file *elem, t_file *dest, char option);
+void		ft_init_max(t_stat *max);
+void		ft_link_list(t_file *file);
+void		ft_lister(int *i, int *identifier, char **av, t_file **arg_lst);
+void		ft_ls(DIR *dir, unsigned char options, char *path);
+void		ft_max_mode(t_stat *file, t_stat *max);
+void		ft_nodir(unsigned char options, char *path);
+void		ft_print_n_free(t_file *arg_tmp);
+void		ft_put_ufile(t_file **lst, t_file **list, unsigned char options);
+void		ft_printspace_str(char *file_name, char *max_name);
+void		ft_printspace(long long nb, long long max);
+void		ft_putpath(char *path);
+void		ft_put_name(t_file *file, int mode, char *path);
+void		ft_putnbr_ll(long long n);
+void		ft_put_owners(t_file *file, t_stat *max);
+void		ft_put_size_and_time(t_file *file, t_stat *max, int mode, int check);
+void		ft_strfcat(char *s1, char *s2);
+void		ft_unlink(t_file *elem);
+void		ft_no_option(char chr);
 
 char		ft_check_open(t_file *dir, char *path);
 char		*ft_path(char *path, char *name);
 
-void		ft_error(void);
-void		ft_print_n_free(t_file *arg_tmp);
-void		ft_print(t_file *arg_tmp);
+unsigned char	ft_set_options(char **av);
+unsigned char	ft_normal_option(char *av, unsigned char *options);
 
-void		ft_print_options(unsigned char options);
-void		no_option(char chr);
-unsigned char	set_options(char **av);
+int		ft_print_l(t_file *file, t_stat *max, char *path);
+int		ft_lst_nodir(t_file **arg_lst, unsigned char options);
+int		ft_put_mode(mode_t mode);
+int		ft_put_right(mode_t mode);
+int		ft_nostat(t_stat *max, char *name);
 
 #endif

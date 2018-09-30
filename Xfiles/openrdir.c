@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_inverse.c                                       :+:      :+:    :+:   */
+/*   openrdir.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/27 19:26:32 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/24 18:41:09 by qugonzal         ###   ########.fr       */
+/*   Created: 2017/11/11 19:55:25 by qugonzal          #+#    #+#             */
+/*   Updated: 2017/11/11 20:35:53 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include <dirent.h>
+#include <errno.h>
+#include "libft/libft.h"
 
-t_file	*ft_inverse_list(t_file *file)
+int		main(int argc, char **argv)
 {
-	if (file->next)
-		file = file->next;
-	while (file->next)
+	DIR	*dirstream;
+	struct dirent	*elem;
+	if (argc > 0)
 	{
-		(file->prev)->next = (file->prev)->prev;
-		(file->prev)->prev = file;
-		file = file->next;
+		if (argc == 1)
+		{
+			dirstream = opendir(".");
+			while ((elem = readdir(dirstream)))
+			{
+				ft_putstr(elem->d_name);
+				ft_putstr("\n");
+			}
+			ft_putnbr(errno);
+		}
 	}
-	if (file->prev)
-	{
-		(file->prev)->next = (file->prev)->prev;
-		(file->prev)->prev = file;
-		file->next = file->prev;
-		file->prev = NULL;
-	}
-	return (file);
+	return (0);
 }

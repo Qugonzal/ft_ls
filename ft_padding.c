@@ -1,33 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_inverse.c                                       :+:      :+:    :+:   */
+/*   ft_padding.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/27 19:26:32 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/24 18:41:09 by qugonzal         ###   ########.fr       */
+/*   Created: 2018/09/26 19:39:53 by qugonzal          #+#    #+#             */
+/*   Updated: 2018/09/26 19:41:29 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_file	*ft_inverse_list(t_file *file)
-{
-	if (file->next)
-		file = file->next;
-	while (file->next)
-	{
-		(file->prev)->next = (file->prev)->prev;
-		(file->prev)->prev = file;
-		file = file->next;
-	}
-	if (file->prev)
-	{
-		(file->prev)->next = (file->prev)->prev;
-		(file->prev)->prev = file;
-		file->next = file->prev;
-		file->prev = NULL;
-	}
-	return (file);
-}
+

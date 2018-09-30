@@ -6,7 +6,7 @@
 #    By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/15 00:14:59 by qugonzal          #+#    #+#              #
-#    Updated: 2017/12/20 17:23:10 by qugonzal         ###   ########.fr        #
+#    Updated: 2018/09/27 19:52:44 by qugonzal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,15 +20,17 @@ CLEAN_COLOR = \033[1;36m
 #     \/\/\/Compiliation-----
 
 NAME = ft_ls
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CC = gcc -ggdb
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 
 #     \/\/\/Files-----
 
 SRC = main.c $(addprefix ft_, $(addsuffix .c, \
 	link_arg_lst inverse\
-	set_options error \
-	ascii_arg \
+	set_options error unique_files\
+	ascii_arg\
+	print print_2 print_3\
+	time stat max padding path\
 	ls ls_l))
 
 OBJ = $(SRC:.c=.o)
