@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 03:01:56 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/29 20:31:49 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/01 17:33:33 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int		main(int ac, char **av)
 			if (options & LS_R)
 				arg_lst = ft_inverse_list(arg_lst);
 			if (ft_lst_nodir(&arg_lst, options) && arg_lst)
-				ft_putstr("\n");
+				ft_putstr("\n\n");
 			while (arg_lst)
 			{
 				tmp_start = arg_lst;
@@ -120,14 +120,14 @@ int		main(int ac, char **av)
 		arg_lst = new_file(arg_lst, ".");
 		if (!(ft_check_open(arg_lst, NULL)))
 		{
-			ft_free(arg_lst)
-			strerror("opendir");
+			ft_free(arg_lst);
+			perror("opendir");
 		}
 		ft_ls(arg_lst->dirstream, options, ".");
 		closedir(arg_lst->dirstream);
 		ft_free(arg_lst);
 	}
-	if (!(options & LS_1) || !(options & LS_L))
+/*	if (!(options & LS_1) || !(options & LS_L))*/
 		ft_putchar('\n');
 	return (0);
 }

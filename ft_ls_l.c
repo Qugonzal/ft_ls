@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 19:22:12 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/29 19:43:22 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/01 17:40:03 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_file		*ft_ls_l(t_file *file, char *path, unsigned char options)
 	{
 		ft_print_l(file, &max, path);
 		if (options & LS_REC)
-			if (file->mode == 4)
+			if (file->mode & DT_DIR)
 				dir = new_file(dir, file->name);
 		file = file->next;
 		ft_free(file->prev);
@@ -36,7 +36,7 @@ t_file		*ft_ls_l(t_file *file, char *path, unsigned char options)
 	}
 	ft_print_l(file, &max, path);
 	if (options & LS_REC)
-		if (file->mode == 4)
+		if (file->mode & DT_DIR)
 			dir = new_file(dir, file->name);
 	ft_free(file);
 	return (dir);

@@ -6,12 +6,12 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 19:17:43 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/29 18:41:11 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/01 17:16:26 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
+/*
 void		ft_print_n_free(t_file *arg_tmp)
 {
 	t_file *tmp;
@@ -27,7 +27,7 @@ void		ft_print_n_free(t_file *arg_tmp)
 	ft_putstr(tmp->name);
 	ft_putstr("\n");
 	ft_free(tmp);
-}
+}*/
 
 t_file		*ft_print_chk_dir(t_file *file, char *path, char options)
 {
@@ -43,12 +43,12 @@ t_file		*ft_print_chk_dir(t_file *file, char *path, char options)
 		{
 			tmp = file;
 			ft_putstr(file->name);
-			if (options & LS_1)
+			if ((options & LS_1) && file->next)
 				ft_putstr("\n");
 			else
 				ft_putstr("  ");
 			if (options & LS_REC)
-				if (file->mode == 4)
+				if ((file->mode & DT_DIR))
 					dir = new_file(dir, file->name);
 			file = file->next;
 			ft_free(tmp);

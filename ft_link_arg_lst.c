@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 04:24:43 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/27 19:50:44 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/01 19:19:09 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void		ft_free(t_file *file)
 			free(file->attr);
 		free(file);
 	}
+	file = NULL;
 }
 
 void		ft_unlink(t_file *elem)
