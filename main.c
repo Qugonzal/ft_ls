@@ -117,7 +117,15 @@ int		main(int ac, char **av)
 	}
 	else
 	{
-		ft_ls(opendir("."), options, ".");
+		arg_lst = new_file(arg_lst, ".");
+		if (!(ft_check_open(arg_lst, NULL)))
+		{
+			ft_free(arg_lst)
+			strerror("opendir");
+		}
+		ft_ls(arg_lst->dirstream, options, ".");
+		closedir(arg_lst->dirstream);
+		ft_free(arg_lst);
 	}
 	if (!(options & LS_1) || !(options & LS_L))
 		ft_putchar('\n');
