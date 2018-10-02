@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 00:00:33 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/01 21:36:46 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/02 14:50:00 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_file		*ft_mtime(t_file *list, char *path);
 t_file		*ft_mtimecopy(t_file *list, char *path);
 t_file		*ft_ls_all(DIR *dir, char options, t_file *file);
 t_file		*ft_ls_l(t_file *file, char *path, unsigned char options);
-void		ft_skip_current_t(t_file **list);
+t_file		*ft_skip_current_t(t_file *list);
 t_file		*ft_print_chk_dir(t_file *file, char *path, char options);
 
 void		ft_checkmax(t_stat *file, t_stat *max);

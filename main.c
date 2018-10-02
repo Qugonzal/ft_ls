@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 03:01:56 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/01 17:33:33 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/02 20:21:33 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,36 @@ void	ft_lister(int *i, int *identifier, char **av, t_file **arg_lst)
 	}
 }
 
+int		ft_fts_open(char **av)
+{
+	int i;
+
+	i = 1;
+	while (av[i])
+	{
+		if (!av[i][0])
+		{
+			ft_putstr("ft_ls: ");
+			errno = 2;	
+			perror("fts_open");
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+/*
+int		ft_av(char **av)
+{
+		int i;
+
+		i = 1;
+		while (av[i])
+		{
+			
+		}
+}*/
+
 int		main(int ac, char **av)
 {
 	unsigned char	options;
@@ -83,8 +113,11 @@ int		main(int ac, char **av)
 	arg_lst = NULL;
 	options = ft_set_options(av);
 	identifier = 0;
+	if (!ft_fts_open(av))
+		return (0);
 	while (av[i] && av[i][0] == '-' && av[i][1])
 		i++;
+//	i = ft_av(av);
 	if (i < ac)
 	{
 		ft_lister(&i, &identifier, av, &arg_lst);
@@ -97,7 +130,7 @@ int		main(int ac, char **av)
 			if (options & LS_R)
 				arg_lst = ft_inverse_list(arg_lst);
 			if (ft_lst_nodir(&arg_lst, options) && arg_lst)
-				ft_putstr("\n\n");
+				ft_putstr("\n");
 			while (arg_lst)
 			{
 				tmp_start = arg_lst;
@@ -125,9 +158,9 @@ int		main(int ac, char **av)
 		}
 		ft_ls(arg_lst->dirstream, options, ".");
 		closedir(arg_lst->dirstream);
-		ft_free(arg_lst);
+	  	ft_free(arg_lst);
 	}
-/*	if (!(options & LS_1) || !(options & LS_L))*/
+	if (!(options & LS_L) && !(options & LS_REC) && !(options & LS_1))
 		ft_putchar('\n');
 	return (0);
 }

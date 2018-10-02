@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 19:17:43 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/01 17:16:26 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/02 16:37:34 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ t_file		*ft_print_chk_dir(t_file *file, char *path, char options)
 	{
 		while (file)
 		{
+			if ((options & LS_1) && file->prev)
+				ft_putstr("\n");
+			else if (file->prev)
+				ft_putstr("  ");
 			tmp = file;
 			ft_putstr(file->name);
-			if ((options & LS_1) && file->next)
-				ft_putstr("\n");
-			else
-				ft_putstr("  ");
 			if (options & LS_REC)
 				if ((file->mode & DT_DIR))
 					dir = new_file(dir, file->name);
@@ -59,6 +59,8 @@ t_file		*ft_print_chk_dir(t_file *file, char *path, char options)
 		ft_link_list(dir);
 		dir = ft_inverse_list(dir);
 	}
+	if (!(options & LS_L))
+		ft_putstr("\n");
 	return (dir);
 }
 

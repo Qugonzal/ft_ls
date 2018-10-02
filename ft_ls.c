@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 00:06:00 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/01 21:42:24 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/02 16:26:34 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,47 +14,54 @@
 
 t_file		*ft_skip(t_file *file)
 {
-	t_file	*next;
-
-	next = file->next;
 	if ((file->name[1] == '\0') || (file->name[1] == '.'))
 	{
 		if (!ft_strcmp(".", file->name))
 		{
 			ft_unlink(file);
 			ft_free(file);
-			return (next);
+			return (NULL);
 		}
 		else if (!ft_strcmp("..", file->name))
 		{
 			ft_unlink(file);
 			ft_free(file);
-			return (next);
+			return (NULL);
 		}
 	}
-	return (next);
+	return (file);
 }
 
-void		ft_skip_current_t(t_file **lst)
+t_file		*ft_skip_current_t(t_file *file)
 {
 	t_file	*tmp;
-	t_file	*file;
 
-	file = *lst;
-	tmp = file;
-	while (file)
+	while (file->next)
 	{
-		if (file->prev)
-			tmp = file->prev;
+		tmp = file->next;
 		if (file->name[0] == '.')
-			file = ft_skip(file);
+		{
+			if (!(file = ft_skip(file)))
+				file = tmp;
+			else
+				file = file->next;
+		}
 		else
 			file = file->next;
 	}
-	if (tmp)
+	tmp = file->prev;
+	if (file->name[0] == '.')
+		file = ft_skip(file);
+	if (!file && !tmp)
+		return (NULL);
+	else if (tmp)
+	{
 		while (tmp->prev)
 			tmp = tmp->prev;
-	*lst = tmp;
+		return (tmp);
+	}
+	else
+		return (file);
 }
 
 t_file	*ft_ls_all(DIR *dir, char options, t_file *file)
@@ -119,10 +126,10 @@ void	ft_ls(DIR *dir, unsigned char options, char *path)
 		file = ft_print_chk_dir(file, path, options);
 		if ((options & LS_REC) && file)
 		{
-			ft_skip_current_t(&file);
+			file = ft_skip_current_t(file);
 			while (file)
 			{
-				ft_putstr("\n\n");
+				ft_putstr("\n");
 				npath = ft_path(path, file->name);
 				if (options & LS_REC)
 					ft_putpath(npath);

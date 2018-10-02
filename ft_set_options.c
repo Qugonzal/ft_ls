@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 05:08:10 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/27 18:56:46 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/02 20:28:41 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,16 @@ unsigned char		ft_normal_option(char *av, unsigned char *options)
 unsigned char	ft_set_options(char **av)
 {
 	int		i;
-	int		j;
 	unsigned char	options;
 
 	i = 0;
 	options = 0;
 	while (av[++i] && av[i][0] == '-')
 	{
-			j = 0;
-			if ((av[i][j] == '-') && (av[i][j + 1] == '-'))
-				options = ft_hard_option(&av[i][j], &options);
+			if (!av[i][1] || av[i][1] == '-')
+				return (options);
 			else
-				options = ft_normal_option(&av[i][j], &options);
+				options = ft_normal_option(av[i], &options);
 	}
 	return (options);
 }

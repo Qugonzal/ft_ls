@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 19:36:41 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/27 19:45:55 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/02 18:40:28 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,16 @@ void		ft_cut_time(char *str, time_t mtime)
 			write(1, &str[i], 1);
 		i = i + 8;
 		ft_putchar(' ');
-		while (++i < 24)
-			write(1, &str[i], 1);
+		if (str[22] == ' ')
+		{
+			i = i + 4;
+			while (++i < 29)
+				write(1, &str[i], 1);
+
+		}
+		else
+			while (++i < 24)
+				write(1, &str[i], 1);
 	}
 	else
 		while (++i < 16)
@@ -35,6 +43,8 @@ void		ft_cut_time(char *str, time_t mtime)
 
 void	ft_put_size_and_time(t_file *file, t_stat *max, int mode, int check)
 {
+	char *str;
+
 	if (mode == S_IFCHR || mode == S_IFBLK)
 	{
 		ft_printspace(major(check), max->mode);
@@ -55,7 +65,8 @@ void	ft_put_size_and_time(t_file *file, t_stat *max, int mode, int check)
 		ft_putnbr_ll((file->attr)->size);
 	}
 	ft_putchar(' ');
-	ft_cut_time(ctime(&((file->attr)->mtime)), (file->attr)->mtime);
+	str = ctime(&((file->attr)->mtime));
+		ft_cut_time(str, (file->attr)->mtime);
 }
 
 t_file		*ft_place_young(t_file *list)
