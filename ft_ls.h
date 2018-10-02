@@ -66,7 +66,7 @@ t_file		*ft_mtime(t_file *list, char *path);
 t_file		*ft_mtimecopy(t_file *list, char *path);
 t_file		*ft_ls_all(DIR *dir, char options, t_file *file);
 t_file		*ft_ls_l(t_file *file, char *path, unsigned char options);
-t_file		*ft_skip_current_t(t_file *list);
+void		ft_skip_current_t(t_file **list);
 t_file		*ft_print_chk_dir(t_file *file, char *path, char options);
 
 void		ft_checkmax(t_stat *file, t_stat *max);

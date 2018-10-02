@@ -14,37 +14,47 @@
 
 t_file		*ft_skip(t_file *file)
 {
+	t_file	*next;
+
+	next = file->next;
 	if ((file->name[1] == '\0') || (file->name[1] == '.'))
 	{
 		if (!ft_strcmp(".", file->name))
 		{
 			ft_unlink(file);
 			ft_free(file);
-			return (NULL);
+			return (next);
 		}
 		else if (!ft_strcmp("..", file->name))
 		{
 			ft_unlink(file);
 			ft_free(file);
-			return (NULL);
+			return (next);
 		}
 	}
-	return (file->next);
+	return (next);
 }
 
-t_file	*ft_skip_current_t(t_file *file)
+void		ft_skip_current_t(t_file **lst)
 {
 	t_file	*tmp;
+	t_file	*file;
 
+	file = *lst;
+	tmp = file;
 	while (file)
 	{
 		if (file->prev)
-			ft_skip(file->prev);
+			tmp = file->prev;
+		if (file->name[0] == '.')
+			file = ft_skip(file);
+		else
+			file = file->next;
 	}
-	while (tmp->prev)
-		tmp = tmp->prev;
-	file = ft_skip(file);
-	return (tmp);
+	if (tmp)
+		while (tmp->prev)
+			tmp = tmp->prev;
+	*lst = tmp;
 }
 
 t_file	*ft_ls_all(DIR *dir, char options, t_file *file)
@@ -109,7 +119,7 @@ void	ft_ls(DIR *dir, unsigned char options, char *path)
 		file = ft_print_chk_dir(file, path, options);
 		if ((options & LS_REC) && file)
 		{
-			file = ft_skip_current_t(file);
+			ft_skip_current_t(&file);
 			while (file)
 			{
 				ft_putstr("\n\n");
