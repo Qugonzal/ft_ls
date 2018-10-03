@@ -6,33 +6,36 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 19:17:43 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/02 16:37:34 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/03 18:54:22 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-/*
-void		ft_print_n_free(t_file *arg_tmp)
+
+t_file		*ft_chk_dir(t_file *file, t_file **dire, int options)
 {
 	t_file *tmp;
+	t_file *dir;
 
-	tmp = arg_tmp;
-	while (tmp->next)
-	{
-		ft_putstr(tmp->name);
+	dir = *dire;
+	if ((options & LS_1) && file->prev)
 		ft_putstr("\n");
-		tmp = tmp->next;
-		ft_free(tmp->prev);
-	}
-	ft_putstr(tmp->name);
-	ft_putstr("\n");
+	else if (file->prev)
+		ft_putstr("  ");
+	tmp = file;
+	ft_putstr(file->name);
+	if (options & LS_REC)
+		if ((file->mode & DT_DIR))
+			dir = new_file(dir, file->name);
+	*dire = dir;
+	file = file->next;
 	ft_free(tmp);
-}*/
+	return (file);
+}
 
-t_file		*ft_print_chk_dir(t_file *file, char *path, char options)
+t_file		*ft_print_chk_dir(t_file *file, char *path, int options)
 {
 	t_file *dir;
-	t_file *tmp;
 
 	dir = NULL;
 	if (options & LS_L)
@@ -41,17 +44,7 @@ t_file		*ft_print_chk_dir(t_file *file, char *path, char options)
 	{
 		while (file)
 		{
-			if ((options & LS_1) && file->prev)
-				ft_putstr("\n");
-			else if (file->prev)
-				ft_putstr("  ");
-			tmp = file;
-			ft_putstr(file->name);
-			if (options & LS_REC)
-				if ((file->mode & DT_DIR))
-					dir = new_file(dir, file->name);
-			file = file->next;
-			ft_free(tmp);
+			file = ft_chk_dir(file, &dir, options);
 		}
 	}
 	if (dir)

@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 19:40:10 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/29 19:43:22 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/03 17:09:14 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ void	ft_put_name(t_file *file, int mode, char *path)
 
 void	ft_strfcat(char *s1, char *s2)
 {
-	int i;
-	int j;
-	char str[260];
+	int		i;
+	int		j;
+	char	str[260];
 
 	i = 0;
 	j = 0;

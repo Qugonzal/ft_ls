@@ -6,13 +6,13 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 05:08:10 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/03 15:13:00 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/03 18:54:47 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void			ft_no_option(char chr)
+void				ft_no_option(char chr)
 {
 	ft_putstr("./ft_ls: illegal option -- ");
 	ft_putchar(chr);
@@ -20,7 +20,7 @@ void			ft_no_option(char chr)
 	exit(-1);
 }
 
-unsigned char		ft_hard_option(char *av, unsigned char *options)
+int					ft_hard_option(char *av, int *options)
 {
 	int j;
 
@@ -39,13 +39,13 @@ unsigned char		ft_hard_option(char *av, unsigned char *options)
 	return (*options);
 }
 
-unsigned char		ft_normal_option(char *av, unsigned char *options)
+int					ft_normal_option(char *av, int *options)
 {
 	int j;
 
 	j = 0;
 	while (av[++j])
-	{	
+	{
 		if (av[j] == 'l')
 			*options = *options | LS_L;
 		else if (av[j] == 'R')
@@ -57,17 +57,21 @@ unsigned char		ft_normal_option(char *av, unsigned char *options)
 		else if (av[j] == 't')
 			*options = *options | LS_T;
 		else if (av[j] == '1')
+		{
+			if ((*options & LS_L))
+				*options = *options ^ LS_L;
 			*options = *options | LS_1;
+		}
 		else
 			ft_no_option(av[j]);
 	}
 	return (*options);
 }
 
-unsigned char	ft_set_options(char **av, int *nb)
+int					ft_set_options(char **av, int *nb)
 {
-	unsigned char	options;
-	int				i;
+	int	options;
+	int	i;
 
 	i = 0;
 	options = 0;

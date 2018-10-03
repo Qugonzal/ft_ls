@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 19:26:18 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/29 19:37:12 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/03 18:44:46 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ int		ft_print_l(t_file *file, t_stat *max, char *path)
 	if (file->attr)
 	{
 		check = (file->attr)->size;
-		mode  = (file->attr)->mode & S_IFMT;
+		mode = (file->attr)->mode & S_IFMT;
 		if (!ft_put_right((file->attr)->mode))
 			return (ft_nostat(max, file->name));
 		ft_putstr("  ");
 		ft_printspace((file->attr)->nlink, max->nlink);
 		ft_putnbr_ll((file->attr)->nlink);
 		ft_put_owners(file, max);
-		ft_put_size_and_time(file, max, mode, check);
+		ft_put_size_n_time(file, max, mode, check);
 	}
 	else
 		return (ft_nostat(max, file->name));
@@ -35,7 +35,7 @@ int		ft_print_l(t_file *file, t_stat *max, char *path)
 	return (1);
 }
 
-void		ft_putnbr_ll(long long n)
+void	ft_putnbr_ll(long long n)
 {
 	if (n >= 10)
 	{
@@ -77,14 +77,23 @@ int		ft_put_right(mode_t mode)
 	if (!ft_put_mode(mode))
 		return (0);
 	check = (mode & ~S_IFMT);
-	(check & S_IRUSR) ? ft_putstr("r") : ft_putstr("-");
-	(check & S_IWUSR) ? ft_putstr("w") : ft_putstr("-");    
-	(check & S_IXUSR) ? ft_putstr("x") : ft_putstr("-");
-	(check & S_IRGRP) ? ft_putstr("r") : ft_putstr("-");
-	(check & S_IWGRP) ? ft_putstr("w") : ft_putstr("-");
-	(check & S_IXGRP) ? ft_putstr("x") : ft_putstr("-");
-	(check & S_IROTH) ? ft_putstr("r") : ft_putstr("-");
-	(check & S_IWOTH) ? ft_putstr("w") : ft_putstr("-");
-	(check & S_IXOTH) ? ft_putstr("x") : ft_putstr("-");
+	(check & S_IRUSR) ? ft_putchar('r') : ft_putchar('-');
+	(check & S_IWUSR) ? ft_putchar('w') : ft_putchar('-');
+	if (mode & S_ISUID)
+		(check & S_IXUSR) ? ft_putchar('s') : ft_putchar('S');
+	else
+		(check & S_IXUSR) ? ft_putchar('x') : ft_putchar('-');
+	(check & S_IRGRP) ? ft_putchar('r') : ft_putchar('-');
+	(check & S_IWGRP) ? ft_putchar('w') : ft_putchar('-');
+	if (mode & S_ISGID)
+		(check & S_IXGRP) ? ft_putchar('s') : ft_putchar('S');
+	else
+		(check & S_IXGRP) ? ft_putchar('x') : ft_putchar('-');
+	(check & S_IROTH) ? ft_putchar('r') : ft_putchar('-');
+	(check & S_IWOTH) ? ft_putchar('w') : ft_putchar('-');
+	if (mode & S_ISVTX)
+		(check & S_IXOTH) ? ft_putchar('t') : ft_putchar('T');
+	else
+		(check & S_IXOTH) ? ft_putchar('x') : ft_putchar('-');
 	return (1);
 }

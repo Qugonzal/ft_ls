@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 19:36:41 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/02 18:40:28 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/03 18:44:46 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void		ft_cut_time(char *str, time_t mtime)
 			i = i + 4;
 			while (++i < 29)
 				write(1, &str[i], 1);
-
 		}
 		else
 			while (++i < 24)
@@ -41,7 +40,7 @@ void		ft_cut_time(char *str, time_t mtime)
 			write(1, &str[i], 1);
 }
 
-void	ft_put_size_and_time(t_file *file, t_stat *max, int mode, int check)
+void		ft_put_size_n_time(t_file *file, t_stat *max, int mode, int check)
 {
 	char *str;
 
@@ -66,7 +65,7 @@ void	ft_put_size_and_time(t_file *file, t_stat *max, int mode, int check)
 	}
 	ft_putchar(' ');
 	str = ctime(&((file->attr)->mtime));
-		ft_cut_time(str, (file->attr)->mtime);
+	ft_cut_time(str, (file->attr)->mtime);
 }
 
 t_file		*ft_place_young(t_file *list)
@@ -93,7 +92,7 @@ t_file		*ft_place_young(t_file *list)
 
 t_file		*ft_mtimecopy(t_file *list, char *path)
 {
-	t_file 		*file;
+	t_file		*file;
 	struct stat	sb;
 	char		*tmp_path;
 

@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 19:48:07 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/29 20:08:00 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/03 16:46:16 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*ft_path(char *path, char *name)
 {
-	char *new_path;
-	int	s1;
-	int	s2;
+	char	*new_path;
+	int		s1;
+	int		s2;
 
 	s1 = ft_strlen(path);
 	s2 = ft_strlen(name);

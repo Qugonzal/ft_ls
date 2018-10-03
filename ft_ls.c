@@ -6,70 +6,20 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 00:06:00 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/02 16:26:34 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/03 18:58:33 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_file		*ft_skip(t_file *file)
-{
-	if ((file->name[1] == '\0') || (file->name[1] == '.'))
-	{
-		if (!ft_strcmp(".", file->name))
-		{
-			ft_unlink(file);
-			ft_free(file);
-			return (NULL);
-		}
-		else if (!ft_strcmp("..", file->name))
-		{
-			ft_unlink(file);
-			ft_free(file);
-			return (NULL);
-		}
-	}
-	return (file);
-}
-
-t_file		*ft_skip_current_t(t_file *file)
-{
-	t_file	*tmp;
-
-	while (file->next)
-	{
-		tmp = file->next;
-		if (file->name[0] == '.')
-		{
-			if (!(file = ft_skip(file)))
-				file = tmp;
-			else
-				file = file->next;
-		}
-		else
-			file = file->next;
-	}
-	tmp = file->prev;
-	if (file->name[0] == '.')
-		file = ft_skip(file);
-	if (!file && !tmp)
-		return (NULL);
-	else if (tmp)
-	{
-		while (tmp->prev)
-			tmp = tmp->prev;
-		return (tmp);
-	}
-	else
-		return (file);
-}
-
-t_file	*ft_ls_all(DIR *dir, char options, t_file *file)
+t_file		*ft_ls_all(DIR *dir, char options)
 {
 	struct dirent	*dirstream;
-	int		id;
+	int				id;
+	t_file			*file;
 
 	id = 0;
+	file = NULL;
 	if (options & LS_A)
 		while ((dirstream = readdir(dir)))
 		{
@@ -90,31 +40,38 @@ t_file	*ft_ls_all(DIR *dir, char options, t_file *file)
 	return (file);
 }
 
-void	ft_free_list(t_file *file)
+t_file		*ft_recurse(t_file *file, char *path, int options)
 {
-	t_file	*tmp;
-	while (file)
+	t_file	*temp;
+	char	*npath;
+
+	temp = NULL;
+	ft_putchar('\n');
+	npath = ft_path(path, file->name);
+	if (options & LS_REC)
+		ft_putpath(npath);
+	if (ft_check_open(file, npath))
 	{
-		tmp = file;
-		file = file->next;
-		ft_free(tmp);
+		ft_ls(file->dirstream, options, npath);
+		closedir(file->dirstream);
 	}
+	free(npath);
+	temp = file;
+	file = file->next;
+	ft_free(temp);
+	return (file);
 }
 
-void	ft_ls(DIR *dir, unsigned char options, char *path)
+void		ft_ls(DIR *dir, int options, char *path)
 {
 	t_file		*file;
-	t_file		*temp;
-	char		*npath;
 
-	file = NULL;
-	temp = NULL;
 	if (!dir)
 	{
 		ft_nodir(options, path);
 		return ;
 	}
-	file = ft_ls_all(dir, options, file);
+	file = ft_ls_all(dir, options);
 	if (file)
 	{
 		ft_link_list(file);
@@ -128,21 +85,7 @@ void	ft_ls(DIR *dir, unsigned char options, char *path)
 		{
 			file = ft_skip_current_t(file);
 			while (file)
-			{
-				ft_putstr("\n");
-				npath = ft_path(path, file->name);
-				if (options & LS_REC)
-					ft_putpath(npath);
-				if (ft_check_open(file, npath))
-				{
-					ft_ls(file->dirstream, options, npath);
-					closedir(file->dirstream);
-				}
-				free(npath);
-				temp = file;
-				file = file->next;
-				ft_free(temp);
-			}
+				file = ft_recurse(file, path, options);
 		}
 	}
 }

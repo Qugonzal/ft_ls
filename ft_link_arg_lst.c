@@ -6,27 +6,15 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 04:24:43 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/01 19:19:09 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/03 16:21:18 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-/*
-t_file		*new_arg(char *name, t_file *nxt_elem)
-{
-	t_file		*new;
-
-	if (!(new = (t_file *)malloc(sizeof(t_arg))))
-		exit(-1);
-	ft_memcpy(new->name, name, ft_strlen(name) + 1);
-	new->next = nxt_elem;
-	return (new);
-}*/
-
 t_file		*new_file(t_file *nxt, char *name)
 {
-	t_file		*file;
+	t_file	*file;
 	int		s;
 
 	s = ft_strlen(name);

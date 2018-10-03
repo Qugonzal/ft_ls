@@ -6,47 +6,12 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 03:01:56 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/03 15:02:24 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/03 18:56:27 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-/*
-   void		ft_print_options(unsigned char options)
-   {
-   if (options) 
-   {
-   ft_putstr("-- OPTIONS --> ");
-   if (options & LS_L)
-   ft_putstr("-l\n");
-   if (options & LS_REC)
-   ft_putstr("-R\n");
-   if (options & LS_A)
-   ft_putstr("-a\n");
-   if (options & LS_R)
-   ft_putstr("-r\n");
-   if (options & LS_T)
-   ft_putstr("-t\n");
-   }
-   else
-   ft_putstr("-- NO OPTIONS --\n");
-   }*/
-/*
-void		ft_print(t_file *arg_tmp)
-{
-	t_file *tmp;
 
-	tmp = arg_tmp;
-	while (tmp->next)
-	{
-		ft_putstr(tmp->name);
-		ft_putstr("\n");
-		tmp = tmp->next;
-	}
-	ft_putstr(tmp->name);
-	ft_putstr("\n");
-}
-*/
 void	ft_lister(int *i, int *identifier, char **av, t_file **arg_lst)
 {
 	t_file		*tmp_start;
@@ -81,7 +46,7 @@ int		ft_fts_open(char **av)
 		if (!av[i][0])
 		{
 			ft_putstr("ft_ls: ");
-			errno = 2;	
+			errno = 2;
 			perror("fts_open");
 			return (0);
 		}
@@ -89,22 +54,52 @@ int		ft_fts_open(char **av)
 	}
 	return (1);
 }
-/*
-int		ft_av(char **av)
-{
-		int i;
 
-		i = 1;
-		while (av[i])
+void	ft_arg_lst(t_file *arg_lst, int options, int identifier)
+{
+	t_file	*tmp_start;
+
+	ft_link_list(arg_lst);
+	arg_lst = ft_ascii(arg_lst);
+	if (options & LS_T)
+		arg_lst = ft_mtime(arg_lst, "./");
+	if (options & LS_R)
+		arg_lst = ft_inverse_list(arg_lst);
+	if (ft_lst_nodir(&arg_lst, options) && arg_lst)
+		ft_putstr("\n");
+	while (arg_lst)
+	{
+		tmp_start = arg_lst;
+		if (identifier > 1)
 		{
-			
+			ft_putstr(arg_lst->name);
+			ft_putstr(":\n");
 		}
-}*/
+		ft_ls(arg_lst->dirstream, options, arg_lst->name);
+		if (arg_lst->dirstream)
+			closedir(arg_lst->dirstream);
+		if ((arg_lst = arg_lst->next))
+			ft_putstr("\n");
+		ft_free(tmp_start);
+	}
+}
+
+void	ft_no_arg(t_file *arg_lst, int options)
+{
+	arg_lst = new_file(arg_lst, ".");
+	if (!(ft_check_open(arg_lst, NULL)))
+	{
+		ft_free(arg_lst);
+		perror("opendir");
+	}
+	ft_ls(arg_lst->dirstream, options, ".");
+	closedir(arg_lst->dirstream);
+	ft_free(arg_lst);
+}
 
 int		main(int ac, char **av)
 {
-	unsigned char	options;
-	t_file			*tmp_start;
+	int				options;
 	int				i;
 	int				identifier;
 	t_file			*arg_lst;
@@ -119,45 +114,9 @@ int		main(int ac, char **av)
 	{
 		ft_lister(&i, &identifier, av, &arg_lst);
 		if (arg_lst)
-		{
-			ft_link_list(arg_lst);
-			arg_lst = ft_ascii(arg_lst);
-			if (options & LS_T)
-				arg_lst = ft_mtime(arg_lst, "./");
-			if (options & LS_R)
-				arg_lst = ft_inverse_list(arg_lst);
-			if (ft_lst_nodir(&arg_lst, options) && arg_lst)
-				ft_putstr("\n");
-			while (arg_lst)
-			{
-				tmp_start = arg_lst;
-				if (identifier > 1)
-				{
-					ft_putstr(arg_lst->name);
-					ft_putstr(":\n");
-				}
-				ft_ls(arg_lst->dirstream, options, arg_lst->name);
-				if (arg_lst->dirstream)
-					closedir(arg_lst->dirstream);
-				if ((arg_lst = arg_lst->next))
-					ft_putstr("\n");
-				ft_free(tmp_start);
-			}
-		}
+			ft_arg_lst(arg_lst, options, identifier);
 	}
 	else
-	{
-		arg_lst = new_file(arg_lst, ".");
-		if (!(ft_check_open(arg_lst, NULL)))
-		{
-			ft_free(arg_lst);
-			perror("opendir");
-		}
-		ft_ls(arg_lst->dirstream, options, ".");
-		closedir(arg_lst->dirstream);
-	  	ft_free(arg_lst);
-	}
-/*	if (!(options & LS_L) && !(options & LS_REC) && !(options & LS_1))
-		ft_putchar('\n');
-*/	return (0);
+		ft_no_arg(arg_lst, options);
+	return (0);
 }

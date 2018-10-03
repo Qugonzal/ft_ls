@@ -6,27 +6,27 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 19:04:07 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/02 16:12:41 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/03 18:55:43 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	ft_put_ls1(unsigned char options, char *path)
+void	ft_put_ls1(int options, char *path)
 {
-		if (options & LS_1)
-		{
-			ft_putstr(path);
-			ft_putstr("\n");
-		}
-		else
-		{
-			ft_putstr(path);
-			ft_putstr("  ");
-		}
+	if (options & LS_1)
+	{
+		ft_putstr(path);
+		ft_putstr("\n");
+	}
+	else
+	{
+		ft_putstr(path);
+		ft_putstr("  ");
+	}
 }
 
-void	ft_nodir(unsigned char options, char *path)
+void	ft_nodir(int options, char *path)
 {
 	struct stat sb;
 	t_file		*file;
@@ -54,7 +54,7 @@ void	ft_nodir(unsigned char options, char *path)
 		ft_put_ls1(options, path);
 }
 
-int		ft_lst_nodir(t_file **arg_lst, unsigned char options)
+int		ft_lst_nodir(t_file **arg_lst, int options)
 {
 	t_file	*list;
 	t_file	*file;
@@ -83,7 +83,7 @@ int		ft_lst_nodir(t_file **arg_lst, unsigned char options)
 	return (f);
 }
 
-void	ft_put_ufile(t_file **lst, t_file **list, unsigned char options)
+void	ft_put_ufile(t_file **lst, t_file **list, int options)
 {
 	t_file	*tmp;
 	t_file	*file;

@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 15:15:24 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/12/27 20:54:10 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/03 16:27:46 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,5 @@ t_file		*ft_ascii(t_file *first)
 
 	last = ft_place_last(first);
 	first = ft_place_first(last);
-	return(ft_parse(first, last));
+	return (ft_parse(first, last));
 }

@@ -6,14 +6,21 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 19:22:12 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/02 16:16:43 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/03 18:51:45 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include <time.h>
 
-t_file		*ft_ls_l(t_file *file, char *path, unsigned char options)
+void		ft_put_total(t_stat max)
+{
+	ft_putstr("total ");
+	ft_putnbr_ll(max.blocks);
+	ft_putchar('\n');
+}
+
+t_file		*ft_ls_l(t_file *file, char *path, int options)
 {
 	t_file		*dir;
 	t_stat		max;
@@ -21,9 +28,7 @@ t_file		*ft_ls_l(t_file *file, char *path, unsigned char options)
 	dir = NULL;
 	ft_init_max(&max);
 	ft_fillcheck_stat(file, &max, path);
-	ft_putstr("total ");
-	ft_putnbr_ll(max.blocks);
-	ft_putchar('\n');
+	ft_put_total(max);
 	while (file->next)
 	{
 		ft_print_l(file, &max, path);

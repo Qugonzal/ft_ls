@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 19:37:52 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/27 19:41:05 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/03 17:11:35 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void		ft_fillstat(t_stat *file, struct stat *sb)
 {
 	struct passwd	*usr;
 	struct group	*grp;
-	int		mode;
+	int				mode;
 
 	file->mode = sb->st_mode;
 	mode = file->mode & S_IFMT;
@@ -61,4 +61,3 @@ void		ft_fillcheck_stat(t_file *file, t_stat *max, char *path)
 		check = check->next;
 	}
 }
-

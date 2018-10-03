@@ -6,13 +6,13 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 03:48:58 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/02 19:03:24 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/03 16:20:37 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		ft_error(void)
+void	ft_error(void)
 {
 	if (errno)
 	{
@@ -41,7 +41,7 @@ int		ft_nostat(t_stat *max, char *name)
 	return (0);
 }
 
-char		ft_check_open(t_file *dir, char *path)
+char	ft_check_open(t_file *dir, char *path)
 {
 	if (path)
 	{
@@ -52,7 +52,7 @@ char		ft_check_open(t_file *dir, char *path)
 			return (0);
 		}
 	}
-	else 
+	else
 	{
 		if (!(dir->dirstream = opendir(dir->name)))
 		{
