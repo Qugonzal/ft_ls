@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 00:00:33 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/02 14:50:00 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/03 14:56:47 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void		ft_no_option(char chr);
 char		ft_check_open(t_file *dir, char *path);
 char		*ft_path(char *path, char *name);
 
-unsigned char	ft_set_options(char **av);
+unsigned char	ft_set_options(char **av, int *i);
 unsigned char	ft_normal_option(char *av, unsigned char *options);
 
 int		ft_print_l(t_file *file, t_stat *max, char *path);

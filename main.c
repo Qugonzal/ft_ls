@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 03:01:56 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/02 20:21:33 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/03 15:02:24 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,10 @@ int		main(int ac, char **av)
 
 	i = 1;
 	arg_lst = NULL;
-	options = ft_set_options(av);
+	options = ft_set_options(av, &i);
 	identifier = 0;
 	if (!ft_fts_open(av))
 		return (0);
-	while (av[i] && av[i][0] == '-' && av[i][1])
-		i++;
-//	i = ft_av(av);
 	if (i < ac)
 	{
 		ft_lister(&i, &identifier, av, &arg_lst);
@@ -160,7 +157,7 @@ int		main(int ac, char **av)
 		closedir(arg_lst->dirstream);
 	  	ft_free(arg_lst);
 	}
-	if (!(options & LS_L) && !(options & LS_REC) && !(options & LS_1))
+/*	if (!(options & LS_L) && !(options & LS_REC) && !(options & LS_1))
 		ft_putchar('\n');
-	return (0);
+*/	return (0);
 }

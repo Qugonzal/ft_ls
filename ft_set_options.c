@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 05:08:10 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/02 20:28:41 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/03 15:13:00 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void			ft_no_option(char chr)
 {
-	ft_putstr("./ft_ls: illegal option -- '");
+	ft_putstr("./ft_ls: illegal option -- ");
 	ft_putchar(chr);
-	ft_putstr("'\nusage: ./ft_ls [-lRart] [file ...]\n");
+	ft_putstr("\nusage: ./ft_ls [-lRart] [file ...]\n");
 	exit(-1);
 }
 
@@ -64,19 +64,28 @@ unsigned char		ft_normal_option(char *av, unsigned char *options)
 	return (*options);
 }
 
-unsigned char	ft_set_options(char **av)
+unsigned char	ft_set_options(char **av, int *nb)
 {
-	int		i;
 	unsigned char	options;
+	int				i;
 
 	i = 0;
 	options = 0;
 	while (av[++i] && av[i][0] == '-')
 	{
-			if (!av[i][1] || av[i][1] == '-')
-				return (options);
-			else
-				options = ft_normal_option(av[i], &options);
+		if (av[i][1] == '-' && !av[i][2])
+		{
+			*nb = i + 1;
+			return (options);
+		}
+		if (!av[i][1])
+		{
+			*nb = i;
+			return (options);
+		}
+		else
+			options = ft_normal_option(av[i], &options);
 	}
+	*nb = i;
 	return (options);
 }
