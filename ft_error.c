@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 03:48:58 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/03 16:20:37 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/04 16:54:19 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,26 @@ int		ft_nostat(t_stat *max, char *name)
 	return (0);
 }
 
-char	ft_check_open(t_file *dir, char *path)
+int		ft_chknopath(t_file *dir)
+{
+	struct stat sb;
+
+	if (!(dir->dirstream = opendir(dir->name)))
+	{
+		dir->dirstream = NULL;
+		if (errno == 20)
+			return (1);
+		else if (lstat(dir->name, &sb))
+		{
+			ft_putstr("ls: ");
+			perror(dir->name);
+			return (0);
+		}
+	}
+	return (1);
+}
+
+int		ft_check_open(t_file *dir, char *path)
 {
 	if (path)
 	{
@@ -54,17 +73,8 @@ char	ft_check_open(t_file *dir, char *path)
 	}
 	else
 	{
-		if (!(dir->dirstream = opendir(dir->name)))
-		{
-			if (errno == 20)
-				return (1);
-			else
-			{
-				ft_putstr("ls: ");
-				perror(dir->name);
-			}
+		if (!(ft_chknopath(dir)))
 			return (0);
-		}
 	}
 	return (1);
 }

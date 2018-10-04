@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 03:01:56 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/03 19:48:42 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/04 17:05:28 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ void	ft_arg_lst(t_file *arg_lst, int options, int identifier)
 {
 	t_file	*tmp_start;
 
-	ft_link_list(arg_lst);
-	arg_lst = ft_ascii(arg_lst);
 	if (options & LS_T)
 		arg_lst = ft_mtime(arg_lst, "./");
 	if (options & LS_R)
@@ -114,7 +112,11 @@ int		main(int ac, char **av)
 	{
 		ft_lister(&i, &identifier, av, &arg_lst);
 		if (arg_lst)
+		{
+			ft_link_list(arg_lst);
+			arg_lst = ft_ascii(arg_lst);
 			ft_arg_lst(arg_lst, options, identifier);
+		}
 	}
 	else
 		ft_no_arg(arg_lst, options);

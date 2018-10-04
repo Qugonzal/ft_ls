@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 19:04:07 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/03 19:48:24 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/04 17:44:09 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,19 @@ void	ft_nodir(int options, char *path)
 			ft_fillstat(file->attr, &sb);
 		if (file->attr)
 			ft_checkmax(file->attr, &max);
-		ft_print_l(file, &max, path);
+		ft_print_l(file, &max, "./");
 		ft_free(file);
 		ft_putchar('\n');
 	}
 	else
-		ft_put_ls1(options, path);
+		ft_putstr(path);
+}
+
+void	ft_rewind_lst(t_file **list)
+{
+	if (*list)
+		while ((*list)->prev)
+			*list = (*list)->prev;
 }
 
 int		ft_lst_nodir(t_file **arg_lst, int options)
@@ -75,10 +82,10 @@ int		ft_lst_nodir(t_file **arg_lst, int options)
 			file = file->next;
 		}
 	}
-	if (list)
-		while (list->prev)
-			list = list->prev;
+	ft_rewind_lst(&list);
 	*arg_lst = list;
+	if (f & !(options & LS_L))
+		ft_putchar('\n');
 	return (f);
 }
 
@@ -91,7 +98,13 @@ void	ft_put_ufile(t_file **lst, t_file **list, int options)
 	*list = file->prev;
 	ft_ls(NULL, options, file->name);
 	tmp = file;
-	file = file->next;
+	if ((file = file->next))
+	{
+		if (options & LS_1)
+			ft_putchar('\n');
+		else if (!(options & LS_L))
+			ft_putstr("  ");
+	}
 	ft_unlink(tmp);
 	ft_free(tmp);
 	*lst = file;
