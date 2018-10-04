@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 03:01:56 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/03 18:56:27 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/03 19:48:42 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		ft_fts_open(char **av)
 	{
 		if (!av[i][0])
 		{
-			ft_putstr("ft_ls: ");
+			ft_putstr("ls: ");
 			errno = 2;
 			perror("fts_open");
 			return (0);

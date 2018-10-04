@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 19:36:41 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/03 18:44:46 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/03 19:46:02 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ t_file		*ft_mtimecopy(t_file *list, char *path)
 		{
 			free(file->attr);
 			file->attr = NULL;
-			perror("stat");
 		}
 		else
 			(file->attr)->mtime = sb.st_mtime;

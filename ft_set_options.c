@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 05:08:10 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/03 18:54:47 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/03 19:57:43 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void				ft_no_option(char chr)
 {
-	ft_putstr("./ft_ls: illegal option -- ");
+	ft_putstr("ls: illegal option -- ");
 	ft_putchar(chr);
 	ft_putstr("\nusage: ./ft_ls [-lRart] [file ...]\n");
 	exit(-1);

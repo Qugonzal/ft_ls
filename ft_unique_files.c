@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 19:04:07 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/03 18:55:43 by qugonzal         ###   ########.fr       */
+/*   Updated: 2018/10/03 19:48:24 by qugonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	ft_nodir(int options, char *path)
 		ft_init_max(&max);
 		if (lstat(file->name, &sb) == -1)
 		{
-			perror("lstat");
 			free(file->attr);
 			file->attr = NULL;
 		}
