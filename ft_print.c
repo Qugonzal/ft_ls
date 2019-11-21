@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 19:17:43 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/03 18:54:22 by qugonzal         ###   ########.fr       */
+/*   Updated: 2019/11/21 17:42:08 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,8 @@ t_file		*ft_print_chk_dir(t_file *file, char *path, int options)
 	if (options & LS_L)
 		dir = ft_ls_l(file, path, options);
 	else
-	{
 		while (file)
-		{
 			file = ft_chk_dir(file, &dir, options);
-		}
-	}
 	if (dir)
 	{
 		ft_link_list(dir);

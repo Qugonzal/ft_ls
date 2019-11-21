@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 19:42:13 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/09/27 19:42:51 by qugonzal         ###   ########.fr       */
+/*   Updated: 2019/11/21 17:37:31 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ void		ft_checkmax(t_stat *file, t_stat *max)
 	if ((file->nlink) > max->nlink)
 		max->nlink = file->nlink;
 	if (ft_strlen(file->user) > ft_strlen(max->user))
-		max->user = file->user;
+		max->user = ft_strdup(file->user);
 	if (ft_strlen(file->group) > ft_strlen(max->group))
-		max->group = file->group;
+		max->group = ft_strdup(file->group);
 	ft_max_mode(file, max);
 	max->blocks = max->blocks + file->blocks;
 }

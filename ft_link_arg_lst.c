@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 04:24:43 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/03 16:21:18 by qugonzal         ###   ########.fr       */
+/*   Updated: 2019/11/21 17:54:11 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ t_file		*new_file(t_file *nxt, char *name)
 		ft_putstr(": filename is too long\n");
 		return (NULL);
 	}
-	if (!(file = (t_file *)malloc(sizeof(t_file))))
+	if (!(file = (t_file *)ft_memalloc(sizeof(t_file))))
 	{
 		perror("malloc:");
 		exit(-1);
 	}
-	if (!(file->attr = (t_stat *)malloc(sizeof(t_stat))))
+	if (!(file->attr = (t_stat *)ft_memalloc(sizeof(t_stat))))
 	{
 		perror("malloc :");
 		exit(-1);
@@ -60,7 +60,13 @@ void		ft_free(t_file *file)
 	if (file)
 	{
 		if (file->attr)
+		{
+			if ((file->attr)->user)
+				free((file->attr)->user);
+			if ((file->attr)->group)
+				free((file->attr)->group);
 			free(file->attr);
+		}
 		free(file);
 	}
 	file = NULL;
