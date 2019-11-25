@@ -53,11 +53,11 @@ t_file		*ft_print_chk_dir(t_file *file, char *path, int options)
 	return (dir);
 }
 
-void		ft_printspace_str(char *file_name, char *max_name)
+void		ft_printspace_str(char *file_name, int max_len)
 {
 	int nb;
 
-	nb = ft_strlen(max_name) - ft_strlen(file_name);
+	nb = max_len - ft_strlen(file_name);
 	while (nb > 0)
 	{
 		ft_putchar(' ');

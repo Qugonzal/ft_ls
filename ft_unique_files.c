@@ -30,7 +30,7 @@ void	ft_nodir(int options, char *path)
 {
 	struct stat sb;
 	t_file		*file;
-	t_stat		max;
+	t_max		max;
 
 	if (options & LS_L)
 	{

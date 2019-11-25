@@ -12,7 +12,7 @@
 
 #include "ft_ls.h"
 
-void	ft_put_owners(t_file *file, t_stat *max)
+void	ft_put_owners(t_file *file, t_max *max)
 {
 	ft_putstr(" ");
 	if ((file->attr)->user)
@@ -51,8 +51,13 @@ void	ft_put_name(t_file *file, int mode, char *path)
 	{
 		file_name = ft_path(path, file->name);
 		ft_putstr(" -> ");
-		if (!readlink(file_name, link, 256))
-			perror("readlink");
+		if (readlink(file_name, link, 256) == -1)
+		{
+			ft_putstr("?\n");
+			ft_putstr("readlink: ");
+			perror(file_name);
+			ft_putstr("\b\b");
+		}
 		else
 			ft_putstr(link);
 		free(file_name);

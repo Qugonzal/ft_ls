@@ -12,7 +12,7 @@
 
 #include "ft_ls.h"
 
-int		ft_print_l(t_file *file, t_stat *max, char *path)
+int		ft_print_l(t_file *file, t_max *max, char *path)
 {
 	int		check;
 	int		mode;

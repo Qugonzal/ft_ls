@@ -33,6 +33,17 @@
 # define LS_T	(1 << 5)
 # define LS_1	(1 << 6)
 
+typedef struct		s_max
+{
+	mode_t			mode;
+	nlink_t			nlink;
+	int				user;
+	int				group;
+	off_t			size;
+	time_t			mtime;
+	blkcnt_t		blocks;
+}					t_max;
+
 typedef struct		s_stat
 {
 	mode_t			mode;
@@ -69,30 +80,30 @@ t_file				*ft_ls_l(t_file *file, char *path, int options);
 t_file				*ft_skip_current_t(t_file *list);
 t_file				*ft_print_chk_dir(t_file *file, char *path, int options);
 
-void				ft_checkmax(t_stat *file, t_stat *max);
+void				ft_checkmax(t_stat *file, t_max *max);
 void				ft_cut_time(char *str, time_t mtime);
 void				ft_error(void);
 void				ft_free(t_file *file);
 void				ft_fillstat(t_stat *file, struct stat *sb);
-void				ft_fillcheck_stat(t_file *file, t_stat *max, char *path);
+void				ft_fillcheck_stat(t_file *file, t_max *max, char *path);
 void				ft_insert(t_file *elem, t_file *dest, char option);
-void				ft_init_max(t_stat *max);
+void				ft_init_max(t_max *max);
 void				ft_link_list(t_file *file);
 void				ft_ls(DIR *dir, int options, char *path);
-void				ft_max_mode(t_stat *file, t_stat *max);
+void				ft_max_mode(t_stat *file, t_max *max);
 void				ft_nodir(int options, char *path);
 void				ft_print_n_free(t_file *arg_tmp);
 void				ft_put_ufile(t_file **lst, t_file **list, int options);
-void				ft_printspace_str(char *file_name, char *max_name);
+void				ft_printspace_str(char *file_name, int max_len);
 void				ft_printspace(long long nb, long long max);
 void				ft_putpath(char *path);
 void				ft_put_name(t_file *file, int mode, char *path);
 void				ft_putnbr_ll(long long n);
-void				ft_put_owners(t_file *file, t_stat *max);
+void				ft_put_owners(t_file *file, t_max *max);
 void				ft_strfcat(char *s1, char *s2);
 void				ft_unlink(t_file *elem);
 void				ft_no_option(char chr);
-void				ft_put_size_n_time(t_file *file, t_stat *max,
+void				ft_put_size_n_time(t_file *file, t_max *max,
 		int mode, int check);
 void				ft_lister(int *i, int *identifier, char **av,
 		t_file **arg_lst);
@@ -102,10 +113,10 @@ char				*ft_path(char *path, char *name);
 int					ft_check_open(t_file *dir, char *path);
 int					ft_set_options(char **av, int *i);
 int					ft_normal_option(char *av, int *options);
-int					ft_print_l(t_file *file, t_stat *max, char *path);
+int					ft_print_l(t_file *file, t_max *max, char *path);
 int					ft_lst_nodir(t_file **arg_lst, int options);
 int					ft_put_mode(mode_t mode);
 int					ft_put_right(mode_t mode);
-int					ft_nostat(t_stat *max, char *name);
+int					ft_nostat(t_max *max, char *name);
 
 #endif

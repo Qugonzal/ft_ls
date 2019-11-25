@@ -53,7 +53,7 @@ void		ft_fillstat(t_stat *file, struct stat *sb)
 	ft_fillstat_ug(file, sb);
 }
 
-void		ft_fillcheck_stat(t_file *file, t_stat *max, char *path)
+void		ft_fillcheck_stat(t_file *file, t_max *max, char *path)
 {
 	struct stat	sb;
 	t_file		*check;
@@ -65,14 +65,16 @@ void		ft_fillcheck_stat(t_file *file, t_stat *max, char *path)
 		tmp_path = ft_path(path, check->name);
 		if (lstat(tmp_path, &sb) == -1)
 		{
-			perror("lstat");
+			ft_putstr("lstat: ");
+			ft_putstr(path);
+			perror(check->name);
 			free(check->attr);
 			check->attr = NULL;
 		}
 		else
 			ft_fillstat(check->attr, &sb);
 		free(tmp_path);
-		if (file->attr)
+		if (check->attr)
 			ft_checkmax(check->attr, max);
 		check = check->next;
 	}

@@ -40,7 +40,7 @@ void		ft_cut_time(char *str, time_t mtime)
 			write(1, &str[i], 1);
 }
 
-void		ft_put_size_n_time(t_file *file, t_stat *max, int mode, int check)
+void		ft_put_size_n_time(t_file *file, t_max *max, int mode, int check)
 {
 	char *str;
 

@@ -24,7 +24,7 @@ void	ft_error(void)
 	}
 }
 
-int		ft_nostat(t_stat *max, char *name)
+int		ft_nostat(t_max *max, char *name)
 {
 	ft_putchar('-');
 	ft_putstr("?????????  ");

@@ -12,7 +12,7 @@
 
 #include "ft_ls.h"
 
-void		ft_max_mode(t_stat *file, t_stat *max)
+void		ft_max_mode(t_stat *file, t_max *max)
 {
 	int		check;
 	int		mode;
@@ -34,24 +34,28 @@ void		ft_max_mode(t_stat *file, t_stat *max)
 	}
 }
 
-void		ft_checkmax(t_stat *file, t_stat *max)
+void		ft_checkmax(t_stat *file, t_max *max)
 {
+	int len;
+
 	if ((file->nlink) > max->nlink)
 		max->nlink = file->nlink;
-	if (ft_strlen(file->user) > ft_strlen(max->user))
-		max->user = ft_strdup(file->user);
-	if (ft_strlen(file->group) > ft_strlen(max->group))
-		max->group = ft_strdup(file->group);
+	len = ft_strlen(file->user);
+	if (len > max->user)
+		max->user = len;
+	len = ft_strlen(file->group);
+	if (len > max->group)
+		max->group = len;
 	ft_max_mode(file, max);
 	max->blocks = max->blocks + file->blocks;
 }
 
-void		ft_init_max(t_stat *max)
+void		ft_init_max(t_max *max)
 {
 	max->mode = 0;
 	max->blocks = 0;
 	max->nlink = 0;
 	max->size = 0;
-	max->user = "";
-	max->group = "";
+	max->user = 0;
+	max->group = 0;
 }

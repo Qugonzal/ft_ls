@@ -13,7 +13,7 @@
 #include "ft_ls.h"
 #include <time.h>
 
-void		ft_put_total(t_stat max)
+void		ft_put_total(t_max max)
 {
 	ft_putstr("total ");
 	ft_putnbr_ll(max.blocks);
@@ -23,7 +23,7 @@ void		ft_put_total(t_stat max)
 t_file		*ft_ls_l(t_file *file, char *path, int options)
 {
 	t_file		*dir;
-	t_stat		max;
+	t_max		max;
 
 	dir = NULL;
 	ft_init_max(&max);
