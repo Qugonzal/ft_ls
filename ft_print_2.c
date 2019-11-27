@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 19:26:18 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/03 18:44:46 by qugonzal         ###   ########.fr       */
+/*   Updated: 2019/11/21 21:00:03 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int		ft_print_l(t_file *file, t_stat *max, char *path)
 {
 	int		check;
 	int		mode;
+	char *str;
 
 	if (file->attr)
 	{
@@ -23,7 +24,14 @@ int		ft_print_l(t_file *file, t_stat *max, char *path)
 		mode = (file->attr)->mode & S_IFMT;
 		if (!ft_put_right((file->attr)->mode))
 			return (ft_nostat(max, file->name));
-		ft_putstr("  ");
+		if (listxattr(str = ft_strjoin(path, file->name), NULL, 0, 0) == -1)
+		{
+			ft_putstr("@ ");
+			perror("");
+			free(str);
+		}
+		else
+			ft_putstr("  ");
 		ft_printspace((file->attr)->nlink, max->nlink);
 		ft_putnbr_ll((file->attr)->nlink);
 		ft_put_owners(file, max);
