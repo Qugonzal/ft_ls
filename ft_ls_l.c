@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls_l.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/15 19:22:12 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/03 18:51:45 by qugonzal         ###   ########.fr       */
+/*   Created: 2019/11/29 19:02:06 by quegonza          #+#    #+#             */
+/*   Updated: 2019/11/29 19:33:14 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_file		*ft_ls_l(t_file *file, char *path, int options)
 {
 	t_file		*dir;
 	t_max		max;
+	mode_t		check;
 
 	dir = NULL;
 	ft_init_max(&max);
@@ -33,7 +34,7 @@ t_file		*ft_ls_l(t_file *file, char *path, int options)
 	{
 		ft_print_l(file, &max, path);
 		if (options & LS_REC)
-			if (file->mode & DT_DIR)
+			if ((check = file->attr->mode & S_IFMT) == S_IFDIR)
 				dir = new_file(dir, file->name);
 		file = file->next;
 		ft_free(file->prev);
@@ -41,7 +42,7 @@ t_file		*ft_ls_l(t_file *file, char *path, int options)
 	}
 	ft_print_l(file, &max, path);
 	if (options & LS_REC)
-		if (file->mode & DT_DIR)
+		if ((check = file->attr->mode & S_IFMT) == S_IFDIR)
 			dir = new_file(dir, file->name);
 	ft_free(file);
 	ft_putchar('\n');

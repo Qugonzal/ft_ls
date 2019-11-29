@@ -6,7 +6,7 @@
 #    By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/15 00:14:59 by qugonzal          #+#    #+#              #
-#    Updated: 2019/11/21 18:27:44 by quegonza         ###   ########.fr        #
+#    Updated: 2019/11/29 19:03:56 by quegonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,8 @@ CLEAN_COLOR = \033[1;36m
 #     \/\/\/Compiliation-----
 
 NAME = ft_ls
-CC = gcc -ggdb
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
 
 #     \/\/\/Files-----
 

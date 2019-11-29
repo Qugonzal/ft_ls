@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/27 19:40:10 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/03 17:09:14 by qugonzal         ###   ########.fr       */
+/*   Created: 2019/11/29 19:02:11 by quegonza          #+#    #+#             */
+/*   Updated: 2019/11/29 19:11:11 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	ft_put_name(t_file *file, int mode, char *path)
 			ft_putstr("?\n");
 			ft_putstr("readlink: ");
 			perror(file_name);
-			ft_putstr("\b\b");
 		}
 		else
 			ft_putstr(link);

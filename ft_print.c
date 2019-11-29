@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/27 19:17:43 by qugonzal          #+#    #+#             */
-/*   Updated: 2019/11/21 17:42:08 by quegonza         ###   ########.fr       */
+/*   Created: 2019/11/29 19:02:09 by quegonza          #+#    #+#             */
+/*   Updated: 2019/11/29 19:36:46 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ t_file		*ft_chk_dir(t_file *file, t_file **dire, int options)
 {
 	t_file *tmp;
 	t_file *dir;
+	mode_t check;
 
 	dir = *dire;
 	if ((options & LS_1) && file->prev)
@@ -24,8 +25,9 @@ t_file		*ft_chk_dir(t_file *file, t_file **dire, int options)
 		ft_putstr("  ");
 	tmp = file;
 	ft_putstr(file->name);
+	check = (file->attr->mode & S_IFMT);
 	if (options & LS_REC)
-		if ((file->mode & DT_DIR))
+		if (check == S_IFDIR)
 			dir = new_file(dir, file->name);
 	*dire = dir;
 	file = file->next;
