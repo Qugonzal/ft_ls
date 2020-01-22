@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 19:48:07 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/03 16:46:16 by qugonzal         ###   ########.fr       */
+/*   Updated: 2020/01/22 18:19:53 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,21 @@ char	*ft_path(char *path, char *name)
 
 	s1 = ft_strlen(path);
 	s2 = ft_strlen(name);
-	if (!(new_path = (char *)ft_memalloc(s1 + s2 + 2)))
-		return (NULL);
-	ft_strncpy(new_path, path, s1);
-	if (new_path[s1 - 1] != '/')
+	if (path[s1 - 1] != '/')
 	{
+		if (!(new_path = (char *)ft_memalloc(s1 + s2 + 2)))
+			return (NULL);
+		ft_strncpy(new_path, path, s1);
 		new_path[s1] = '/';
 		ft_strncpy(&new_path[s1 + 1], name, s2);
 	}
 	else
+	{
+		if (!(new_path = (char *)ft_memalloc(s1 + s2 + 1)))
+			return (NULL);
+		ft_strncpy(new_path, path, s1);
 		ft_strncpy(&new_path[s1], name, s2);
+	}
 	return (new_path);
 }
 
