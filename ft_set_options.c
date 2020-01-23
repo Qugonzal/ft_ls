@@ -6,7 +6,7 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:12 by quegonza          #+#    #+#             */
-/*   Updated: 2019/11/29 19:02:12 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/01/16 16:42:10 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ int					ft_hard_option(char *av, int *options)
 	while (av[++j])
 	{
 		if (!(ft_strncmp("recursive", &av[j], ft_strlen(&av[j]))))
-			*options = *options | LS_REC;
+			*options = *options | (1 << 2);
 		else if (!(ft_strncmp("all", &av[j], ft_strlen(&av[j]))))
-			*options = *options | LS_A;
+			*options = *options | (1 << 3);
 		else if (!(ft_strncmp("reverse", &av[j], ft_strlen(&av[j]))))
-			*options = *options | LS_R;
+			*options = *options | (1 << 4);
 		else
 			ft_no_option(av[j]);
 	}
@@ -47,20 +47,20 @@ int					ft_normal_option(char *av, int *options)
 	while (av[++j])
 	{
 		if (av[j] == 'l')
-			*options = *options | LS_L;
+			*options = *options | (1 << 1);
 		else if (av[j] == 'R')
-			*options = *options | LS_REC;
+			*options = *options | (1 << 2);
 		else if (av[j] == 'a')
-			*options = *options | LS_A;
+			*options = *options | (1 << 3);
 		else if (av[j] == 'r')
-			*options = *options | LS_R;
+			*options = *options | (1 << 4);
 		else if (av[j] == 't')
-			*options = *options | LS_T;
+			*options = *options | (1 << 5);
 		else if (av[j] == '1')
 		{
-			if ((*options & LS_L))
-				*options = *options ^ LS_L;
-			*options = *options | LS_1;
+			if ((*options & (1 << 1)))
+				*options = *options ^ (1 << 1);
+			*options = *options | (1 << 6);
 		}
 		else
 			ft_no_option(av[j]);
