@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 03:01:56 by qugonzal          #+#    #+#             */
-/*   Updated: 2018/10/04 17:05:28 by qugonzal         ###   ########.fr       */
+/*   Updated: 2020/01/23 19:03:38 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		ft_fts_open(char **av)
 		{
 			ft_putstr("ls: ");
 			errno = 2;
-			perror("fts_open");
+			perror(" ");
 			return (0);
 		}
 		i++;

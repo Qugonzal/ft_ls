@@ -6,7 +6,7 @@
 /*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 19:17:43 by qugonzal          #+#    #+#             */
-/*   Updated: 2019/11/21 17:42:08 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/01/23 18:50:44 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ t_file		*ft_chk_dir(t_file *file, t_file **dire, int options)
 {
 	t_file *tmp;
 	t_file *dir;
+	mode_t check;
 
+	check = ((file->attr)->mode & S_IFMT);
 	dir = *dire;
 	if ((options & LS_1) && file->prev)
 		ft_putstr("\n");
@@ -25,7 +27,7 @@ t_file		*ft_chk_dir(t_file *file, t_file **dire, int options)
 	tmp = file;
 	ft_putstr(file->name);
 	if (options & LS_REC)
-		if ((file->mode & DT_DIR))
+		if ((check & S_IFDIR))
 			dir = new_file(dir, file->name);
 	*dire = dir;
 	file = file->next;
