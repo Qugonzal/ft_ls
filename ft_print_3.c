@@ -6,7 +6,7 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:11 by quegonza          #+#    #+#             */
-/*   Updated: 2019/11/29 19:11:11 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/01/24 19:19:31 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ void	ft_put_name(t_file *file, int mode, char *path)
 	ft_putstr(file->name);
 	if (mode == S_IFLNK)
 	{
+		ft_clean_slash(file->name);
 		file_name = ft_path(path, file->name);
+		ft_clean_slash(file_name);
 		ft_putstr(" -> ");
 		if (readlink(file_name, link, 256) == -1)
 		{

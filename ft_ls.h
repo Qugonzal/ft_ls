@@ -6,7 +6,7 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:17 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/24 16:15:24 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/01/24 19:07:41 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void				ft_lister(int *i, int *identifier, char **av,
 		t_file **arg_lst);
 
 char				*ft_path(char *path, char *name);
+void				ft_clean_slash(char *path);
 
 int					ft_check_open(t_file *dir, char *path);
 int					ft_set_options(char **av, int *i);

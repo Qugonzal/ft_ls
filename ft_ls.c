@@ -6,7 +6,7 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:06 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/24 16:13:37 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/01/24 19:38:17 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,27 @@ t_file		*ft_recurse(t_file *file, char *path, int options)
 	return (file);
 }
 
-int			ft_ldir(DIR *dir, char *path)
+int			ft_iflink(char *path)
 {
 	struct stat sb;
-	mode_t		mode;
-	return (0);
+
+	if (lstat(path, &sb) == -1)
+	{
+		ft_putstr("lstat: ");
+		ft_putstr(path);
+	}
+	sb.st_mode = sb.st_mode & S_IFMT;
+	if (sb.st_mode == S_IFLNK)
+		return (1);
+	else
+		return (0);
 }
 
 void		ft_ls(DIR *dir, int options, char *path)
 {
 	t_file		*file;
 
-	if (!dir || ft_ldir(DIR *dir, char *path))
+	if (!dir || ft_iflink(path))
 	{
 		ft_nodir(options, path);
 		return ;

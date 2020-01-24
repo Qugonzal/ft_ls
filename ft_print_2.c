@@ -6,15 +6,12 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:10 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/24 16:14:24 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/01/24 20:09:03 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-<<<<<<< HEAD
-int		ft_print_l(t_file *file, t_max *max, char *path)
-=======
 void		ft_xattr(t_file *file, char *path)
 {
 	int		size;
@@ -22,11 +19,12 @@ void		ft_xattr(t_file *file, char *path)
 	mode_t check;
 
 
-	check = (file->attr)->mode & S_IROTH;
+	check = (file->attr)->mode & ~S_IFMT;
 	size = 0;
-	if (check)
+	if (check & S_IROTH)
 	{
 		str = ft_path(path, file->name);
+		ft_clean_slash(str);
 		size = listxattr(str, NULL, 0, 0);
 		free(str);
 	}
@@ -36,8 +34,7 @@ void		ft_xattr(t_file *file, char *path)
 		ft_putstr("  ");
 }
 
-int		ft_print_l(t_file *file, t_stat *max, char *path)
->>>>>>> master
+int		ft_print_l(t_file *file, t_max *max, char *path)
 {
 	int		check;
 	int		mode;
