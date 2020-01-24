@@ -5,8 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< HEAD
 /*   Created: 2019/11/29 19:02:16 by quegonza          #+#    #+#             */
 /*   Updated: 2019/11/29 19:02:16 by quegonza         ###   ########.fr       */
+=======
+/*   Created: 2017/11/28 03:01:56 by qugonzal          #+#    #+#             */
+/*   Updated: 2020/01/23 19:03:38 by quegonza         ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +52,7 @@ int		ft_fts_open(char **av)
 		{
 			ft_putstr("ls: ");
 			errno = 2;
-			perror("fts_open");
+			perror(" ");
 			return (0);
 		}
 		i++;

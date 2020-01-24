@@ -5,14 +5,44 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< HEAD
 /*   Created: 2019/11/29 19:02:10 by quegonza          #+#    #+#             */
 /*   Updated: 2019/11/29 19:02:10 by quegonza         ###   ########.fr       */
+=======
+/*   Created: 2018/09/27 19:26:18 by qugonzal          #+#    #+#             */
+/*   Updated: 2020/01/22 19:45:17 by quegonza         ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
+<<<<<<< HEAD
 int		ft_print_l(t_file *file, t_max *max, char *path)
+=======
+void		ft_xattr(t_file *file, char *path)
+{
+	int		size;
+	char	*str;
+	mode_t check;
+
+
+	check = (file->attr)->mode & S_IROTH;
+	size = 0;
+	if (check)
+	{
+		str = ft_path(path, file->name);
+		size = listxattr(str, NULL, 0, 0);
+		free(str);
+	}
+	if (size > 0)
+		ft_putstr("@ ");
+	else
+		ft_putstr("  ");
+}
+
+int		ft_print_l(t_file *file, t_stat *max, char *path)
+>>>>>>> master
 {
 	int		check;
 	int		mode;
@@ -23,7 +53,7 @@ int		ft_print_l(t_file *file, t_max *max, char *path)
 		mode = (file->attr)->mode & S_IFMT;
 		if (!ft_put_right((file->attr)->mode))
 			return (ft_nostat(max, file->name));
-		ft_putstr("  ");
+		ft_xattr(file, path);
 		ft_printspace((file->attr)->nlink, max->nlink);
 		ft_putnbr_ll((file->attr)->nlink);
 		ft_put_owners(file, max);

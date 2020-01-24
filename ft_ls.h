@@ -5,8 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< HEAD
 /*   Created: 2019/11/29 19:02:17 by quegonza          #+#    #+#             */
 /*   Updated: 2019/11/29 19:02:17 by quegonza         ###   ########.fr       */
+=======
+/*   Created: 2017/11/15 00:00:33 by qugonzal          #+#    #+#             */
+/*   Updated: 2019/11/21 20:37:02 by quegonza         ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +26,7 @@
 # include <unistd.h>
 # include <sys/stat.h>
 # include <sys/types.h>
+# include <sys/xattr.h>
 # include <time.h>
 # include <grp.h>
 # include <pwd.h>

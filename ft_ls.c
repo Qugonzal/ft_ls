@@ -5,8 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< HEAD
 /*   Created: 2019/11/29 19:02:06 by quegonza          #+#    #+#             */
 /*   Updated: 2019/11/29 19:02:06 by quegonza         ###   ########.fr       */
+=======
+/*   Created: 2017/12/15 00:06:00 by qugonzal          #+#    #+#             */
+/*   Updated: 2020/01/23 20:20:32 by quegonza         ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +67,18 @@ t_file		*ft_recurse(t_file *file, char *path, int options)
 	return (file);
 }
 
+int			ft_ldir(DIR *dir, char *path)
+{
+	struct stat sb;
+	mode_t		mode;
+	return (0);
+}
+
 void		ft_ls(DIR *dir, int options, char *path)
 {
 	t_file		*file;
 
-	if (!dir)
+	if (!dir || ft_ldir(DIR *dir, char *path))
 	{
 		ft_nodir(options, path);
 		return ;

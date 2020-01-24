@@ -5,8 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< HEAD
 /*   Created: 2019/11/29 19:02:09 by quegonza          #+#    #+#             */
 /*   Updated: 2019/11/29 19:36:46 by quegonza         ###   ########.fr       */
+=======
+/*   Created: 2018/09/27 19:17:43 by qugonzal          #+#    #+#             */
+/*   Updated: 2020/01/23 18:50:44 by quegonza         ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +23,7 @@ t_file		*ft_chk_dir(t_file *file, t_file **dire, int options)
 	t_file *dir;
 	mode_t check;
 
+	check = ((file->attr)->mode & S_IFMT);
 	dir = *dire;
 	if ((options & LS_1) && file->prev)
 		ft_putstr("\n");
@@ -27,7 +33,11 @@ t_file		*ft_chk_dir(t_file *file, t_file **dire, int options)
 	ft_putstr(file->name);
 	check = (file->attr->mode & S_IFMT);
 	if (options & LS_REC)
+<<<<<<< HEAD
 		if (check == S_IFDIR)
+=======
+		if ((check & S_IFDIR))
+>>>>>>> master
 			dir = new_file(dir, file->name);
 	*dire = dir;
 	file = file->next;
