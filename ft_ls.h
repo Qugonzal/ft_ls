@@ -6,7 +6,7 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:17 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/24 19:07:41 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/01/27 16:11:21 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,23 @@
 # define LS_R	(1 << 4)
 # define LS_T	(1 << 5)
 # define LS_1	(1 << 6)
+
+typedef	struct		s_op
+{
+	char	l:1;
+	char	rec:1;
+	char	a:1;
+	char	r:1;
+	char	t:1;
+	char	one:1;
+	char	_other:2;
+}					t_op;
+
+typedef	union		u_opt
+{
+	char	value;
+	t_opt	option;
+}					t_opt;
 
 typedef struct		s_max
 {

@@ -6,7 +6,7 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:12 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/16 16:42:10 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/01/27 16:26:41 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void				ft_no_option(char chr)
 	exit(-1);
 }
 
-int					ft_hard_option(char *av, int *options)
+int					ft_hard_option(char *av, t_opt opt)
 {
 	int j;
 
@@ -28,7 +28,7 @@ int					ft_hard_option(char *av, int *options)
 	while (av[++j])
 	{
 		if (!(ft_strncmp("recursive", &av[j], ft_strlen(&av[j]))))
-			*options = *options | (1 << 2);
+			opt.option.rec = 1;
 		else if (!(ft_strncmp("all", &av[j], ft_strlen(&av[j]))))
 			*options = *options | (1 << 3);
 		else if (!(ft_strncmp("reverse", &av[j], ft_strlen(&av[j]))))

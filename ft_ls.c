@@ -6,13 +6,13 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:06 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/24 19:38:17 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/01/27 16:11:45 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_file		*ft_ls_all(DIR *dir, char options)
+t_file		*ft_ls_all(DIR *dir, t_opt option)
 {
 	struct dirent	*dirstream;
 	int				id;
@@ -20,7 +20,7 @@ t_file		*ft_ls_all(DIR *dir, char options)
 
 	id = 0;
 	file = NULL;
-	if (options & LS_A)
+	if (opt.option.a)
 		while ((dirstream = readdir(dir)))
 		{
 			file = new_file(file, dirstream->d_name);
@@ -40,7 +40,7 @@ t_file		*ft_ls_all(DIR *dir, char options)
 	return (file);
 }
 
-t_file		*ft_recurse(t_file *file, char *path, int options)
+t_file		*ft_recurse(t_file *file, char *path, t_opt opt)
 {
 	t_file	*temp;
 	char	*npath;
@@ -48,7 +48,7 @@ t_file		*ft_recurse(t_file *file, char *path, int options)
 	temp = NULL;
 	ft_putchar('\n');
 	npath = ft_path(path, file->name);
-	if (options & LS_REC)
+	if (opt.options.rec)
 		ft_putpath(npath);
 	if (ft_check_open(file, npath))
 	{

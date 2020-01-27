@@ -6,7 +6,7 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:16 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/24 16:15:09 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/01/27 18:57:06 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ int		ft_fts_open(char **av)
 	return (1);
 }
 
-void	ft_arg_lst(t_file *arg_lst, int options, int identifier)
+void	ft_arg_lst(t_file *arg_lst, t_opt opt, int identifier)
 {
 	t_file	*tmp_start;
 
-	if (options & LS_T)
+	if (opt.option.t)
 		arg_lst = ft_mtime(arg_lst, "./");
-	if (options & LS_R)
+	if (opt.option.r)
 		arg_lst = ft_inverse_list(arg_lst);
 	if (ft_lst_nodir(&arg_lst, options) && arg_lst)
 		ft_putstr("\n");
@@ -73,7 +73,7 @@ void	ft_arg_lst(t_file *arg_lst, int options, int identifier)
 			ft_putstr(arg_lst->name);
 			ft_putstr(":\n");
 		}
-		ft_ls(arg_lst->dirstream, options, arg_lst->name);
+		ft_ls(arg_lst->dirstream, opt, arg_lst->name);
 		if (arg_lst->dirstream)
 			closedir(arg_lst->dirstream);
 		if ((arg_lst = arg_lst->next))
@@ -82,7 +82,7 @@ void	ft_arg_lst(t_file *arg_lst, int options, int identifier)
 	}
 }
 
-void	ft_no_arg(t_file *arg_lst, int options)
+void	ft_no_arg(t_file *arg_lst, t_opt opt)
 {
 	arg_lst = new_file(arg_lst, ".");
 	if (!(ft_check_open(arg_lst, NULL)))
@@ -90,21 +90,21 @@ void	ft_no_arg(t_file *arg_lst, int options)
 		ft_free(arg_lst);
 		perror("opendir");
 	}
-	ft_ls(arg_lst->dirstream, options, ".");
+	ft_ls(arg_lst->dirstream, opt, ".");
 	closedir(arg_lst->dirstream);
 	ft_free(arg_lst);
 }
 
 int		main(int ac, char **av)
 {
-	int				options;
 	int				i;
 	int				identifier;
 	t_file			*arg_lst;
+	t_opt			opt;
 
 	i = 1;
 	arg_lst = NULL;
-	options = ft_set_options(av, &i);
+	opt = ft_set_options(av, &i);
 	identifier = 0;
 	if (!ft_fts_open(av))
 		return (0);
@@ -115,10 +115,10 @@ int		main(int ac, char **av)
 		{
 			ft_link_list(arg_lst);
 			arg_lst = ft_ascii(arg_lst);
-			ft_arg_lst(arg_lst, options, identifier);
+			ft_arg_lst(arg_lst, opt, identifier);
 		}
 	}
 	else
-		ft_no_arg(arg_lst, options);
+		ft_no_arg(arg_lst, opt);
 	return (0);
 }
