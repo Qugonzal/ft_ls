@@ -6,7 +6,7 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:06 by quegonza          #+#    #+#             */
-/*   Updated: 2019/11/29 19:33:14 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/01/28 17:15:48 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void		ft_put_total(t_max max)
 	ft_putchar('\n');
 }
 
-t_file		*ft_ls_l(t_file *file, char *path, int options)
+t_file		*ft_ls_l(t_file *file, char *path, t_opt opt)
 {
 	t_file		*dir;
 	t_max		max;
@@ -33,7 +33,7 @@ t_file		*ft_ls_l(t_file *file, char *path, int options)
 	while (file->next)
 	{
 		ft_print_l(file, &max, path);
-		if (options & LS_REC)
+		if (opt.option.rec)
 			if ((check = file->attr->mode & S_IFMT) == S_IFDIR)
 				dir = new_file(dir, file->name);
 		file = file->next;
@@ -41,7 +41,7 @@ t_file		*ft_ls_l(t_file *file, char *path, int options)
 		ft_putchar('\n');
 	}
 	ft_print_l(file, &max, path);
-	if (options & LS_REC)
+	if (opt.option.rec)
 		if ((check = file->attr->mode & S_IFMT) == S_IFDIR)
 			dir = new_file(dir, file->name);
 	ft_free(file);

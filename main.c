@@ -6,7 +6,7 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:16 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/27 18:57:06 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/01/28 16:11:39 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_arg_lst(t_file *arg_lst, t_opt opt, int identifier)
 		arg_lst = ft_mtime(arg_lst, "./");
 	if (opt.option.r)
 		arg_lst = ft_inverse_list(arg_lst);
-	if (ft_lst_nodir(&arg_lst, options) && arg_lst)
+	if (ft_lst_nodir(&arg_lst, opt) && arg_lst)
 		ft_putstr("\n");
 	while (arg_lst)
 	{

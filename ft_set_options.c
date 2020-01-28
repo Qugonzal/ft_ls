@@ -6,13 +6,13 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:12 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/27 16:26:41 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/01/28 17:23:36 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void				ft_no_option(char chr)
+void	ft_no_option(char chr)
 {
 	ft_putstr("ls: illegal option -- ");
 	ft_putchar(chr);
@@ -20,7 +20,7 @@ void				ft_no_option(char chr)
 	exit(-1);
 }
 
-int					ft_hard_option(char *av, t_opt opt)
+t_opt	ft_hard_option(char *av, t_opt opt)
 {
 	int j;
 
@@ -30,16 +30,16 @@ int					ft_hard_option(char *av, t_opt opt)
 		if (!(ft_strncmp("recursive", &av[j], ft_strlen(&av[j]))))
 			opt.option.rec = 1;
 		else if (!(ft_strncmp("all", &av[j], ft_strlen(&av[j]))))
-			*options = *options | (1 << 3);
+			opt.option.a = 1;
 		else if (!(ft_strncmp("reverse", &av[j], ft_strlen(&av[j]))))
-			*options = *options | (1 << 4);
+			opt.option.r = 1;
 		else
 			ft_no_option(av[j]);
 	}
-	return (*options);
+	return (opt);
 }
 
-int					ft_normal_option(char *av, int *options)
+void	ft_normal_option(char *av, t_opt *opt)
 {
 	int j;
 
@@ -47,49 +47,48 @@ int					ft_normal_option(char *av, int *options)
 	while (av[++j])
 	{
 		if (av[j] == 'l')
-			*options = *options | (1 << 1);
+			opt->option.l = 1;
 		else if (av[j] == 'R')
-			*options = *options | (1 << 2);
+			opt->option.rec = 1;
 		else if (av[j] == 'a')
-			*options = *options | (1 << 3);
+			opt->option.a = 1;
 		else if (av[j] == 'r')
-			*options = *options | (1 << 4);
+			opt->option.r = 1;
 		else if (av[j] == 't')
-			*options = *options | (1 << 5);
+			opt->option.t = 1;
 		else if (av[j] == '1')
 		{
-			if ((*options & (1 << 1)))
-				*options = *options ^ (1 << 1);
-			*options = *options | (1 << 6);
+			if ((opt->option.l))
+				opt->option.l = 0;
+			opt->option.one = 1;
 		}
 		else
 			ft_no_option(av[j]);
 	}
-	return (*options);
 }
 
-int					ft_set_options(char **av, int *nb)
+t_opt	ft_set_options(char **av, int *nb)
 {
-	int	options;
-	int	i;
+	t_opt	opt;
+	int		i;
 
 	i = 0;
-	options = 0;
+	opt.value = 0;
 	while (av[++i] && av[i][0] == '-')
 	{
 		if (av[i][1] == '-' && !av[i][2])
 		{
 			*nb = i + 1;
-			return (options);
+			return (opt);
 		}
 		if (!av[i][1])
 		{
 			*nb = i;
-			return (options);
+			return (opt);
 		}
 		else
-			options = ft_normal_option(av[i], &options);
+			ft_normal_option(av[i], &opt);
 	}
 	*nb = i;
-	return (options);
+	return (opt);
 }

@@ -6,13 +6,13 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:09 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/24 18:14:26 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/01/28 17:11:55 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_file		*ft_chk_dir(t_file *file, t_file **dire, int options)
+t_file		*ft_chk_dir(t_file *file, t_file **dire, t_opt opt)
 {
 	t_file *tmp;
 	t_file *dir;
@@ -20,13 +20,13 @@ t_file		*ft_chk_dir(t_file *file, t_file **dire, int options)
 
 	check = ((file->attr)->mode & S_IFMT);
 	dir = *dire;
-	if ((options & LS_1) && file->prev)
+	if ((opt.option.one) && file->prev)
 		ft_putstr("\n");
 	else if (file->prev)
 		ft_putstr("  ");
 	tmp = file;
 	ft_putstr(file->name);
-	if (options & LS_REC)
+	if (opt.option.rec)
 		if (check == S_IFDIR)
 			dir = new_file(dir, file->name);
 	*dire = dir;
@@ -35,22 +35,22 @@ t_file		*ft_chk_dir(t_file *file, t_file **dire, int options)
 	return (file);
 }
 
-t_file		*ft_print_chk_dir(t_file *file, char *path, int options)
+t_file		*ft_print_chk_dir(t_file *file, char *path, t_opt opt)
 {
 	t_file *dir;
 
 	dir = NULL;
-	if (options & LS_L)
-		dir = ft_ls_l(file, path, options);
+	if (opt.option.l)
+		dir = ft_ls_l(file, path, opt);
 	else
 		while (file)
-			file = ft_chk_dir(file, &dir, options);
+			file = ft_chk_dir(file, &dir, opt);
 	if (dir)
 	{
 		ft_link_list(dir);
 		dir = ft_inverse_list(dir);
 	}
-	if (!(options & LS_L))
+	if (!(opt.option.l))
 		ft_putstr("\n");
 	return (dir);
 }

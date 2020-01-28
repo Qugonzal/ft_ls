@@ -6,18 +6,17 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:10 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/24 20:09:03 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/01/28 17:23:01 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		ft_xattr(t_file *file, char *path)
+void	ft_xattr(t_file *file, char *path)
 {
 	int		size;
 	char	*str;
-	mode_t check;
-
+	mode_t	check;
 
 	check = (file->attr)->mode & ~S_IFMT;
 	size = 0;

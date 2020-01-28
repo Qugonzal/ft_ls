@@ -6,15 +6,15 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:15 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/24 16:14:35 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/01/28 17:01:57 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	ft_put_ls1(int options, char *path)
+void	ft_put_ls1(t_opt opt, char *path)
 {
-	if (options & LS_1)
+	if (opt.option.one)
 	{
 		ft_putstr(path);
 		ft_putstr("\n");
@@ -26,13 +26,13 @@ void	ft_put_ls1(int options, char *path)
 	}
 }
 
-void	ft_nodir(int options, char *path)
+void	ft_nodir(t_opt opt, char *path)
 {
 	struct stat sb;
 	t_file		*file;
 	t_max		max;
 
-	if (options & LS_L)
+	if (opt.option.l)
 	{
 		file = new_file(NULL, path);
 		ft_init_max(&max);
@@ -60,7 +60,7 @@ void	ft_rewind_lst(t_file **list)
 			*list = (*list)->prev;
 }
 
-int		ft_lst_nodir(t_file **arg_lst, int options)
+int		ft_lst_nodir(t_file **arg_lst, t_opt opt)
 {
 	t_file	*list;
 	t_file	*file;
@@ -73,7 +73,7 @@ int		ft_lst_nodir(t_file **arg_lst, int options)
 	{
 		if (!(file->dirstream))
 		{
-			ft_put_ufile(&file, &list, options);
+			ft_put_ufile(&file, &list, opt);
 			f = 1;
 		}
 		else
@@ -84,25 +84,25 @@ int		ft_lst_nodir(t_file **arg_lst, int options)
 	}
 	ft_rewind_lst(&list);
 	*arg_lst = list;
-	if (f & !(options & LS_L))
+	if (f & !(opt.option.l))
 		ft_putchar('\n');
 	return (f);
 }
 
-void	ft_put_ufile(t_file **lst, t_file **list, int options)
+void	ft_put_ufile(t_file **lst, t_file **list, t_opt opt)
 {
 	t_file	*tmp;
 	t_file	*file;
 
 	file = *lst;
 	*list = file->prev;
-	ft_ls(NULL, options, file->name);
+	ft_ls(NULL, opt, file->name);
 	tmp = file;
 	if ((file = file->next))
 	{
-		if (options & LS_1)
+		if (opt.option.one)
 			ft_putchar('\n');
-		else if (!(options & LS_L))
+		else if (!(opt.option.l))
 			ft_putstr("  ");
 	}
 	ft_unlink(tmp);

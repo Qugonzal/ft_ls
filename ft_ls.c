@@ -6,13 +6,13 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:06 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/27 16:11:45 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/01/28 17:14:14 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_file		*ft_ls_all(DIR *dir, t_opt option)
+t_file		*ft_ls_all(DIR *dir, t_opt opt)
 {
 	struct dirent	*dirstream;
 	int				id;
@@ -48,11 +48,11 @@ t_file		*ft_recurse(t_file *file, char *path, t_opt opt)
 	temp = NULL;
 	ft_putchar('\n');
 	npath = ft_path(path, file->name);
-	if (opt.options.rec)
+	if (opt.option.rec)
 		ft_putpath(npath);
 	if (ft_check_open(file, npath))
 	{
-		ft_ls(file->dirstream, options, npath);
+		ft_ls(file->dirstream, opt, npath);
 		closedir(file->dirstream);
 	}
 	free(npath);
@@ -78,30 +78,30 @@ int			ft_iflink(char *path)
 		return (0);
 }
 
-void		ft_ls(DIR *dir, int options, char *path)
+void		ft_ls(DIR *dir, t_opt opt, char *path)
 {
 	t_file		*file;
 
 	if (!dir || ft_iflink(path))
 	{
-		ft_nodir(options, path);
+		ft_nodir(opt, path);
 		return ;
 	}
-	file = ft_ls_all(dir, options);
+	file = ft_ls_all(dir, opt);
 	if (file)
 	{
 		ft_link_list(file);
 		file = ft_ascii(file);
-		if (options & LS_T)
+		if (opt.option.t)
 			file = ft_mtime(file, path);
-		if (options & LS_R)
+		if (opt.option.r)
 			file = ft_inverse_list(file);
-		file = ft_print_chk_dir(file, path, options);
-		if ((options & LS_REC) && file)
+		file = ft_print_chk_dir(file, path, opt);
+		if ((opt.option.rec) && file)
 		{
 			file = ft_skip_current_t(file);
 			while (file)
-				file = ft_recurse(file, path, options);
+				file = ft_recurse(file, path, opt);
 		}
 	}
 }
