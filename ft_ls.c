@@ -6,7 +6,7 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:06 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/28 17:14:14 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/02/04 17:17:34 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void		ft_ls(DIR *dir, t_opt opt, char *path)
 {
 	t_file		*file;
 
-	if (!dir || ft_iflink(path))
+	if (!dir || (ft_iflink(path) && opt.option.l))
 	{
 		ft_nodir(opt, path);
 		return ;
