@@ -6,19 +6,32 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:09 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/28 17:11:55 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/02/14 18:12:37 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+/*
+**
+**readlink + readdir/stat & chk if dir (then fil 'dir')
+***
+**padding (see testmain in 'test_line') 
+**
+*/
+void		ft_chk_linkdir(t_file *dir, char *name)
+{
+	size_t	bufsize;
+
+	
+}
 
 t_file		*ft_chk_dir(t_file *file, t_file **dire, t_opt opt)
 {
-	t_file *tmp;
-	t_file *dir;
-	mode_t check;
+	t_file			*tmp;
+	t_file			*dir;
+	unsigned char	check;
 
-	check = ((file->attr)->mode & S_IFMT);
+	check = file->mode;
 	dir = *dire;
 	if ((opt.option.one) && file->prev)
 		ft_putstr("\n");
@@ -26,9 +39,14 @@ t_file		*ft_chk_dir(t_file *file, t_file **dire, t_opt opt)
 		ft_putstr("  ");
 	tmp = file;
 	ft_putstr(file->name);
+	ft_putnbr(check);
 	if (opt.option.rec)
-		if (check == S_IFDIR)
+	{
+		if (check & DT_DIR)
 			dir = new_file(dir, file->name);
+		else if (check & DT_LNK)
+//			ft_chk_linkdir(dir, file->name);
+	}
 	*dire = dir;
 	file = file->next;
 	ft_free(tmp);

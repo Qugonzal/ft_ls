@@ -6,7 +6,7 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:17 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/28 17:17:36 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/02/14 17:37:13 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@
 # include <unistd.h>
 # include <sys/stat.h>
 # include <sys/types.h>
+# include <sys/ioctl.h>
 # include <sys/xattr.h>
 # include <time.h>
 # include <grp.h>
 # include <pwd.h>
-# include <sys/ioctl.h>
 
 typedef	struct		s_op
 {
@@ -71,7 +71,7 @@ typedef struct		s_file
 	int				id;
 	char			name[260];
 	DIR				*dirstream;
-	int				mode;
+	unsigned char	mode;
 	struct s_stat	*attr;
 	struct s_file	*prev;
 	struct s_file	*next;

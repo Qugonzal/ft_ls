@@ -6,7 +6,7 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:01:22 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/15 17:47:48 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/02/14 15:44:18 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		ft_chknopath(t_file *dir)
 			return (1);
 		else if (lstat(dir->name, &sb))
 		{
-			ft_putstr("ft-ls: ");
+			ft_putstr("ft_ls: ");
 			perror(dir->name);
 			return (0);
 		}
