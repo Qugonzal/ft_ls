@@ -6,7 +6,7 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:13 by quegonza          #+#    #+#             */
-/*   Updated: 2019/11/29 19:02:13 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/02/25 18:20:50 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void		ft_fillstat_ug(t_stat *file, struct stat *sb)
 	}
 }
 
-void		ft_fillstat(t_stat *file, struct stat *sb)
+void		ft_fillstat(t_stat *file, struct stat *sb, t_opt opt)
 {
 	int				mode;
 
@@ -48,12 +48,15 @@ void		ft_fillstat(t_stat *file, struct stat *sb)
 		file->size = sb->st_rdev;
 	else
 		file->size = sb->st_size;
-	file->mtime = sb->st_mtime;
+	if (opt.option.u)
+		file->mtime = sb->st_atime;
+	else
+		file->mtime = sb->st_mtime;
 	file->blocks = sb->st_blocks;
 	ft_fillstat_ug(file, sb);
 }
 
-void		ft_fillcheck_stat(t_file *file, t_max *max, char *path)
+void		ft_fillcheck_stat(t_file *file, t_max *max, char *path, t_opt opt)
 {
 	struct stat	sb;
 	t_file		*check;
@@ -72,7 +75,7 @@ void		ft_fillcheck_stat(t_file *file, t_max *max, char *path)
 			check->attr = NULL;
 		}
 		else
-			ft_fillstat(check->attr, &sb);
+			ft_fillstat(check->attr, &sb, opt);
 		free(tmp_path);
 		if (check->attr)
 			ft_checkmax(check->attr, max);

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/18 13:13:56 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/04/28 16:17:38 by qugonzal         ###   ########.fr       */
+/*   Created: 2019/04/10 14:52:26 by quegonza          #+#    #+#             */
+/*   Updated: 2019/04/10 15:37:43 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
+#include "libft.h"
 
 int		ft_strncmp(const char *s1, const char *s2, size_t n)
 {

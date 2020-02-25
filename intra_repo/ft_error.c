@@ -6,7 +6,7 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:01:22 by quegonza          #+#    #+#             */
-/*   Updated: 2020/02/13 14:20:39 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/02/20 21:29:38 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,17 @@ int		ft_chknopath(t_file *dir)
 		dir->dirstream = NULL;
 		if (errno == 20)
 			return (1);
-		else if (lstat(dir->name, &sb))
+		else if (lstat(dir->name, &sb) == -1)
 		{
-			ft_putstr("ft_ls: ");
+			ft_putstr("ls: ");
 			perror(dir->name);
 			return (0);
 		}
+		else if ((sb.st_mode & S_IFMT) == S_IFLNK)
+			return (1);
+		ft_putstr("ls: ");
+		perror(dir->name);
+		return (0);
 	}
 	return (1);
 }

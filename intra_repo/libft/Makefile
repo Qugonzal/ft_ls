@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: quegonza <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/03/29 10:54:35 by qugonzal          #+#    #+#              #
-#    Updated: 2017/10/03 17:24:27 by qugonzal         ###   ########.fr        #
+#    Created: 2019/04/10 15:06:02 by quegonza          #+#    #+#              #
+#    Updated: 2020/02/21 15:39:25 by quegonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,14 @@ OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME):
-	gcc -c -Wall -Wextra -Werror $(SRC)
-	ar -rc $(NAME) $(OBJ)
+$(NAME): $(OBJ) ./libft.h
+	@gcc -c -Wall -Wextra -Werror $(SRC)
+	@ar -rc $(NAME) $(OBJ)
+#	@ranlib $(NAME)
+
+.SILENT:
+	$(OBJ)
+
 clean:
 	rm -f $(OBJ)
 fclean: clean

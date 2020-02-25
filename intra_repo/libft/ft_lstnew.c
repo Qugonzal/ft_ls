@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/24 13:06:33 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/04/24 14:25:34 by qugonzal         ###   ########.fr       */
+/*   Created: 2019/04/10 14:52:16 by quegonza          #+#    #+#             */
+/*   Updated: 2019/04/10 15:36:51 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
 t_list	*ft_lstnew(void const *content, size_t content_size)
 {

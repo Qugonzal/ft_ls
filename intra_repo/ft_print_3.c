@@ -6,26 +6,34 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:11 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/24 19:19:31 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/02/25 19:02:06 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	ft_put_owners(t_file *file, t_max *max)
+void	ft_put_user(t_file *file, t_max *max, t_opt opt)
+{
+	if (!(opt.option.g))
+	{
+		if ((file->attr)->user)
+		{
+			ft_putstr((file->attr)->user);
+			ft_printspace_str((file->attr)->user, max->user);
+		}
+		else
+		{
+			ft_putstr("none");
+			ft_printspace_str("none", max->user);
+		}
+		ft_putstr("  ");
+	}
+}
+
+void	ft_put_owners(t_file *file, t_max *max, t_opt opt)
 {
 	ft_putstr(" ");
-	if ((file->attr)->user)
-	{
-		ft_putstr((file->attr)->user);
-		ft_printspace_str((file->attr)->user, max->user);
-	}
-	else
-	{
-		ft_putstr("none");
-		ft_printspace_str("none", max->user);
-	}
-	ft_putstr("  ");
+	ft_put_user(file, max, opt);
 	if ((file->attr)->group)
 	{
 		ft_putstr((file->attr)->group);

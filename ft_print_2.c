@@ -6,7 +6,7 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:10 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/28 17:23:01 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/02/20 15:41:59 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_xattr(t_file *file, char *path)
 	{
 		str = ft_path(path, file->name);
 		ft_clean_slash(str);
-		size = listxattr(str, NULL, 0, 0);
+		size = listxattr(str, NULL, 0, XATTR_NOFOLLOW);
 		free(str);
 	}
 	if (size > 0)

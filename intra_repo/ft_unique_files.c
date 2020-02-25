@@ -6,7 +6,7 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:15 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/28 17:01:57 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/02/25 19:01:32 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ void	ft_nodir(t_opt opt, char *path)
 			file->attr = NULL;
 		}
 		else
-			ft_fillstat(file->attr, &sb);
+			ft_fillstat(file->attr, &sb, opt);
 		if (file->attr)
 			ft_checkmax(file->attr, &max);
-		ft_print_l(file, &max, "./");
+		ft_print_l(file, &max, "./", opt);
 		ft_free(file);
 		ft_putchar('\n');
 	}

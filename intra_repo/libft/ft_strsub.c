@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/21 14:24:53 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/04/24 18:25:37 by qugonzal         ###   ########.fr       */
+/*   Created: 2019/04/10 14:52:36 by quegonza          #+#    #+#             */
+/*   Updated: 2019/04/10 15:37:58 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
 char	*ft_strsub(char const *s, unsigned int start, size_t len)

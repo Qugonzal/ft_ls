@@ -6,19 +6,35 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:09 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/28 17:11:55 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/02/15 19:04:46 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_file		*ft_chk_dir(t_file *file, t_file **dire, t_opt opt)
+void		ft_chk_linkdir(t_file **dir, char *name, char *path)
 {
-	t_file *tmp;
-	t_file *dir;
-	mode_t check;
+	struct stat	sb;
+	char		*full_path;
 
-	check = ((file->attr)->mode & S_IFMT);
+	full_path = ft_path(path, name);
+	if (stat(full_path, &sb) == -1)
+	{
+		ft_putstr("stat: ");
+		perror(name);
+	}
+	if ((sb.st_mode = sb.st_mode & S_IFMT) == S_IFDIR)
+		*dir = new_file(*dir, name);
+	free(full_path);
+}
+
+t_file		*ft_chk_dir(t_file *file, t_file **dire, t_opt opt, char *path)
+{
+	t_file			*tmp;
+	t_file			*dir;
+	unsigned char	check;
+
+	check = file->mode;
 	dir = *dire;
 	if ((opt.option.one) && file->prev)
 		ft_putstr("\n");
@@ -27,8 +43,12 @@ t_file		*ft_chk_dir(t_file *file, t_file **dire, t_opt opt)
 	tmp = file;
 	ft_putstr(file->name);
 	if (opt.option.rec)
-		if (check == S_IFDIR)
+	{
+		if (check == DT_DIR)
 			dir = new_file(dir, file->name);
+		else if (check == DT_LNK || check == DT_UNKNOWN)
+			ft_chk_linkdir(&dir, file->name, path);
+	}
 	*dire = dir;
 	file = file->next;
 	ft_free(tmp);
@@ -44,7 +64,7 @@ t_file		*ft_print_chk_dir(t_file *file, char *path, t_opt opt)
 		dir = ft_ls_l(file, path, opt);
 	else
 		while (file)
-			file = ft_chk_dir(file, &dir, opt);
+			file = ft_chk_dir(file, &dir, opt, path);
 	if (dir)
 	{
 		ft_link_list(dir);

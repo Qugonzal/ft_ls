@@ -6,7 +6,7 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:08 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/28 18:20:21 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/02/15 18:40:51 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_clean_slash(char *path)
 	i = -1;
 	if (path[0] == '.' && path[1] == '/')
 	{
-		while (++i < i2)
+		while (++i < i2 - 1)
 			tmp[i] = path[i + 2];
 		tmp[i + 1] = '\0';
 	}

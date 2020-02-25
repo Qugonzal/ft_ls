@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/12 14:44:03 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/10/03 17:24:55 by qugonzal         ###   ########.fr       */
+/*   Created: 2019/04/10 15:06:18 by quegonza          #+#    #+#             */
+/*   Updated: 2020/02/20 21:02:39 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define LIBFT_H
 
 # include <string.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 void				ft_putchar(char c);
 void				ft_putchar_fd(char c, int fd);

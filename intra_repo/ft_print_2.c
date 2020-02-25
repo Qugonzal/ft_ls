@@ -6,7 +6,7 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:10 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/28 17:23:01 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/02/25 18:57:33 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_xattr(t_file *file, char *path)
 	{
 		str = ft_path(path, file->name);
 		ft_clean_slash(str);
-		size = listxattr(str, NULL, 0, 0);
+		size = listxattr(str, NULL, 0, XATTR_NOFOLLOW);
 		free(str);
 	}
 	if (size > 0)
@@ -33,7 +33,7 @@ void	ft_xattr(t_file *file, char *path)
 		ft_putstr("  ");
 }
 
-int		ft_print_l(t_file *file, t_max *max, char *path)
+int		ft_print_l(t_file *file, t_max *max, char *path, t_opt opt)
 {
 	int		check;
 	int		mode;
@@ -47,7 +47,7 @@ int		ft_print_l(t_file *file, t_max *max, char *path)
 		ft_xattr(file, path);
 		ft_printspace((file->attr)->nlink, max->nlink);
 		ft_putnbr_ll((file->attr)->nlink);
-		ft_put_owners(file, max);
+		ft_put_owners(file, max, opt);
 		ft_put_size_n_time(file, max, mode, check);
 	}
 	else

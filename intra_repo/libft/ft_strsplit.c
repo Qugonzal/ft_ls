@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/21 15:50:05 by qugonzal          #+#    #+#             */
-/*   Updated: 2017/04/25 14:21:53 by qugonzal         ###   ########.fr       */
+/*   Created: 2019/04/10 14:52:36 by quegonza          #+#    #+#             */
+/*   Updated: 2019/04/10 20:07:18 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
 static int		wordcount(char const *s, char c)
 {
@@ -54,6 +53,13 @@ static char		*writeword(char const *s, char c)
 	return (new);
 }
 
+static void		ft_free(char **tab, int i)
+{
+	while (--i > -1)
+		free(tab[i]);
+	free(tab);
+}
+
 char			**ft_strsplit(char const *s, char c)
 {
 	unsigned int	i;
@@ -72,7 +78,8 @@ char			**ft_strsplit(char const *s, char c)
 	{
 		while (s[i] == c)
 			i++;
-		tab[j] = writeword(&s[i], c);
+		if (!(tab[j] = writeword(&s[i], c)))
+			ft_free(tab, j);
 		while (s[i] && s[i] != c)
 			i++;
 		j++;

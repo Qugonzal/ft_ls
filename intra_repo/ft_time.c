@@ -6,7 +6,7 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:14 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/24 20:14:34 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/02/25 18:20:57 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_file		*ft_place_young(t_file *list)
 	return (tmp);
 }
 
-t_file		*ft_mtimecopy(t_file *list, char *path)
+t_file		*ft_mtimecopy(t_file *list, char *path, t_opt opt)
 {
 	t_file		*file;
 	struct stat	sb;
@@ -105,6 +105,8 @@ t_file		*ft_mtimecopy(t_file *list, char *path)
 			free(file->attr);
 			file->attr = NULL;
 		}
+		else if (opt.option.u)
+			(file->attr)->mtime = sb.st_atime;
 		else
 			(file->attr)->mtime = sb.st_mtime;
 		free(tmp_path);
@@ -113,11 +115,11 @@ t_file		*ft_mtimecopy(t_file *list, char *path)
 	return (ft_place_young(list));
 }
 
-t_file		*ft_mtime(t_file *list, char *path)
+t_file		*ft_mtime(t_file *list, char *path, t_opt opt)
 {
 	t_file	*file;
 
-	list = ft_mtimecopy(list, path);
+	list = ft_mtimecopy(list, path, opt);
 	file = list->next;
 	while (file)
 	{

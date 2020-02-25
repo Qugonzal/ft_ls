@@ -6,7 +6,7 @@
 #    By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/15 00:14:59 by qugonzal          #+#    #+#              #
-#    Updated: 2019/11/29 19:03:56 by quegonza         ###   ########.fr        #
+#    Updated: 2020/02/21 15:42:31 by quegonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,9 +33,19 @@ SRC = main.c $(addprefix ft_, $(addsuffix .c, \
 	time stat max path skip\
 	ls ls_l))
 
-OBJ = $(SRC:.c=.o)
+LIB_SRC = $(addprefix libft/ft_, $(addsuffix .c, \
+	   putchar putnbr putstr putnstr strcmp strncmp strlen strstr strnstr \
+	   strdup strcpy strncpy strcat strncat strlcat strchr strrchr \
+	   memset bzero memcpy memccpy memmove memchr memcmp atoi isalpha \
+	   isdigit isalnum isascii isprint toupper tolower memalloc \
+	   memdel strnew strdel strclr striter striteri strmap strmapi \
+	   strequ strnequ strsub strjoin strnjoin strtrim strsplit itoa putendl \
+	   putchar_fd putstr_fd putendl_fd putnbr_fd lstnew lstdelone lstdel \
+	   lstadd lstiter lstmap is_prime sqrt power putlongnbr atoli strcut))
 
-INC = -Llibft ./libft/libft.a
+LIB = libft/libft.a
+
+OBJ = $(SRC:.c=.o)
 
 #     \/\/\/Rules-----
 
@@ -43,14 +53,16 @@ INC = -Llibft ./libft/libft.a
 
 all: $(NAME) 
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) ft_ls.h $(LIB) libft/Makefile
+	@$(CC) $(CFLAGS) $(OBJ) $(LIB) -o $@ 
+	@echo "$(OK_COLOR)	--- $(NAME) compiled ! ---	$(NO_COLOR)"
+
+$(LIB): $(LIB_SRC) libft/libft.h
 	@make all -C libft
-	$(CC) $(CFLAGS) $(OBJ) $(INC) -o $@ 
-	@echo "$(OK_COLOR)	--- Compiled ! ---	$(NO_COLOR)"
 
 $(OBJ): $(SRC)
-	$(CC) $(CFLAGS) -c $(SRC)
-	@echo "$(OK_COLOR)	--- Binary   created ---	$(NO_COLOR)"
+	@$(CC) $(CFLAGS) -c $(SRC)
+	@echo "$(OK_COLOR)	--- Binaries created ---	$(NO_COLOR)"
 
 norme:
 	@norminette $(SRC) $(INC)
@@ -58,11 +70,11 @@ norme:
 clean:
 	rm -rf $(OBJ)
 	@make clean -C libft
-	@echo "$(CLEAN_COLOR)	--- Binary   deleted ---		$(NO_COLOR)"
+	@echo "$(CLEAN_COLOR)	--- Binaries deleted ---		$(NO_COLOR)"
 	
 fclean: clean
 	@make fclean -C libft
 	rm -rf $(NAME)
-	@echo "$(CLEAN_COLOR)	--- Program  deleted ---		$(NO_COLOR)"
+	@echo "$(CLEAN_COLOR)	--- $(NAME) deleted ---		$(NO_COLOR)"
 
 re: fclean all

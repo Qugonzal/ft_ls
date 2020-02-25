@@ -6,7 +6,7 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:12 by quegonza          #+#    #+#             */
-/*   Updated: 2020/01/28 17:23:36 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/02/25 18:51:02 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	ft_no_option(char chr)
 {
-	ft_putstr("ls: illegal option -- ");
+	ft_putstr("/bin/ls: illegal option -- ");
 	ft_putchar(chr);
-	ft_putstr("\nusage: ./ft_ls [-lRart] [file ...]\n");
+	ft_putstr("\nusage: ls [-lRart] [file ...]\n");
 	exit(-1);
 }
 
@@ -39,6 +39,25 @@ t_opt	ft_hard_option(char *av, t_opt opt)
 	return (opt);
 }
 
+void	ft_opt(char *av, t_opt *opt, int j)
+{
+	if (av[j] == '1')
+	{
+		if ((opt->option.l))
+			opt->option.l = 0;
+		opt->option.one = 1;
+	}
+	else if (av[j] == 'u')
+		opt->option.u = 1;
+	else if (av[j] == 'g')
+	{
+		opt->option.g = 1;
+		opt->option.l = 1;
+	}
+	else
+		ft_no_option(av[j]);
+}
+
 void	ft_normal_option(char *av, t_opt *opt)
 {
 	int j;
@@ -56,14 +75,8 @@ void	ft_normal_option(char *av, t_opt *opt)
 			opt->option.r = 1;
 		else if (av[j] == 't')
 			opt->option.t = 1;
-		else if (av[j] == '1')
-		{
-			if ((opt->option.l))
-				opt->option.l = 0;
-			opt->option.one = 1;
-		}
 		else
-			ft_no_option(av[j]);
+			ft_opt(av, opt, j);
 	}
 }
 

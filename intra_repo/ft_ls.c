@@ -6,7 +6,7 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:06 by quegonza          #+#    #+#             */
-/*   Updated: 2020/02/13 17:07:31 by quegonza         ###   ########.fr       */
+/*   Updated: 2020/02/25 18:25:17 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void		ft_ls(DIR *dir, t_opt opt, char *path)
 		ft_link_list(file);
 		file = ft_ascii(file);
 		if (opt.option.t)
-			file = ft_mtime(file, path);
+			file = ft_mtime(file, path, opt);
 		if (opt.option.r)
 			file = ft_inverse_list(file);
 		file = ft_print_chk_dir(file, path, opt);
