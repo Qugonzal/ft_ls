@@ -6,7 +6,7 @@
 /*   By: quegonza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:02:17 by quegonza          #+#    #+#             */
-/*   Updated: 2020/02/14 17:37:13 by quegonza         ###   ########.fr       */
+/*   Updated: 2021/03/10 20:05:33 by quegonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <unistd.h>
 # include <sys/stat.h>
 # include <sys/types.h>
+# include <sys/sysmacros.h>
 # include <sys/ioctl.h>
 # include <sys/xattr.h>
 # include <time.h>

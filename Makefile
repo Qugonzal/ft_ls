@@ -6,7 +6,7 @@
 #    By: qugonzal <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/15 00:14:59 by qugonzal          #+#    #+#              #
-#    Updated: 2020/02/15 18:42:27 by quegonza         ###   ########.fr        #
+#    Updated: 2021/03/10 20:28:41 by quegonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CLEAN_COLOR = \033[1;36m
 
 #     \/\/\/Compiliation-----
 
-NAME = ft_ls
+NAME = mls
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
@@ -35,7 +35,7 @@ SRC = main.c $(addprefix ft_, $(addsuffix .c, \
 
 OBJ = $(SRC:.c=.o)
 
-INC = -Llibft ./libft/libft.a
+INC = -L libft -I libft -lft
 
 #     \/\/\/Rules-----
 
